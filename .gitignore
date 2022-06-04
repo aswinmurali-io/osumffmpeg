@@ -6,6 +6,7 @@ ios/
 linux/
 macos/
 web/
+windows/
 
 # See https://www.dartlang.org/guides/libraries/private-files
 
