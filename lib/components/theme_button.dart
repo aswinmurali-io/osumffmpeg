@@ -25,20 +25,10 @@ class ThemeButton extends ConsumerWidget {
     final theme = ref.watch(ThemeProvider.provider);
     final themeNotifier = ref.watch(ThemeProvider.provider.notifier);
 
-    return ElevatedButton.icon(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-          ),
-        ),
-      ),
+    return IconButton(
+      tooltip: 'Change theme',
       onPressed: themeNotifier.toggleTheme,
       icon: Icon(getIconBasedOnTheme(theme)),
-      label: const Padding(
-        padding: EdgeInsets.all(12),
-        child: Text('Change Theme'),
-      ),
     );
   }
 }
