@@ -8,6 +8,11 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     (final ref) => ThemeProvider(),
   );
 
+  static const headline2Theme = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 27,
+  );
+
   static ThemeData get lightTheme {
     return ThemeData(
       primarySwatch: Colors.teal,
@@ -16,6 +21,9 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
         shadowColor: Colors.transparent,
       ),
       scaffoldBackgroundColor: Colors.transparent,
+      textTheme: const TextTheme(
+        headline2: headline2Theme,
+      ),
     );
   }
 
@@ -41,8 +49,16 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
           color: Colors.tealAccent,
         ),
       ),
+      textTheme: TextTheme(
+        headline2: headline2Theme.copyWith(
+          color: Colors.white70,
+        ),
+      ),
     );
   }
+
+  bool isDark(final BuildContext context) =>
+      MediaQuery.of(context).platformBrightness == Brightness.dark;
 
   void toggleTheme() {
     switch (state) {
