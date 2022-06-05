@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:osumffmpeg/components/theme_button.dart';
 
 class ConvertMediaPage extends ConsumerWidget {
   const ConvertMediaPage({super.key});
@@ -10,8 +10,8 @@ class ConvertMediaPage extends ConsumerWidget {
     return Scrollbar(
       child: SingleChildScrollView(
         child: Row(
-          children: [
-            
+          children: const [
+            ThemeButton(),
           ],
         ),
       ),

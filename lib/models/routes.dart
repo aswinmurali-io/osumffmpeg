@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,75 +19,70 @@ class Route {
 
   final Widget content;
 
-  Widget get page => FadeInLeft(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: content,
-        ),
-      );
+  Widget get page {
+    return FadeInRight(
+      duration: const Duration(milliseconds: 200),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: content,
+      ),
+    );
+  }
 
   @override
   String toString() => 'Route(title: $title, page: $content)';
 }
 
-class RoutesValueNotifier extends StateNotifier<List<Route>> {
-  RoutesValueNotifier() : super([]);
+class RouteProvider extends StateNotifier<int> {
+  RouteProvider() : super(0);
 
-  bool isBuildOnce = false;
+  // ignore: avoid_setters_without_getters
+  set route(final int index) => state = index;
 
-  Future<bool> add() async {
-    if (!isBuildOnce) {
-      await Future.delayed(const Duration(milliseconds: 1));
+  static final provider = StateNotifierProvider<RouteProvider, int>(
+    (final ref) => RouteProvider(),
+  );
 
-      super.state = [
-        ...super.state,
-        Route(
-          title: 'Convert Media',
-          icon: const Icon(Icons.update),
-          content: ConvertMediaPage(),
-        ),
-        Route(
-          title: 'Save photo from video',
-          icon: const Icon(Icons.photo),
-          content: Container(),
-        ),
-        Route(
-          title: 'Upscale or downscale video',
-          icon: const Icon(Icons.screenshot_monitor),
-          content: Container(),
-        ),
-        Route(
-          title: 'Change framerate of video',
-          icon: const Icon(Icons.speed),
-          content: Container(),
-        ),
-        Route(
-          title: 'Loop video',
-          icon: const Icon(Icons.repeat),
-          content: Container(),
-        ),
-        Route(
-          title: 'Change or mute audio in video',
-          icon: const Icon(Icons.audiotrack),
-          content: Container(),
-        ),
-        Route(
-          title: 'Make gif from video',
-          icon: const Icon(Icons.gif),
-          content: Container(),
-        ),
-        Route(
-          title: 'Make video from images',
-          icon: const Icon(Icons.video_camera_front),
-          content: Container(),
-        ),
-      ];
-      isBuildOnce = true;
-    }
-    return isBuildOnce;
-  }
+  static final routes = [
+    Route(
+      title: 'Convert Media',
+      icon: const Icon(Icons.update),
+      content: ConvertMediaPage(),
+    ),
+    Route(
+      title: 'Save photo from video',
+      icon: const Icon(Icons.photo),
+      content: Container(),
+    ),
+    Route(
+      title: 'Upscale or downscale video',
+      icon: const Icon(Icons.screenshot_monitor),
+      content: Container(),
+    ),
+    Route(
+      title: 'Change framerate of video',
+      icon: const Icon(Icons.speed),
+      content: Container(),
+    ),
+    Route(
+      title: 'Loop video',
+      icon: const Icon(Icons.repeat),
+      content: Container(),
+    ),
+    Route(
+      title: 'Change or mute audio in video',
+      icon: const Icon(Icons.audiotrack),
+      content: Container(),
+    ),
+    Route(
+      title: 'Make gif from video',
+      icon: const Icon(Icons.gif),
+      content: Container(),
+    ),
+    Route(
+      title: 'Make video from images',
+      icon: const Icon(Icons.video_camera_front),
+      content: Container(),
+    ),
+  ];
 }
-
-final routeProvider = StateNotifierProvider<RoutesValueNotifier, List<Route>>(
-  (final ref) => RoutesValueNotifier(),
-);
