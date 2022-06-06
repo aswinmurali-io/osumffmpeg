@@ -9,12 +9,14 @@ environment:
 
 dependencies:
   animate_do: ^2.1.0
+  async: ^2.9.0
   dropdown_search: ^5.0.2
   file_picker: ^4.6.1
   flutter:
     sdk: flutter
   flutter_acrylic: ^1.0.0+2
   flutter_riverpod: ^1.0.4
+  osumlog: ^0.1.0
   path: ^1.8.2
 
 dev_dependencies:
