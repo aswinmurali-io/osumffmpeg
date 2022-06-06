@@ -4,28 +4,38 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:osumffmpeg/modules/common.dart';
-import 'package:osumffmpeg/modules/converter.dart';
 
 import '../components/dropdown.dart';
 import '../models/formats.dart';
 import '../models/layout/convert_media/media_state.dart';
 import '../models/layout/convert_media/ui_state.dart';
+import '../modules/common.dart';
 
 class ConvertMediaPage extends ConsumerWidget {
   const ConvertMediaPage({super.key});
 
+  void convert(
+    final FFmpegProvider ffmpegNotifier,
+    final ConvertMediaState formState,
+  ) =>
+      ffmpegNotifier.sendToFFmpeg(
+        ['-i', formState.inputToString(), formState.outputToString(), '-y'],
+      );
+
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
+    // FORM CONTROLLERS
     final controllers = ref.watch(ConvertMediaControllersProvider.provider);
-    final state = ref.watch(ConvertMediaProvider.provider);
-    final notifier = ref.watch(ConvertMediaProvider.provider.notifier);
 
-    final ffmpeg = ref.watch(FFmpegStatusStreamProvider.provider);
-    final ffmpegNotifier =
-        ref.watch(FFmpegStatusStreamProvider.provider.notifier);
+    // LOGIC PARAMETERS
+    final formState = ref.watch(ConvertMediaProvider.provider);
+    final formNotifier = ref.watch(ConvertMediaProvider.provider.notifier);
 
-    final validatedStatus = notifier.validate();
+    // FFMPEG
+    final ffmpegStatus = ref.watch(FFmpegProvider.provider);
+    final ffmpegNotifier = ref.watch(FFmpegProvider.provider.notifier);
+
+    final validatedStatus = formNotifier.validate();
 
     return Scrollbar(
       child: SingleChildScrollView(
@@ -59,7 +69,7 @@ class ConvertMediaPage extends ConsumerWidget {
                       if (result != null) {
                         final file = File(result.files.single.path!);
                         controllers.input.text = file.absolute.path;
-                        notifier
+                        formNotifier
                           ..updateInputFile(file)
                           ..autoUpdateOutputDirectory(
                             controllers.output,
@@ -84,7 +94,7 @@ class ConvertMediaPage extends ConsumerWidget {
                 items: MediaFormats.values.map((final e) => e.value).toList(),
                 onChanged: (final value) {
                   if (value != null) {
-                    notifier.updateExtension(
+                    formNotifier.updateExtension(
                       MediaFormats.values.firstWhere(
                         (final format) => format.toString() == value,
                         orElse: () {
@@ -100,7 +110,7 @@ class ConvertMediaPage extends ConsumerWidget {
                     );
                   }
                 },
-                value: state.extension.value,
+                value: formState.extension.value,
               ),
               const SizedBox(height: 20),
               Text(
@@ -126,7 +136,7 @@ class ConvertMediaPage extends ConsumerWidget {
                       final location =
                           await FilePicker.platform.getDirectoryPath();
                       if (location != null) {
-                        notifier.updateOutputDirectory(Directory(location));
+                        formNotifier.updateOutputDirectory(Directory(location));
                         controllers.output.text = location;
                       }
                     },
@@ -142,20 +152,15 @@ class ConvertMediaPage extends ConsumerWidget {
                     const EdgeInsets.all(16),
                   ),
                 ),
-                onPressed: notifier.validate() == 'Success'
-                    ? () async => ffmpegNotifier.sendToFFmpeg([
-                          '-i',
-                          state.inputToString(),
-                          state.outputToString(),
-                          '-y'
-                        ])
+                onPressed: formNotifier.validate() == 'Success'
+                    ? () => convert(ffmpegNotifier, formState)
                     : null,
                 icon: const Icon(Icons.send),
                 label: const Text('Convert'),
               ),
               const SizedBox(height: 10),
-              if (validatedStatus != 'Success') Text(notifier.validate()),
-              if (ffmpeg != null) ffmpeg,
+              if (validatedStatus != 'Success') Text(formNotifier.validate()),
+              if (ffmpegStatus != null) ffmpegStatus,
             ],
           ),
         ),

@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:osumlog/osumlog.dart';
 
-class FFmpegStatusStreamProvider
-    extends StateNotifier<StreamBuilder<List<int>>?> {
-  FFmpegStatusStreamProvider() : super(null);
+class FFmpegProvider extends StateNotifier<StreamBuilder<List<int>>?> {
+  FFmpegProvider() : super(null);
 
-  static final provider = StateNotifierProvider<FFmpegStatusStreamProvider,
-      StreamBuilder<List<int>>?>(
-    (final ref) => FFmpegStatusStreamProvider(),
+  static final provider =
+      StateNotifierProvider<FFmpegProvider, StreamBuilder<List<int>>?>(
+    (final ref) => FFmpegProvider(),
   );
 
   static const ffmpeg = 'ffmpeg';
@@ -23,10 +22,15 @@ class FFmpegStatusStreamProvider
 
     state = StreamBuilder<List<int>>(
       initialData: const [0],
-      stream: StreamGroup.merge([process.stdout, process.stderr]),
+      stream: StreamGroup.merge([
+        process.stdout,
+        process.stderr,
+      ]),
       builder: (final context, final snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
-          return Text(String.fromCharCodes(snapshot.data!));
+          return Text(
+            String.fromCharCodes(snapshot.data!),
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(),
