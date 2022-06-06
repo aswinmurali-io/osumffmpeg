@@ -5,13 +5,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/formats.dart';
 
 class CustomDropdownSearch extends ConsumerWidget {
-  const CustomDropdownSearch({super.key});
+  const CustomDropdownSearch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    required this.items,
+  });
+
+  final String value;
+
+  final List<String> items;
+
+  final void Function(String?) onChanged;
 
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
-    final mediaFormat = ref.watch(MediaFormatProvider.provider);
-    final setMediaFormat = ref.watch(MediaFormatProvider.provider.notifier);
-
     return DropdownSearch<String>(
       popupProps: const PopupProps.menu(
         searchFieldProps: TextFieldProps(
@@ -20,7 +28,7 @@ class CustomDropdownSearch extends ConsumerWidget {
         showSearchBox: true,
         showSelectedItems: true,
       ),
-      items: MediaFormats.values.map((final e) => e.value).toList(),
+      items: items,
       dropdownDecoratorProps: const DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
           prefixIcon: Icon(Icons.extension),
@@ -31,17 +39,19 @@ class CustomDropdownSearch extends ConsumerWidget {
           hintText: 'The format the input media file must be converted',
         ),
       ),
-      onChanged: (final value) {
-        setMediaFormat.format = MediaFormats.values.firstWhere(
-          (final format) {
-            return format.toString() == value;
-          },
-          orElse: () {
-            return MediaFormats.mk4;
-          },
-        );
-      },
-      selectedItem: mediaFormat.value,
+      onChanged: onChanged,
+      selectedItem: value,
     );
   }
 }
+
+/*
+MediaFormats.values.map((final e) => e.value).toList()
+onChanged: (final value) {
+        setMediaFormat.format = MediaFormats.values.firstWhere(
+          (final format) => format.toString() == value,
+          orElse: () => MediaFormats.mk4,
+        );
+      },
+      selectedItem: mediaFormat.value,
+      */
