@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   animate_do: ^2.1.0
+  dropdown_search: ^5.0.2
   flutter:
     sdk: flutter
   flutter_acrylic: ^1.0.0+2
