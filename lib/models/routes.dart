@@ -3,6 +3,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:osumffmpeg/components/theme_button.dart';
 import 'package:osumffmpeg/routes/convert_media.dart';
 
 @immutable
@@ -24,7 +25,13 @@ class Route {
       duration: const Duration(milliseconds: 200),
       child: Padding(
         padding: const EdgeInsets.all(12),
-        child: content,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            ThemeButton(),
+            content,
+          ],
+        ),
       ),
     );
   }

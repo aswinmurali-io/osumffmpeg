@@ -1,11 +1,10 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/format.dart';
+import '../models/formats.dart';
 
-class CustomDropdownSearch<T> extends ConsumerWidget {
+class CustomDropdownSearch extends ConsumerWidget {
   const CustomDropdownSearch({super.key});
 
   @override

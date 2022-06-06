@@ -21,8 +21,10 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
         shadowColor: Colors.transparent,
       ),
       scaffoldBackgroundColor: Colors.transparent,
-      textTheme: const TextTheme(
-        headline2: headline2Theme,
+      textTheme: TextTheme(
+        headline2: headline2Theme.copyWith(
+          color: Colors.black,
+        ),
       ),
     );
   }
@@ -33,6 +35,18 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       scaffoldBackgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(
         color: Colors.white,
+      ),
+      buttonTheme: ButtonThemeData(
+        buttonColor: Colors.cyanAccent,
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        labelStyle: TextStyle(
+          color: Colors.white,
+        ),
+        
+        iconColor: Colors.white,
+        hoverColor: Colors.tealAccent,
+        focusColor: Colors.tealAccent,
       ),
       navigationRailTheme: const NavigationRailThemeData(
         backgroundColor: Color.fromARGB(255, 82, 82, 82),
@@ -52,6 +66,9 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       textTheme: TextTheme(
         headline2: headline2Theme.copyWith(
           color: Colors.white70,
+        ),
+        bodyText1: const TextStyle(
+          color: Colors.white,
         ),
       ),
     );
