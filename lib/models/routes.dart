@@ -27,10 +27,7 @@ class Route {
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            ThemeButton(),
-            content,
-          ],
+          children: [ThemeButton(), content],
         ),
       ),
     );

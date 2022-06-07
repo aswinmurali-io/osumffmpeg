@@ -2,17 +2,18 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/formats.dart';
-
-class CustomDropdownSearch extends ConsumerWidget {
-  const CustomDropdownSearch({
+class OsumDropdown extends ConsumerWidget {
+  const OsumDropdown({
     super.key,
     required this.value,
     required this.onChanged,
     required this.items,
+    required this.labelText,
   });
 
   final String value;
+
+  final String labelText;
 
   final List<String> items;
 
@@ -29,14 +30,13 @@ class CustomDropdownSearch extends ConsumerWidget {
         showSelectedItems: true,
       ),
       items: items,
-      dropdownDecoratorProps: const DropDownDecoratorProps(
+      dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
-          prefixIcon: Icon(Icons.extension),
-          border: OutlineInputBorder(
+          prefixIcon: const Icon(Icons.extension),
+          border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
-          labelText: 'Media Format',
-          hintText: 'The format the input media file must be converted',
+          labelText: labelText,
         ),
       ),
       onChanged: onChanged,
@@ -44,14 +44,3 @@ class CustomDropdownSearch extends ConsumerWidget {
     );
   }
 }
-
-/*
-MediaFormats.values.map((final e) => e.value).toList()
-onChanged: (final value) {
-        setMediaFormat.format = MediaFormats.values.firstWhere(
-          (final format) => format.toString() == value,
-          orElse: () => MediaFormats.mk4,
-        );
-      },
-      selectedItem: mediaFormat.value,
-      */

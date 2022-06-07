@@ -1,6 +1,8 @@
 # Osum ffmpeg
 .vscode/
 
+test/video.mp4
+
 android/
 ios/
 linux/

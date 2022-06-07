@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../components/dropdown.dart';
-import '../models/formats.dart';
+import '../engine/media.dart';
 import '../models/layout/convert_media/media_state.dart';
 import '../models/layout/convert_media/ui_state.dart';
 import '../modules/common.dart';
@@ -14,18 +14,69 @@ import '../modules/common.dart';
 class ConvertMediaPage extends ConsumerWidget {
   const ConvertMediaPage({super.key});
 
-  void convert(
+  void onConvert(
     final FFmpegProvider ffmpegNotifier,
     final ConvertMediaState formState,
-  ) =>
-      ffmpegNotifier.sendToFFmpeg(
-        ['-i', formState.inputToString(), formState.outputToString(), '-y'],
+  ) {
+    ffmpegNotifier.sendToFFmpeg(
+      ['-i', formState.inputToString(), formState.outputToString(), '-y'],
+    );
+  }
+
+  Future<void> onBrowse(
+    final ConvertMediaFormState formControllers,
+    final ConvertMediaProvider formNotifier,
+  ) async {
+    final result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      final file = File(result.files.single.path!);
+      formControllers.input.text = file.absolute.path;
+      formNotifier
+        ..updateInputFile(file)
+        ..autoUpdateOutputDirectory(
+          formControllers.output,
+        );
+    }
+  }
+
+  void onFormatChanged(
+    final String? value,
+    final ConvertMediaProvider formNotifier,
+  ) {
+    if (value != null) {
+      formNotifier.updateExtension(
+        MediaFormats.values.firstWhere(
+          (final format) => format.toString() == value,
+          orElse: () {
+            if (kDebugMode) {
+              print(
+                'Unable to find media format from enum. '
+                'Falling back to m4v.',
+              );
+            }
+            return MediaFormats.mk4;
+          },
+        ),
       );
+    }
+  }
+
+  Future<void> onSaveLocation(
+    final ConvertMediaFormState formControllers,
+    final ConvertMediaProvider formNotifier,
+  ) async {
+    final location = await FilePicker.platform.getDirectoryPath();
+    if (location != null) {
+      formNotifier.updateOutputDirectory(Directory(location));
+      formControllers.output.text = location;
+    }
+  }
 
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
     // FORM CONTROLLERS
-    final controllers = ref.watch(ConvertMediaControllersProvider.provider);
+    final formControllers = ref.watch(ConvertMediaControllersProvider.provider);
 
     // LOGIC PARAMETERS
     final formState = ref.watch(ConvertMediaProvider.provider);
@@ -52,7 +103,7 @@ class ConvertMediaPage extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: controllers.input,
+                      controller: formControllers.input,
                       enabled: false,
                     ),
                   ),
@@ -63,19 +114,7 @@ class ConvertMediaPage extends ConsumerWidget {
                         const EdgeInsets.all(16),
                       ),
                     ),
-                    onPressed: () async {
-                      final result = await FilePicker.platform.pickFiles();
-
-                      if (result != null) {
-                        final file = File(result.files.single.path!);
-                        controllers.input.text = file.absolute.path;
-                        formNotifier
-                          ..updateInputFile(file)
-                          ..autoUpdateOutputDirectory(
-                            controllers.output,
-                          );
-                      }
-                    },
+                    onPressed: () => onBrowse(formControllers, formNotifier),
                     icon: const Icon(Icons.file_copy_outlined),
                     label: const Text('Browse'),
                   )
@@ -90,26 +129,11 @@ class ConvertMediaPage extends ConsumerWidget {
               // ---------------------------------------------------------------
               // Media Format Dropdown
               // ---------------------------------------------------------------
-              CustomDropdownSearch(
+              OsumDropdown(
+                labelText: 'Media Format',
                 items: MediaFormats.values.map((final e) => e.value).toList(),
-                onChanged: (final value) {
-                  if (value != null) {
-                    formNotifier.updateExtension(
-                      MediaFormats.values.firstWhere(
-                        (final format) => format.toString() == value,
-                        orElse: () {
-                          if (kDebugMode) {
-                            print(
-                              'Unable to find media format from enum. '
-                              'Falling back to m4v.',
-                            );
-                          }
-                          return MediaFormats.mk4;
-                        },
-                      ),
-                    );
-                  }
-                },
+                onChanged: (final value) =>
+                    onFormatChanged(value, formNotifier),
                 value: formState.extension.value,
               ),
               const SizedBox(height: 20),
@@ -121,7 +145,7 @@ class ConvertMediaPage extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: TextField(
-                      controller: controllers.output,
+                      controller: formControllers.output,
                       enabled: false,
                     ),
                   ),
@@ -132,14 +156,8 @@ class ConvertMediaPage extends ConsumerWidget {
                         const EdgeInsets.all(16),
                       ),
                     ),
-                    onPressed: () async {
-                      final location =
-                          await FilePicker.platform.getDirectoryPath();
-                      if (location != null) {
-                        formNotifier.updateOutputDirectory(Directory(location));
-                        controllers.output.text = location;
-                      }
-                    },
+                    onPressed: () =>
+                        onSaveLocation(formControllers, formNotifier),
                     icon: const Icon(Icons.save),
                     label: const Text('Save Location'),
                   )
@@ -153,7 +171,7 @@ class ConvertMediaPage extends ConsumerWidget {
                   ),
                 ),
                 onPressed: formNotifier.validate() == 'Success'
-                    ? () => convert(ffmpegNotifier, formState)
+                    ? () => onConvert(ffmpegNotifier, formState)
                     : null,
                 icon: const Icon(Icons.send),
                 label: const Text('Convert'),

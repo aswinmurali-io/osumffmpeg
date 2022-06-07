@@ -36,14 +36,10 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.cyanAccent,
-      ),
       inputDecorationTheme: const InputDecorationTheme(
         labelStyle: TextStyle(
           color: Colors.white,
         ),
-        
         iconColor: Colors.white,
         hoverColor: Colors.tealAccent,
         focusColor: Colors.tealAccent,

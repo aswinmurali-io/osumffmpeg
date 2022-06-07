@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @immutable
-class _FormState {
-  const _FormState({
+class ConvertMediaFormState {
+  const ConvertMediaFormState({
     required this.input,
     required this.output,
   });
@@ -13,17 +13,17 @@ class _FormState {
   final TextEditingController output;
 }
 
-class ConvertMediaControllersProvider extends StateNotifier<_FormState> {
+class ConvertMediaControllersProvider extends StateNotifier<ConvertMediaFormState> {
   ConvertMediaControllersProvider()
       : super(
-          _FormState(
+          ConvertMediaFormState(
             input: TextEditingController(),
             output: TextEditingController(),
           ),
         );
 
   static final provider =
-      StateNotifierProvider<ConvertMediaControllersProvider, _FormState>(
+      StateNotifierProvider<ConvertMediaControllersProvider, ConvertMediaFormState>(
     (final ref) {
       return ConvertMediaControllersProvider();
     },

@@ -22,10 +22,8 @@ class FFmpegProvider extends StateNotifier<StreamBuilder<List<int>>?> {
 
     state = StreamBuilder<List<int>>(
       initialData: const [0],
-      stream: StreamGroup.merge([
-        process.stderr,
-        process.stdout,
-      ]).asBroadcastStream(),
+      stream: StreamGroup.merge([process.stderr, process.stdout])
+          .asBroadcastStream(),
       builder: (final context, final snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return Text(
