@@ -4,5 +4,5 @@ class MediaEngineException implements Exception {
   final dynamic error;
 
   @override
-  String toString() => '$error';
+  String toString() => '(ffmpeg error) $error';
 }

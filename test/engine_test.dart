@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:osumffmpeg/engine/except.dart';
 import 'package:osumffmpeg/engine/exec.dart';
 import 'package:osumffmpeg/engine/media.dart';
+import 'package:osumlog/osumlog.dart';
 
 final testVideoDetails = {
   'path': File('test/video.mp4'),
@@ -24,7 +26,8 @@ void main() {
     );
 
     test(
-      'Check total video frames logic ${VideoTestDetails.file.path} should be ${VideoTestDetails.totalFrames}',
+      'Check total video frames logic ${VideoTestDetails.file.path} '
+      'should be ${VideoTestDetails.totalFrames}',
       () async => expect(
         await Media(VideoTestDetails.file).getTotalFrames(),
         equals(9900),
@@ -32,7 +35,8 @@ void main() {
     );
 
     test(
-      'Check duration logic ${VideoTestDetails.file.path} should be ${VideoTestDetails.duration}',
+      'Check duration logic ${VideoTestDetails.file.path} '
+      'should be ${VideoTestDetails.duration}',
       () async {
         expect(
           await Media(VideoTestDetails.file).getDuration(),
@@ -40,5 +44,20 @@ void main() {
         );
       },
     );
+
+    test(
+        'Check ffmpeg -v should cause exception because it does not exist. '
+        'If it does exist then this ffmpeg version is different from the '
+        'tested version for osumffmpeg.', () async {
+      expect(
+        () async => MediaEngine.executeFFmpeg(
+          executable: FFmpegExec.ffmpeg,
+          commands: ['-v'],
+        ),
+        throwsA(isA<MediaEngineException>()),
+      );
+    });
+
+    Log.info('Possible media formats ${MediaFormats.values}');
   });
 }
