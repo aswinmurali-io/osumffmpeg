@@ -27,7 +27,7 @@ class OsumFfmpeg extends ConsumerWidget {
 
     return MaterialApp(
       title: 'Osum ffmpeg',
-      theme: ThemeProvider.lightTheme,
+      theme: ThemeProvider.lightTheme ,
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
       home: OsumMainPage(),

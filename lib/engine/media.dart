@@ -21,10 +21,40 @@ class Media {
   final File media;
 
   /// Save the media in a specific [format] as [outputFile].
-  Future<void> saveToFormat(
+  Future<Stream<List<int>>> saveToFormat(
     final MediaFormats format,
     final File outputFile,
-  ) async {}
+  ) async {
+    return MediaEngine.executeFFmpegStream(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        '-i',
+        media.absolute.path,
+        outputFile.path,
+        '-y'
+      ],
+    );
+  }
+
+  /// Loop and save as [outputFile] video with specific [duration].
+  Future<void> loopAndSave(
+    final File outputFile,
+    final Duration duration,
+  ) async {
+    await MediaEngine.executeFFmpeg(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        '-re',
+        '-f',
+        'lavfi',
+        '-i',
+        '"movie=filename=${media.path}:loop=0, setpts=N/(FRAME_RATE*TB)"',
+        '-t',
+        '${duration.inSeconds}',
+        outputFile.path,
+      ],
+    );
+  }
 
   /// Get the total frames in the video.
   Future<int> getTotalFrames() async {

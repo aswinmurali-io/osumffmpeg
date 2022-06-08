@@ -129,12 +129,15 @@ class ConvertMediaPage extends ConsumerWidget {
               // ---------------------------------------------------------------
               // Media Format Dropdown
               // ---------------------------------------------------------------
-              OsumDropdown(
-                labelText: 'Media Format',
-                items: MediaFormats.values.map((final e) => e.value).toList(),
-                onChanged: (final value) =>
-                    onFormatChanged(value, formNotifier),
-                value: formState.extension.value,
+              SizedBox(
+                width: 160,
+                child: OsumDropdown(
+                  labelText: 'Media Format',
+                  items: MediaFormats.values.map((final e) => e.value).toList(),
+                  onChanged: (final value) =>
+                      onFormatChanged(value, formNotifier),
+                  value: formState.extension.value,
+                ),
               ),
               const SizedBox(height: 20),
               Text(

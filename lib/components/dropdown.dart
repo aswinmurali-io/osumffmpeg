@@ -35,6 +35,7 @@ class OsumDropdown extends ConsumerWidget {
           prefixIcon: const Icon(Icons.extension),
           border: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide(color: Colors.yellow),
           ),
           labelText: labelText,
         ),

@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:osumffmpeg/components/theme_button.dart';
 import 'package:osumffmpeg/routes/convert_media.dart';
 
+import '../routes/loop_video.dart';
+
 @immutable
 class Route {
   const Route({
@@ -71,7 +73,7 @@ class RouteProvider extends StateNotifier<int> {
     Route(
       title: 'Loop video',
       icon: const Icon(Icons.repeat),
-      content: Container(),
+      content: LoopVideoPage(),
     ),
     Route(
       title: 'Change or mute audio in video',

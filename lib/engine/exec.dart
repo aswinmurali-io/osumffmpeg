@@ -35,11 +35,11 @@ class MediaEngine {
     required final FFmpegExec executable,
     required final List<String> commands,
   }) async {
-    final process = await Process.run(executable.value, commands);
+    final process = await Process.start(executable.value, commands);
 
     return StreamGroup.merge([
-      process.stderr as Stream<List<int>>,
-      process.stdout as Stream<List<int>>
+      process.stderr,
+      process.stdout,
     ]).asBroadcastStream();
   }
 
