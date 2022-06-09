@@ -2,8 +2,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OsumDropdown extends ConsumerWidget {
-  const OsumDropdown({
+class CustomDropdown extends ConsumerWidget {
+  const CustomDropdown({
     super.key,
     required this.value,
     required this.onChanged,
