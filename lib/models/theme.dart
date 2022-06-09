@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeProvider extends StateNotifier<ThemeMode> {
@@ -60,8 +59,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
         selectedIconTheme: IconThemeData(color: Colors.tealAccent),
       ),
       textTheme: TextTheme(
-        headline2: headline2.copyWith(color: Colors.white70),
-        // bodyText1: const TextStyle(color: Colors.white),
+        headline2: headline2.copyWith(color: Colors.white),
         subtitle1: const TextStyle(color: Colors.white), // TextField text!
       ),
     );
