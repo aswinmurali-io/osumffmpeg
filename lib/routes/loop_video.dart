@@ -4,8 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:osumffmpeg/engine/exec.dart';
-
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
@@ -92,7 +90,7 @@ class _PageState {
   /// Checking if the form is valid to enable loop button.
   Future<void> onChangeInForm() async {
     if (await File(input.text).exists() &&
-        await Directory(dirname(input.text)).exists()) {
+        await Directory(dirname(output.text)).exists()) {
       final hours = int.tryParse(duration.hours.text);
       final minutes = int.tryParse(duration.minutes.text);
       final seconds = int.tryParse(duration.seconds.text);
@@ -189,7 +187,6 @@ class LoopMediaPage extends HookWidget {
                   StreamBuilder(
                     stream: state.ffmpegOutput.value,
                     builder: (final context, final snapshot) {
-                      print(snapshot.data);
                       if (snapshot.hasData && snapshot.data != null) {
                         return Text(String.fromCharCodes(snapshot.data!));
                       } else if (snapshot.data == null) {
