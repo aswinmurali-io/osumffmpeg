@@ -27,21 +27,16 @@ class Media {
   ) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
-      commands: [
-        '-i',
-        media.absolute.path,
-        outputFile.path,
-        '-y'
-      ],
+      commands: ['-i', media.absolute.path, outputFile.path, '-y'],
     );
   }
 
   /// Loop and save as [outputFile] video with specific [duration].
-  Future<void> loopAndSave(
+  Future<Stream<List<int>>> loopAndSave(
     final File outputFile,
     final Duration duration,
   ) async {
-    await MediaEngine.executeFFmpeg(
+    return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
       commands: [
         '-re',
@@ -52,6 +47,7 @@ class Media {
         '-t',
         '${duration.inSeconds}',
         outputFile.path,
+        '-y',
       ],
     );
   }
