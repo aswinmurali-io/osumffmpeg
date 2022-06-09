@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:osumffmpeg/engine/exec.dart';
 
 import 'package:path/path.dart';
 
@@ -18,7 +19,8 @@ class _PageState {
       : input = useTextEditingController(),
         output = useTextEditingController(),
         duration = DurationController(),
-        enableLoop = useState(false);
+        enableLoop = useState(false),
+        ffmpegOutput = useState(null);
 
   /// The [input] media file text field controller.
   final TextEditingController input;
@@ -31,6 +33,9 @@ class _PageState {
 
   /// Should the loop button be enabled.
   final ValueNotifier<bool> enableLoop;
+
+  /// The
+  final ValueNotifier<Stream<List<int>>?> ffmpegOutput;
 
   /// Get the default output file location based on the [input] given.
   ///
@@ -58,6 +63,7 @@ class _PageState {
 
       duration.hours.text = '${totalDuration.inHours.remainder(24)}';
       duration.minutes.text = '${totalDuration.inMinutes.remainder(60)}';
+      duration.seconds.text = '${totalDuration.inSeconds.remainder(60)}';
 
       output.text = getDefaultOutputFileLocation();
     }
@@ -89,13 +95,27 @@ class _PageState {
         await Directory(dirname(input.text)).exists()) {
       final hours = int.tryParse(duration.hours.text);
       final minutes = int.tryParse(duration.minutes.text);
+      final seconds = int.tryParse(duration.seconds.text);
 
-      if (hours != null && minutes != null) {
+      if (hours != null && minutes != null && seconds != null) {
         enableLoop.value = true;
       }
     } else {
       enableLoop.value = false;
     }
+  }
+
+  /// Loop video
+  Future<void> renderLoopedVideo() async {
+    final value = Duration(
+      hours: int.parse(duration.hours.text),
+      minutes: int.parse(duration.minutes.text),
+      seconds: int.parse(duration.seconds.text),
+    );
+
+    final file = Media(File(input.text));
+
+    ffmpegOutput.value = await file.loopAndSave(File(output.text), value);
   }
 }
 
@@ -162,9 +182,27 @@ class LoopMediaPage extends HookWidget {
                   CustomButton(
                     label: 'Loop',
                     icon: const Icon(Icons.loop),
-                    onPressed: state.enableLoop.value ? () {} : null,
+                    onPressed:
+                        state.enableLoop.value ? state.renderLoopedVideo : null,
                   ),
                   const SizedBox(height: 10),
+                  StreamBuilder(
+                    stream: state.ffmpegOutput.value,
+                    builder: (final context, final snapshot) {
+                      print(snapshot.data);
+                      if (snapshot.hasData && snapshot.data != null) {
+                        return Text(String.fromCharCodes(snapshot.data!));
+                      } else if (snapshot.data == null) {
+                        return const Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Icon(Icons.terminal),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
