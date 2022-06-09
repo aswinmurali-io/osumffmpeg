@@ -73,7 +73,7 @@ class RouteProvider extends StateNotifier<int> {
     Route(
       title: 'Loop video',
       icon: const Icon(Icons.repeat),
-      content: LoopVideoPage(),
+      content: LoopMediaPage(),
     ),
     Route(
       title: 'Change or mute audio in video',
