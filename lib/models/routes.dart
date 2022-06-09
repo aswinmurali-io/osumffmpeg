@@ -1,11 +1,9 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:osumffmpeg/components/theme_button.dart';
-import 'package:osumffmpeg/routes/convert_media_old.dart';
 
+import '../components/theme_button.dart';
+import '../routes/convert_media.dart';
 import '../routes/loop_video.dart';
 
 @immutable
@@ -29,7 +27,7 @@ class Route {
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [ThemeButton(), content],
+          children: [const ThemeButton(), content],
         ),
       ),
     );
@@ -50,9 +48,9 @@ class RouteProvider extends StateNotifier<int> {
   );
 
   static final routes = [
-    Route(
+    const Route(
       title: 'Convert Media',
-      icon: const Icon(Icons.update),
+      icon: Icon(Icons.update),
       content: ConvertMediaPage(),
     ),
     Route(
@@ -70,9 +68,9 @@ class RouteProvider extends StateNotifier<int> {
       icon: const Icon(Icons.speed),
       content: Container(),
     ),
-    Route(
+    const Route(
       title: 'Loop video',
-      icon: const Icon(Icons.repeat),
+      icon: Icon(Icons.repeat),
       content: LoopMediaPage(),
     ),
     Route(
