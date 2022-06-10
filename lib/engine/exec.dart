@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:osumlog/osumlog.dart';
 
 import 'except.dart';
+import 'utils.dart';
 
 enum FFmpegExec {
   ffplay('ffplay'),
@@ -36,7 +37,9 @@ class MediaEngine {
     required final FFmpegExec executable,
     required final List<String> commands,
   }) async {
-    final process = await Process.start(executable.value, commands);
+    Log.info('Execute ${executable.value} ${protectUserPath(commands).join(' ')}' );
+    
+    final process = await Process.start(executable.value, commands, runInShell: true, includeParentEnvironment: true);
 
     return StreamGroup.merge([
       process.stderr,
@@ -50,7 +53,11 @@ class MediaEngine {
     required final FFmpegExec executable,
     required final List<String> commands,
   }) async {
+    Log.info('Execute ${executable.value} ${protectUserPath(commands).join(' ')}' );
+
     final process = await Process.run(executable.value, commands);
+
+    Log.info('Output ${process.stdout}');
 
     if (process.exitCode == 1) {
       throw MediaEngineException(process.stderr);
