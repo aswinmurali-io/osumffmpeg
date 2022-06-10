@@ -1,5 +1,5 @@
 name: osumffmpeg
-description: Provide the power of `ffmpeg` to normal users.
+description: Provide the power of FFMPEG to normal users.
 publish_to: 'none'
 
 version: 1.0.0+1
