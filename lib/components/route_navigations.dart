@@ -1,17 +1,22 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Route;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../models/routes.dart';
+import '../models/route.dart';
 
 class RouteNavigationRail extends ConsumerWidget {
-  const RouteNavigationRail({super.key});
+  const RouteNavigationRail({
+    super.key,
+    required this.index,
+    required this.routes,
+  });
+
+  final ValueNotifier<int> index;
+
+  final List<Route> routes;
 
   @override
   Widget build(final BuildContext context, final WidgetRef ref) {
-    final routeIndex = ref.watch(RouteProvider.provider);
-    final routeNotifier = ref.watch(RouteProvider.provider.notifier);
-
     return SizedBox(
       width: 150,
       child: FadeInLeftBig(
@@ -35,10 +40,10 @@ class RouteNavigationRail extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(10),
                         child: NavigationRail(
                           onDestinationSelected: (final value) =>
-                              routeNotifier.route = value,
+                              index.value = value,
                           labelType: NavigationRailLabelType.all,
                           destinations: [
-                            for (final route in RouteProvider.routes)
+                            for (final route in routes)
                               NavigationRailDestination(
                                 icon: ZoomIn(child: route.icon),
                                 label: Text(
@@ -47,7 +52,7 @@ class RouteNavigationRail extends ConsumerWidget {
                                 ),
                               ),
                           ],
-                          selectedIndex: routeIndex,
+                          selectedIndex: index.value,
                         ),
                       ),
                     ),
