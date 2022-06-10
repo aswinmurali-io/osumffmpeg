@@ -22,13 +22,14 @@ class OsumFfmpeg extends ConsumerWidget {
   Widget build(final BuildContext context, final WidgetRef ref) {
     final themeMode = ref.watch(ThemeProvider.provider);
 
-    Window.setEffect(
-      effect: WindowEffect.mica,
-      dark: themeMode == ThemeMode.dark,
-    );
+    if (themeMode == ThemeMode.dark) {
+      Window.setEffect(effect: WindowEffect.acrylic, dark: true);
+    } else {
+      Window.setEffect(effect: WindowEffect.mica, dark: false);
+    }
 
     return MaterialApp(
-      title: 'Osum ffmpeg',
+      title: 'Osum FFMPEG',
       theme: ThemeProvider.lightTheme,
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
