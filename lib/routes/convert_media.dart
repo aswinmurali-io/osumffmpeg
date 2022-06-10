@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
 import '../components/dropdown.dart';
+import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/exec.dart';
 import '../engine/media.dart';
@@ -164,23 +165,7 @@ class ConvertMediaPage extends HookWidget {
                           state.enableConvert.value ? state.onConvert : null,
                     ),
                     const SizedBox(height: 10),
-                    StreamBuilder<List<int>>(
-                      stream: state.ffmpegOutput.value,
-                      builder: (final context, final snapshot) {
-                        if (snapshot.hasData && snapshot.data != null) {
-                          return Text(String.fromCharCodes(snapshot.data!));
-                        } else if (snapshot.data == null) {
-                          return const Padding(
-                            padding: EdgeInsets.all(8),
-                            child: Icon(Icons.terminal),
-                          );
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      },
-                    ),
+                    FfmpegOutput(outputStream: state.ffmpegOutput.value),
                   ],
                 ),
               ),

@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
 import '../components/duration_field.dart';
+import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/media.dart';
 
@@ -184,22 +185,7 @@ class LoopMediaPage extends HookWidget {
                         state.enableLoop.value ? state.renderLoopedVideo : null,
                   ),
                   const SizedBox(height: 10),
-                  StreamBuilder(
-                    stream: state.ffmpegOutput.value,
-                    builder: (final context, final snapshot) {
-                      if (snapshot.hasData && snapshot.data != null) {
-                        return Text(String.fromCharCodes(snapshot.data!));
-                      } else if (snapshot.data == null) {
-                        return const Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(Icons.terminal),
-                        );
-                      }
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
+                  FfmpegOutput(outputStream: state.ffmpegOutput.value)
                 ],
               ),
             ),
