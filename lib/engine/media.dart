@@ -40,10 +40,8 @@ class Media {
       executable: FFmpegExec.ffmpeg,
       commands: [
         '-re',
-        '-f',
-        'lavfi',
         '-i',
-        '"movie=filename=${media.path}:loop=0, setpts=N/(FRAME_RATE*TB)"',
+        media.path,
         '-t',
         '${duration.inSeconds}',
         outputFile.path,
