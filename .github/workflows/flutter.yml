@@ -16,7 +16,7 @@ jobs:
       - name: Install flutter
         uses: britannio/action-install-flutter@v1.1
         with:
-          version: beta
+          version: 2.18.0-168.0.dev
 
       - name: Install dependencies
         run: flutter pub get
