@@ -16,7 +16,7 @@ jobs:
       - name: Install flutter
         uses: britannio/action-install-flutter@v1.1
         with:
-          version: master
+          version: flutter-3.1-candidate.10
 
       - name: Install dependencies
         run: flutter pub get
