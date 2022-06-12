@@ -2,6 +2,7 @@ include: package:flutter_lints/flutter.yaml
 
 linter:
   rules:
+    # - public_member_api_docs
     - camel_case_types
     - prefer_collection_literals
     - avoid_shadowing_type_parameters
@@ -43,7 +44,6 @@ linter:
     - prefer_interpolation_to_compose_strings
     - prefer_mixin
     - prefer_null_aware_method_calls
-    # - public_member_api_docs
     - require_trailing_commas
     - sort_constructors_first
     - sort_unnamed_constructors_first

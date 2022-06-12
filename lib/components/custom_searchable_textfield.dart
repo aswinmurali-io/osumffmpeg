@@ -3,7 +3,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../engine/utils.dart';
 
-class CustomSearchableTextField<T extends WithValue> extends StatelessWidget {
+class CustomSearchableTextField<T extends WithDisplayableValue>
+    extends StatelessWidget {
   const CustomSearchableTextField({
     super.key,
     required this.controller,
@@ -20,16 +21,22 @@ class CustomSearchableTextField<T extends WithValue> extends StatelessWidget {
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,
       ),
-      suggestionsCallback: (final pattern) => options
-          .where((final value) => '$value'.contains(pattern))
-          .map((final value) => value.value.toDisplayString()),
+      suggestionsCallback: (final pattern) {
+        return options
+            .where((final value) => '$value'.contains(pattern))
+            .map((final value) => value.value.toDisplayString());
+      },
       itemBuilder: (final _, final suggestion) => ListTile(
         title: Text(
           suggestion,
-          style: const TextStyle(color: Colors.black),
+          style: const TextStyle(
+            color: Colors.black,
+          ),
         ),
       ),
-      onSuggestionSelected: (final suggestion) => controller.text = suggestion,
+      onSuggestionSelected: (final suggestion) {
+        controller.text = suggestion;
+      },
       validator: (final value) =>
           (value != null && value.isEmpty) ? 'Please select a option.' : null,
       onSaved: (final value) {

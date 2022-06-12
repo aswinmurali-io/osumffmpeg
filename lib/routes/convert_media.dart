@@ -11,8 +11,9 @@ import '../components/custom_button.dart';
 import '../components/dropdown.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
+import '../engine/enums/exec.dart';
+import '../engine/enums/formats.dart';
 import '../engine/exec.dart';
-import '../engine/media.dart';
 
 class _PageState {
   _PageState()

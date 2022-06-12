@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:osumffmpeg/engine/except.dart';
+import 'package:osumffmpeg/engine/enums/exec.dart';
+import 'package:osumffmpeg/engine/enums/formats.dart';
 import 'package:osumffmpeg/engine/exec.dart';
 import 'package:osumffmpeg/engine/media.dart';
+import 'package:osumffmpeg/engine/utils.dart';
 import 'package:osumlog/osumlog.dart';
 
 final testVideoDetails = {

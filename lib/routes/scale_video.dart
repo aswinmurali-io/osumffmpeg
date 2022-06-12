@@ -5,13 +5,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:osumffmpeg/engine/resolution.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
 import '../components/custom_searchable_textfield.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
+import '../engine/enums/resolution.dart';
 
 class _PageState {
   /// The loop media page state.
@@ -158,7 +158,8 @@ class ScaleVideoPage extends HookWidget {
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: state.resolution,
                       ),
-                      suggestionsCallback: (final pattern) => Resolutions.values
+                      suggestionsCallback: (final pattern) => MediaResolutions
+                          .values
                           .where((final res) => '$res'.contains(pattern))
                           .map((final res) => res.value.toDisplayString()),
                       itemBuilder: (final _, final suggestion) {
@@ -188,9 +189,9 @@ class ScaleVideoPage extends HookWidget {
                   ),
                   SizedBox(
                     width: 230,
-                    child: CustomSearchableTextField<Resolutions>(
+                    child: CustomSearchableTextField<MediaResolutions>(
                       controller: state.resolution,
-                      options: Resolutions.values,
+                      options: MediaResolutions.values,
                     ),
                   ),
                   const SizedBox(height: 20),
