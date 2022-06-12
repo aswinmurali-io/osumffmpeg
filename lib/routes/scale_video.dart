@@ -9,6 +9,7 @@ import 'package:osumffmpeg/engine/resolution.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
+import '../components/custom_searchable_textfield.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 
@@ -183,6 +184,13 @@ class ScaleVideoPage extends HookWidget {
                           state.resolution.text = value;
                         }
                       },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 230,
+                    child: CustomSearchableTextField<Resolutions>(
+                      controller: state.resolution,
+                      options: Resolutions.values,
                     ),
                   ),
                   const SizedBox(height: 20),
