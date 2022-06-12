@@ -4,7 +4,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
