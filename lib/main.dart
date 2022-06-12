@@ -8,6 +8,7 @@ import 'models/route.dart';
 import 'models/theme.dart';
 import 'routes/convert_media.dart';
 import 'routes/loop_video.dart';
+import 'routes/scale_video.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +34,7 @@ class OsumFfmpeg extends ConsumerWidget {
       theme: ThemeProvider.lightTheme,
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
+      // debugShowCheckedModeBanner: false,
       home: OsumLayout(),
     );
   }
@@ -52,10 +54,10 @@ class OsumLayout extends HookWidget {
       icon: const Icon(Icons.photo),
       content: Container(),
     ),
-    Route(
+    const Route(
       title: 'Upscale or downscale video',
-      icon: const Icon(Icons.screenshot_monitor),
-      content: Container(),
+      icon: Icon(Icons.screenshot_monitor),
+      content: ScaleVideoPage(),
     ),
     Route(
       title: 'Change framerate of video',
