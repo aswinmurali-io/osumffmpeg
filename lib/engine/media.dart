@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'exec.dart';
+import 'resolution.dart';
 
 enum MediaFormats {
   mkv('mkv'),
@@ -97,6 +98,23 @@ class Media {
       minutes: int.parse(unitTime[1]),
       seconds: int.parse(finalUnitTime[0]),
       milliseconds: int.parse(finalUnitTime[1]),
+    );
+  }
+
+  Future<Stream<List<int>>> scale(
+    final Resolution resolution,
+    final File outputFile,
+  ) async {
+    return MediaEngine.executeFFmpegStream(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        '-i',
+        media.path,
+        '-vf',
+        'scale=$resolution:flags=lanczos',
+        outputFile.path,
+        '-y',
+      ],
     );
   }
 }
