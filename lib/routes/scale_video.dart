@@ -154,41 +154,6 @@ class ScaleVideoPage extends HookWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 230,
-                    child: TypeAheadFormField<String>(
-                      textFieldConfiguration: TextFieldConfiguration(
-                        controller: state.resolution,
-                      ),
-                      suggestionsCallback: (final pattern) => MediaResolutions
-                          .values
-                          .where((final res) => '$res'.contains(pattern))
-                          .map((final res) => res.value.toDisplayString()),
-                      itemBuilder: (final _, final suggestion) {
-                        return ListTile(
-                          title: Text(
-                            suggestion,
-                            style: const TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        );
-                      },
-                      onSuggestionSelected: (final suggestion) =>
-                          state.resolution.text = suggestion,
-                      validator: (final value) {
-                        if (value != null && value.isEmpty) {
-                          return 'Please select a resolution.';
-                        }
-                        return null;
-                      },
-                      onSaved: (final value) {
-                        if (value != null) {
-                          state.resolution.text = value;
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 230,
                     child: CustomSearchableTextField<MediaResolutions>(
                       controller: state.resolution,
                       options: MediaResolutions.values,
