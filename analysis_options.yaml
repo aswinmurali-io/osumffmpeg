@@ -37,7 +37,7 @@ linter:
     - prefer_constructors_over_static_methods
     - prefer_final_in_for_each
     - prefer_final_locals
-    - prefer_final_parameters
+    # - prefer_final_parameters
     - prefer_foreach
     - prefer_if_elements_to_conditional_expressions
     - prefer_int_literals
