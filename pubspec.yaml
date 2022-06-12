@@ -20,7 +20,7 @@ dependencies:
   flutter_typeahead: ^4.0.0
   hooks_riverpod: ^1.0.4
   osumlog: ^0.1.0
-  path: ^1.8.2
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
