@@ -8,10 +8,13 @@ class CustomButton extends StatelessWidget {
     this.onPressed,
   });
 
+  /// Custom button's label text.
   final String label;
 
+  /// Custom button's icon.
   final Icon icon;
 
+  /// Optional callback when user presses the button.
   final void Function()? onPressed;
 
   @override
