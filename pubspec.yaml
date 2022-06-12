@@ -17,6 +17,7 @@ dependencies:
   flutter_acrylic: ^1.0.0+2
   flutter_hooks: ^0.18.4
   flutter_riverpod: ^1.0.4
+  flutter_typeahead: ^4.0.0
   hooks_riverpod: ^1.0.4
   osumlog: ^0.1.0
   path: ^1.8.2
