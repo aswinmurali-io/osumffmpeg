@@ -16,7 +16,7 @@ class RouteNavigationRail extends ConsumerWidget {
   final List<Route> routes;
 
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 150,
       child: FadeInLeftBig(
@@ -25,7 +25,7 @@ class RouteNavigationRail extends ConsumerWidget {
         // NOTE: https://github.com/flutter/flutter/issues/89167
         // IntrinsicHeight <- is expensive.
         child: LayoutBuilder(
-          builder: (final context, final constraint) {
+          builder: (context, constraint) {
             return Scrollbar(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -39,8 +39,7 @@ class RouteNavigationRail extends ConsumerWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: NavigationRail(
-                          onDestinationSelected: (final value) =>
-                              index.value = value,
+                          onDestinationSelected: (value) => index.value = value,
                           labelType: NavigationRailLabelType.all,
                           destinations: [
                             for (final route in routes)

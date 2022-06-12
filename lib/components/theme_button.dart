@@ -6,7 +6,7 @@ import '../models/theme.dart';
 class ThemeButton extends ConsumerWidget {
   const ThemeButton({super.key});
 
-  IconData getIconBasedOnTheme(final ThemeMode theme) {
+  IconData getIconBasedOnTheme(ThemeMode theme) {
     // Get the icon of the next theme.
     switch (theme) {
       case ThemeMode.dark:
@@ -21,7 +21,7 @@ class ThemeButton extends ConsumerWidget {
   }
 
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(ThemeProvider.provider);
     final themeNotifier = ref.watch(ThemeProvider.provider.notifier);
 

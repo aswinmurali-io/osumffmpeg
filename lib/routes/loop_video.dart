@@ -124,7 +124,7 @@ class LoopMediaPage extends HookWidget {
   const LoopMediaPage({super.key});
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     final state = _PageState();
 
     return FadeInRight(

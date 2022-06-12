@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
   final void Function()? onPressed;
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ButtonStyle(
         padding: MaterialStateProperty.all(

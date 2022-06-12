@@ -20,7 +20,7 @@ class OsumFfmpeg extends ConsumerWidget {
   const OsumFfmpeg({super.key});
 
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(ThemeProvider.provider);
 
     if (themeMode == ThemeMode.dark) {
@@ -87,7 +87,7 @@ class OsumLayout extends HookWidget {
   ];
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     final routeIndex = useState(0);
 
     return Scaffold(

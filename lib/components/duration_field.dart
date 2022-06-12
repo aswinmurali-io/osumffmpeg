@@ -32,7 +32,7 @@ class DurationField extends StatelessWidget {
   /// The [controller] that handles the state of this widget.
   final DurationController controller;
 
-  Widget buildField(final TextEditingController textController) {
+  Widget buildField(TextEditingController textController) {
     return SizedBox(
       width: 90,
       child: TextFormField(
@@ -56,7 +56,7 @@ class DurationField extends StatelessWidget {
   }
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     return Row(
       children: [
         buildField(controller.hours),

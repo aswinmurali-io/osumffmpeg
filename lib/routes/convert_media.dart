@@ -63,10 +63,10 @@ class _PageState {
     }
   }
 
-  void onFormatChange(final String? value) {
+  void onFormatChange(String? value) {
     if (value != null) {
       format.value = MediaFormats.values.firstWhere(
-        (final format) => format.toString() == value,
+        (format) => format.toString() == value,
         orElse: () {
           if (kDebugMode) {
             print(
@@ -93,7 +93,7 @@ class ConvertMediaPage extends HookWidget {
   const ConvertMediaPage({super.key});
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     final state = _PageState();
 
     return FadeInRight(
@@ -133,9 +133,7 @@ class ConvertMediaPage extends HookWidget {
                       width: 160,
                       child: CustomDropdown(
                         labelText: 'Media Format',
-                        items: MediaFormats.values
-                            .map((final e) => e.value)
-                            .toList(),
+                        items: MediaFormats.values.map((e) => e.value).toList(),
                         onChanged: state.onFormatChange,
                         value: state.format.value.value,
                       ),

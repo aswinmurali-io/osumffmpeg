@@ -25,8 +25,8 @@ class MediaEngine {
   /// Execute [commands] inside ffmpeg's [executable] and get the output
   /// as a [Stream].
   static Future<Stream<List<int>>> executeFFmpegStream({
-    required final FFmpegExec executable,
-    required final List<String> commands,
+    required FFmpegExec executable,
+    required List<String> commands,
   }) async {
     Log.info(
       'Execute ${executable.value} ${protectUserPath(commands).join(' ')}',
@@ -48,8 +48,8 @@ class MediaEngine {
   /// Execute [commands] inside ffmpeg's [executable] and get the output
   /// as a [String].
   static Future<String> executeFFmpeg({
-    required final FFmpegExec executable,
-    required final List<String> commands,
+    required FFmpegExec executable,
+    required List<String> commands,
   }) async {
     Log.info(
       'Execute ${executable.value} ${protectUserPath(commands).join(' ')}',

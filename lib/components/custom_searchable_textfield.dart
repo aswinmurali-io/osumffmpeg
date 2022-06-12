@@ -16,17 +16,17 @@ class CustomSearchableTextField<T extends WithDisplayableValue>
   final List<T> options;
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     return TypeAheadFormField<String>(
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,
       ),
-      suggestionsCallback: (final pattern) {
+      suggestionsCallback: (pattern) {
         return options
-            .where((final value) => '$value'.contains(pattern))
-            .map((final value) => value.value.toDisplayString());
+            .where((value) => '$value'.contains(pattern))
+            .map((value) => value.value.toDisplayString());
       },
-      itemBuilder: (final _, final suggestion) => ListTile(
+      itemBuilder: (_, suggestion) => ListTile(
         title: Text(
           suggestion,
           style: const TextStyle(
@@ -34,12 +34,12 @@ class CustomSearchableTextField<T extends WithDisplayableValue>
           ),
         ),
       ),
-      onSuggestionSelected: (final suggestion) {
+      onSuggestionSelected: (suggestion) {
         controller.text = suggestion;
       },
-      validator: (final value) =>
+      validator: (value) =>
           (value != null && value.isEmpty) ? 'Please select a option.' : null,
-      onSaved: (final value) {
+      onSaved: (value) {
         if (value != null) {
           controller.text = value;
         }

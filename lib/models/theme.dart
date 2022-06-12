@@ -5,12 +5,12 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
   ThemeProvider() : super(ThemeMode.system);
 
   /// Converts any [color] of type [Colors] to [MaterialColor].
-  static MaterialColor colorToMaterial(final Color color) =>
+  static MaterialColor colorToMaterial(Color color) =>
       MaterialColor(color.value, getSwatch(color));
 
   /// Get swatch from a [color].
   /// source: https://stackoverflow.com/questions/46595466/is-there-a-map-of-material-design-colors-for-flutter
-  static Map<int, Color> getSwatch(final Color color) {
+  static Map<int, Color> getSwatch(Color color) {
     final hslColor = HSLColor.fromColor(color);
     final lightness = hslColor.lightness;
 
@@ -44,7 +44,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
   }
 
   static final provider = StateNotifierProvider<ThemeProvider, ThemeMode>(
-    (final ref) => ThemeProvider(),
+    (ref) => ThemeProvider(),
   );
 
   static const primarySwatch = Colors.teal;
@@ -56,7 +56,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     fontSize: 27,
   );
 
-  static InputDecorationTheme getTextInputTheme(final bool isDark) {
+  static InputDecorationTheme getTextInputTheme(bool isDark) {
     return InputDecorationTheme(
       iconColor: isDark ? Colors.white : Colors.black54,
       labelStyle: TextStyle(
@@ -119,7 +119,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.resolveWith<Color>(
-            (final states) {
+            (states) {
               if (states.contains(MaterialState.disabled)) {
                 return Colors.white70;
               }
@@ -127,7 +127,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
             },
           ),
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
-            (final states) {
+            (states) {
               if (states.contains(MaterialState.disabled)) {
                 return const Color.fromARGB(90, 78, 78, 78);
               }

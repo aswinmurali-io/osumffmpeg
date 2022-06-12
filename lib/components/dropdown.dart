@@ -20,7 +20,7 @@ class CustomDropdown extends ConsumerWidget {
   final void Function(String?) onChanged;
 
   @override
-  Widget build(final BuildContext context, final WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DropdownSearch<String>(
       popupProps: const PopupProps.menu(
         searchFieldProps: TextFieldProps(

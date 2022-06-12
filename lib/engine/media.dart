@@ -13,8 +13,8 @@ class Media {
 
   /// Save the media in a specific [format] as [outputFile].
   Future<Stream<List<int>>> saveToFormat(
-    final MediaFormats format,
-    final File outputFile,
+    MediaFormats format,
+    File outputFile,
   ) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
@@ -24,8 +24,8 @@ class Media {
 
   /// Loop and save as [outputFile] video with specific [duration].
   Future<Stream<List<int>>> loopAndSave(
-    final File outputFile,
-    final Duration duration,
+    File outputFile,
+    Duration duration,
   ) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
@@ -92,8 +92,8 @@ class Media {
   }
 
   Future<Stream<List<int>>> scale(
-    final MediaResolution resolution,
-    final File outputFile,
+    MediaResolution resolution,
+    File outputFile,
   ) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,

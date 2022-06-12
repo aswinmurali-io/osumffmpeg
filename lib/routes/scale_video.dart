@@ -117,7 +117,7 @@ class ScaleVideoPage extends HookWidget {
   const ScaleVideoPage({super.key});
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     final state = _PageState();
 
     return FadeInRight(

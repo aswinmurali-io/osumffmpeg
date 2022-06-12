@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-TimeOfDay getTimeOfDayFromString(final String timeString) {
+TimeOfDay getTimeOfDayFromString(String timeString) {
   final timeString = TimeOfDay.now().toString();
   final parts = timeString.split(':');
   final hours = int.parse(parts.first.split('(').last);
@@ -8,8 +8,8 @@ TimeOfDay getTimeOfDayFromString(final String timeString) {
   return TimeOfDay(hour: hours, minute: minutes);
 }
 
-List<String> protectUserPath(final List<String> commands) => commands
-    .map((final e) => e.contains('/') || e.contains(r'\') ? '***' : e)
+List<String> protectUserPath(List<String> commands) => commands
+    .map((e) => e.contains('/') || e.contains(r'\') ? '***' : e)
     .toList();
 
 /// A mixin with a [toDisplayString] method that can be

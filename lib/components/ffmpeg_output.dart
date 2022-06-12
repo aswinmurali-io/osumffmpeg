@@ -6,10 +6,10 @@ class FfmpegOutput extends StatelessWidget {
   final Stream<List<int>>? outputStream;
 
   @override
-  Widget build(final BuildContext context) {
+  Widget build(BuildContext context) {
     return StreamBuilder<List<int>>(
       stream: outputStream,
-      builder: (final context, final snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return Text(String.fromCharCodes(snapshot.data!));
         } else if (snapshot.data == null) {
