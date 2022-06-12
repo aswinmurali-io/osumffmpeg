@@ -15,7 +15,7 @@
 ```diff
 // windows/runner/main.cpp
 + Win32Window::Size size(1280, 720);
-+ if (!window.CreateAndShow(L"Osum FFMPEG (Beta)", origin, size)) {
++ if (!window.CreateAndShow(L"Osumffmpeg (Beta)", origin, size)) {
 
 - Win32Window::Size size(750, 600);
 - if (!window.CreateAndShow(L"osumffmpeg", origin, size)) {
