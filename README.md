@@ -7,16 +7,3 @@
 [![Github Page](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment)
 
 [![Flutter](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter.yml/badge.svg)](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter.yml)
-
-## Minor Changes
-
-### Windows
-
-```diff
-// windows/runner/main.cpp
-+ Win32Window::Size size(1280, 720);
-+ if (!window.CreateAndShow(L"Osumffmpeg (Beta)", origin, size)) {
-
-- Win32Window::Size size(750, 600);
-- if (!window.CreateAndShow(L"osumffmpeg", origin, size)) {
-```
