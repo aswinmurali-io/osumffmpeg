@@ -1,4 +1,6 @@
-class Resolution {
+import 'utils.dart';
+
+class Resolution implements WithDisplayString {
   /// Define a media resolution by giving it's [width], [height]
   /// and a [name] to identify it.
   const Resolution(this.width, this.height, this.name);
@@ -12,6 +14,7 @@ class Resolution {
   @override
   String toString() => '${width}x$height';
 
+  @override
   String toDisplayString() => '$name ($width x $height)';
 }
 
@@ -20,7 +23,7 @@ class Resolution {
 /// source:
 ///   1. https://en.wikipedia.org/wiki/Display_resolution
 ///   2. Samsung display settings.
-enum Resolutions {
+enum Resolutions implements WithValue {
   hd720(Resolution(1280, 720, 'HD 720')),
   hdplus(Resolution(1600, 720, 'HD+ 720')),
   fhd1080(Resolution(1920, 1080, 'FHD 1080')),
@@ -31,5 +34,6 @@ enum Resolutions {
 
   const Resolutions(this.value);
 
+  @override
   final Resolution value;
 }
