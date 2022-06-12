@@ -69,6 +69,13 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
           width: 1,
         ), //
       ),
+      // TextField + Searchable suggestion widget focused border theme.
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: isDark ? Colors.white : primarySwatch,
+          width: isDark ? 2.5 : 1.3,
+        ), //
+      ),
       // Disabled text field used for media paths.
       disabledBorder: UnderlineInputBorder(
         borderRadius: BorderRadius.circular(20),
