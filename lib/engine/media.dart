@@ -1,19 +1,9 @@
 import 'dart:io';
 
+import 'enums/exec.dart';
+import 'enums/formats.dart';
+import 'enums/resolution.dart';
 import 'exec.dart';
-import 'resolution.dart';
-
-enum MediaFormats {
-  mkv('mkv'),
-  mp3('mp3'),
-  mp4('mp4'),
-  mov('mov'),
-  avi('avi'),
-  mk4('m4v');
-
-  const MediaFormats(this.value);
-  final String value;
-}
 
 class Media {
   const Media(this.media);
@@ -102,7 +92,7 @@ class Media {
   }
 
   Future<Stream<List<int>>> scale(
-    final Resolution resolution,
+    final MediaResolution resolution,
     final File outputFile,
   ) async {
     return MediaEngine.executeFFmpegStream(

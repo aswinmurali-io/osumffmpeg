@@ -3,17 +3,8 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:osumlog/osumlog.dart';
 
-import 'except.dart';
+import 'enums/exec.dart';
 import 'utils.dart';
-
-enum FFmpegExec {
-  ffplay('ffplay'),
-  ffmpeg('ffmpeg'),
-  ffprobe('ffprobe');
-
-  const FFmpegExec(this.value);
-  final String value;
-}
 
 class MediaEngine {
   static Future<String> checkForExecs() async {
@@ -37,9 +28,16 @@ class MediaEngine {
     required final FFmpegExec executable,
     required final List<String> commands,
   }) async {
-    Log.info('Execute ${executable.value} ${protectUserPath(commands).join(' ')}' );
-    
-    final process = await Process.start(executable.value, commands, runInShell: true, includeParentEnvironment: true);
+    Log.info(
+      'Execute ${executable.value} ${protectUserPath(commands).join(' ')}',
+    );
+
+    final process = await Process.start(
+      executable.value,
+      commands,
+      runInShell: true,
+      includeParentEnvironment: true,
+    );
 
     return StreamGroup.merge([
       process.stderr,
@@ -53,7 +51,9 @@ class MediaEngine {
     required final FFmpegExec executable,
     required final List<String> commands,
   }) async {
-    Log.info('Execute ${executable.value} ${protectUserPath(commands).join(' ')}' );
+    Log.info(
+      'Execute ${executable.value} ${protectUserPath(commands).join(' ')}',
+    );
 
     final process = await Process.run(executable.value, commands);
 

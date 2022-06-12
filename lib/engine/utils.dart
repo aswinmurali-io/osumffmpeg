@@ -19,8 +19,21 @@ mixin WithDisplayString {
 }
 
 /// A mixin with a value property of type [WithDisplayString]
-/// 
+///
 /// Refer [WithDisplayString] for more information.
-mixin WithValue {
+mixin WithDisplayableValue {
   WithDisplayString get value;
+}
+
+mixin WithValue<T> {
+  T get value;
+}
+
+class MediaEngineException implements Exception {
+  MediaEngineException(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() => '(ffmpeg error) $error';
 }
