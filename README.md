@@ -8,12 +8,6 @@
 
 [![Flutter](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter.yml/badge.svg)](https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter.yml)
 
-## TODO
-
-- Right now tab switching causes the same ffmpeg output stream in **convert media page** to be listened again. Temp fix is to return as broadcase stream. But ideal fix would be to stop multiple listening.
-
-- User path is censored by osumffmpeg from entering in the log but ffmpeg output may still output path. Need to find a way to mask it.
-
 ## Minor Changes
 
 ### Windows
