@@ -11,3 +11,16 @@ TimeOfDay getTimeOfDayFromString(final String timeString) {
 List<String> protectUserPath(final List<String> commands) => commands
     .map((final e) => e.contains('/') || e.contains(r'\') ? '***' : e)
     .toList();
+
+/// A mixin with a [toDisplayString] method that can be
+/// used to display a string specifically for the UI.
+mixin WithDisplayString {
+  String toDisplayString();
+}
+
+/// A mixin with a value property of type [WithDisplayString]
+/// 
+/// Refer [WithDisplayString] for more information.
+mixin WithValue {
+  WithDisplayString get value;
+}
