@@ -62,19 +62,22 @@ class OsumLayout extends HookWidget {
       title: 'Upscale or downscale video',
       icon: Icon(Icons.screenshot_monitor),
       content: ScaleVideoPage(),
-      description: 'Upscale video resolution from 1080p to 4K or downscale to 480p.',
+      description:
+          'Upscale video resolution from 1080p to 4K or downscale to 480p.',
     ),
     Route(
       title: 'Change framerate of video',
       icon: const Icon(Icons.speed),
       content: Container(),
-      description: 'Make video smoother or slower by changing framerate of video.',
+      description:
+          'Make video smoother or slower by changing framerate of video.',
     ),
     const Route(
       title: 'Loop video',
       icon: Icon(Icons.repeat),
       content: LoopMediaPage(),
-      description: 'Repeat the contents inside a video upto a certain duration.',
+      description:
+          'Repeat the contents inside a video upto a certain duration.',
     ),
     Route(
       title: 'Change or mute audio in video',
