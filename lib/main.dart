@@ -35,54 +35,64 @@ class OsumFfmpeg extends ConsumerWidget {
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
       // debugShowCheckedModeBanner: false,
-      home: OsumLayout(),
+      home: const OsumLayout(),
     );
   }
 }
 
 class OsumLayout extends HookWidget {
-  OsumLayout({super.key});
+  const OsumLayout({super.key});
 
-  final routes = [
+  static final routeJumpController = TextEditingController();
+
+  static final routes = [
     const Route(
       title: 'Convert Media',
       icon: Icon(Icons.update),
       content: ConvertMediaPage(),
+      description: 'Convert video/audio from one format to another.',
     ),
     Route(
       title: 'Save photo from video',
       icon: const Icon(Icons.photo),
       content: Container(),
+      description: '',
     ),
     const Route(
       title: 'Upscale or downscale video',
       icon: Icon(Icons.screenshot_monitor),
       content: ScaleVideoPage(),
+      description: 'Upscale video resolution from 1080p to 4K or downscale to 480p.',
     ),
     Route(
       title: 'Change framerate of video',
       icon: const Icon(Icons.speed),
       content: Container(),
+      description: 'Make video smoother or slower by changing framerate of video.',
     ),
     const Route(
       title: 'Loop video',
       icon: Icon(Icons.repeat),
       content: LoopMediaPage(),
+      description: 'Repeat the contents inside a video upto a certain duration.',
     ),
     Route(
       title: 'Change or mute audio in video',
       icon: const Icon(Icons.audiotrack),
       content: Container(),
+      description: '',
     ),
     Route(
       title: 'Make gif from video',
       icon: const Icon(Icons.gif),
       content: Container(),
+      description: '',
     ),
     Route(
       title: 'Make video from images',
       icon: const Icon(Icons.video_camera_front),
       content: Container(),
+      description: '',
     ),
   ];
 
@@ -104,7 +114,7 @@ class OsumLayout extends HookWidget {
                   Visibility(
                     maintainState: true,
                     visible: route == routes[routeIndex.value],
-                    child: route.page,
+                    child: route.page(routeIndex),
                   )
               ],
             ),
