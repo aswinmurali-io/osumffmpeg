@@ -22,8 +22,7 @@ class OsumFfmpeg extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(ThemeProvider.provider);
-    final themeProvider = ref.watch(ThemeProvider.provider.notifier)
-      ..loadThemePreference();
+    ref.watch(ThemeProvider.provider.notifier).loadThemePreference();
 
     return MaterialApp(
       title: 'Osum FFMPEG',
