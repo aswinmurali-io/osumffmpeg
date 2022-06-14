@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends StateNotifier<ThemeMode> {
   ThemeProvider() : super(ThemeMode.system);
@@ -171,17 +172,42 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     bodyText2: const TextStyle(color: Colors.white),
   );
 
-  void toggleTheme() {
+  Future<void> toggleTheme() async {
+    final preferences = await SharedPreferences.getInstance();
+
     switch (state) {
       case ThemeMode.dark:
         state = ThemeMode.light;
+        await preferences.setString('theme', 'light');
         break;
       case ThemeMode.light:
         state = ThemeMode.system;
+        await preferences.setString('theme', 'system');
         break;
       default:
         state = ThemeMode.dark;
+        await preferences.setString('theme', 'dark');
         break;
     }
+  }
+
+  void loadThemePreference() {
+    SharedPreferences.getInstance().then((preferences) {
+      if (preferences.containsKey('theme')) {
+        final mode = preferences.getString('theme');
+
+        switch (mode) {
+          case 'dark':
+            super.state = ThemeMode.dark;
+            break;
+          case 'light':
+            super.state = ThemeMode.light;
+            break;
+          default:
+            super.state = ThemeMode.system;
+            break;
+        }
+      }
+    });
   }
 }

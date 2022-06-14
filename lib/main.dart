@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart' hide Route;
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,6 +22,8 @@ class OsumFfmpeg extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(ThemeProvider.provider);
+    final themeProvider = ref.watch(ThemeProvider.provider.notifier)
+      ..loadThemePreference();
 
     return MaterialApp(
       title: 'Osum FFMPEG',
@@ -30,7 +31,10 @@ class OsumFfmpeg extends ConsumerWidget {
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
       // debugShowCheckedModeBanner: false,
-      home: OsumLayout(themeMode: themeMode),
+      home: OsumLayout(
+        themeMode: themeMode,
+        themeProvider: themeProvider,
+      ),
     );
   }
 }
@@ -39,9 +43,11 @@ class OsumLayout extends HookWidget {
   const OsumLayout({
     super.key,
     required this.themeMode,
+    required this.themeProvider,
   });
 
   final ThemeMode themeMode;
+  final ThemeProvider themeProvider;
 
   static final routeJumpController = TextEditingController();
 
