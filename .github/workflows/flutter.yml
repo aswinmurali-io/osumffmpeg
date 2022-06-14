@@ -1,4 +1,4 @@
-name: Flutter
+name: flutter
 
 on:
   push:
@@ -26,6 +26,12 @@ jobs:
 
       - name: Analyze project source
         run: flutter analyze
+      
+      - name: Create platform
+        run: flutter create .
+
+      - name: Test Build
+        run: flutter build linux
 
 #       - name: Run tests
 #         run: flutter test
