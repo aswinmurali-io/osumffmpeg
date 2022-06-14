@@ -3,20 +3,29 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/theme.dart';
 
+class ThemeButtonAsset {
+  const ThemeButtonAsset(this.label, this.icon);
+
+  final IconData icon;
+
+  final String label;
+}
+
 class ThemeButton extends ConsumerWidget {
   const ThemeButton({super.key});
 
-  IconData getIconBasedOnTheme(ThemeMode theme) {
+  ThemeButtonAsset getAsset(ThemeMode theme) {
     // Get the icon of the next theme.
     switch (theme) {
       case ThemeMode.dark:
-        return Icons.light_mode;
+        return const ThemeButtonAsset('Light Mode', Icons.light_mode);
       case ThemeMode.light:
-        return Icons.auto_mode;
+        return const ThemeButtonAsset('Auto', Icons.auto_mode);
       case ThemeMode.system:
-        return Icons.dark_mode;
+        return const ThemeButtonAsset('Dark Mode', Icons.dark_mode);
       default:
-        return Icons.error_outline;
+        //
+        return const ThemeButtonAsset('Change Theme', Icons.error_outline);
     }
   }
 
@@ -25,10 +34,13 @@ class ThemeButton extends ConsumerWidget {
     final theme = ref.watch(ThemeProvider.provider);
     final themeNotifier = ref.watch(ThemeProvider.provider.notifier);
 
-    return IconButton(
-      tooltip: 'Change theme',
+    final asset = getAsset(theme);
+
+    return TextButton.icon(
+      // tooltip: 'Change theme',
       onPressed: themeNotifier.toggleTheme,
-      icon: Icon(getIconBasedOnTheme(theme)),
+      icon: Icon(asset.icon),
+      label: Text(asset.label),
     );
   }
 }

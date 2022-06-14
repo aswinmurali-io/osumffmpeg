@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ThemeProvider extends StateNotifier<ThemeMode> {
@@ -87,6 +89,21 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
         ),
       ),
     );
+  }
+
+  static void refreshWindowTheme(ThemeMode themeMode) {
+    if (themeMode == ThemeMode.dark) {
+      Window.setEffect(effect: WindowEffect.acrylic, dark: true);
+    } else if (themeMode == ThemeMode.system) {
+      if (SchedulerBinding.instance.window.platformBrightness ==
+          Brightness.light) {
+        Window.setEffect(effect: WindowEffect.mica, dark: false);
+      } else {
+        Window.setEffect(effect: WindowEffect.acrylic, dark: true);
+      }
+    } else {
+      Window.setEffect(effect: WindowEffect.mica, dark: false);
+    }
   }
 
   static ThemeData get lightTheme {

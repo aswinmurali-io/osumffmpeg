@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Route;
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,25 +24,24 @@ class OsumFfmpeg extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(ThemeProvider.provider);
 
-    if (themeMode == ThemeMode.dark) {
-      Window.setEffect(effect: WindowEffect.acrylic, dark: true);
-    } else {
-      Window.setEffect(effect: WindowEffect.mica, dark: false);
-    }
-
     return MaterialApp(
       title: 'Osum FFMPEG',
       theme: ThemeProvider.lightTheme,
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
       // debugShowCheckedModeBanner: false,
-      home: const OsumLayout(),
+      home: OsumLayout(themeMode: themeMode),
     );
   }
 }
 
 class OsumLayout extends HookWidget {
-  const OsumLayout({super.key});
+  const OsumLayout({
+    super.key,
+    required this.themeMode,
+  });
+
+  final ThemeMode themeMode;
 
   static final routeJumpController = TextEditingController();
 
@@ -101,6 +101,11 @@ class OsumLayout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Check performance effects of window theme refreshing when
+    // rebuilding the main app layout. This should only happen when system
+    // theme changes or changing routes (need to avoid changing route rebuild).
+    ThemeProvider.refreshWindowTheme(themeMode);
+
     final routeIndex = useState(0);
 
     return Scaffold(
