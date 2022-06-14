@@ -4,6 +4,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:osumffmpeg/engine/utils.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
@@ -11,6 +12,7 @@ import '../components/custom_searchable_textfield.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/enums/resolution.dart';
+import '../engine/media.dart';
 
 class _PageState {
   /// The loop media page state.
@@ -46,7 +48,7 @@ class _PageState {
     final filename = basenameWithoutExtension(input.text);
     final ext = extension(input.text);
 
-    return '$path/${filename}_scaled$ext';
+    return '$path/$filename (Scaled)$ext';
   }
 
   /// On browsing the input file to loop.
@@ -82,32 +84,28 @@ class _PageState {
     }
   }
 
-  /// Checking if the form is valid to enable loop button.
+  /// Checking if the form is valid to enable scale button.
   Future<void> onChangeInForm() async {
-    // if (await File(input.text).exists() &&
-    //     await Directory(dirname(output.text)).exists()) {
-    //   final hours = int.tryParse(resolution.hours.text);
-    //   final minutes = int.tryParse(resolution.minutes.text);
-    //   final seconds = int.tryParse(resolution.seconds.text);
-
-    //   if (hours != null && minutes != null && seconds != null) {
-    //     enableScale.value = true;
-    //   }
-    // } else {
-    //   enableScale.value = false;
+    if (await File(input.text).exists() &&
+        await Directory(dirname(output.text)).exists()) {
+      try {
+        MediaResolution.fromString(resolution.text);
+        enableScale.value = true;
+      } on InvalidMediaResolution {
+        enableScale.value = false;
+      }
+    }
   }
 
-  /// Loop video
-  Future<void> renderLoopedVideo() async {
-    // final value = Duration(
-    //   hours: int.parse(resolution.hours.text),
-    //   minutes: int.parse(resolution.minutes.text),
-    //   seconds: int.parse(resolution.seconds.text),
-    // );
+  void onChangeInScale(String? value) {}
 
-    // final file = Media(File(input.text));
+  /// Scale video
+  Future<void> renderScaleVideo() async {
+    final file = Media(File(input.text));
 
-    // ffmpegOutput.value = await file.loopAndSave(File(output.text), value);
+    final value = MediaResolution.fromString(resolution.text);
+
+    ffmpegOutput.value = await file.scale(value, File(output.text));
   }
 }
 
@@ -156,7 +154,8 @@ class ScaleVideoPage extends HookWidget {
                     child: CustomSearchableTextField<MediaResolutions>(
                       controller: state.resolution,
                       options: MediaResolutions.values,
-                      onChanged: (p0) {},
+                      hintText: 'Type or search for media resolutions.',
+                      onChanged: state.onChangeInScale,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -181,9 +180,8 @@ class ScaleVideoPage extends HookWidget {
                   CustomButton(
                     label: 'Loop',
                     icon: const Icon(Icons.loop),
-                    onPressed: state.enableScale.value
-                        ? state.renderLoopedVideo
-                        : null,
+                    onPressed:
+                        state.enableScale.value ? state.renderScaleVideo : null,
                   ),
                   const SizedBox(height: 10),
                   FfmpegOutput(outputStream: state.ffmpegOutput.value)

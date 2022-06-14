@@ -30,10 +30,19 @@ mixin WithValue<T> {
 }
 
 class MediaEngineException implements Exception {
-  MediaEngineException(this.error);
+  const MediaEngineException(this.error);
 
   final dynamic error;
 
   @override
   String toString() => '(ffmpeg error) $error';
+}
+
+class InvalidMediaResolution implements Exception {
+  const InvalidMediaResolution(this.resolution);
+
+  final dynamic resolution;
+
+  @override
+  String toString() => '(invalid resolution error) $resolution';
 }

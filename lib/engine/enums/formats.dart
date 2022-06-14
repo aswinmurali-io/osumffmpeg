@@ -3,15 +3,6 @@ import '../utils.dart';
 class MediaFormat implements WithDisplayString {
   const MediaFormat(this.formatString, this.displayString);
 
-  factory MediaFormat.fromDisplayString(String formatString) => MediaFormat(
-        MediaFormats.values
-            .where((format) => format.value.formatString == formatString)
-            .first
-            .value
-            .formatString,
-        formatString,
-      );
-
   final String formatString;
 
   final String displayString;

@@ -101,7 +101,7 @@ class Media {
         '-i',
         media.path,
         '-vf',
-        'scale=$resolution:flags=lanczos',
+        'scale=${resolution.toDisplayString()}:flags=lanczos',
         outputFile.path,
         '-y',
       ],

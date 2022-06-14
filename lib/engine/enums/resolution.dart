@@ -5,6 +5,15 @@ class MediaResolution implements WithDisplayString {
   /// and a [name] to identify it.
   const MediaResolution(this.width, this.height, this.name);
 
+  factory MediaResolution.fromString(String resolution) {
+    if (resolution.contains('x')) {
+      final units = resolution.split('x').map(int.parse);
+      return MediaResolution(units.first, units.last, 'Custom');
+    } else {
+      throw InvalidMediaResolution(resolution);
+    }
+  }
+
   final int width;
 
   final int height;
@@ -12,10 +21,10 @@ class MediaResolution implements WithDisplayString {
   final String name;
 
   @override
-  String toString() => '${width}x$height';
+  String toString() => '$name ($width x $height)';
 
   @override
-  String toDisplayString() => '$name ($width x $height)';
+  String toDisplayString() => '${width}x$height';
 }
 
 /// Common media resolutions.
