@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:osumffmpeg/components/custom_searchable_textfield.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
-import '../components/dropdown.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/enums/exec.dart';
