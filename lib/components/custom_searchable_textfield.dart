@@ -27,12 +27,7 @@ class CustomSearchableTextField<T extends WithDisplayableValue>
             .map((value) => value.value.toDisplayString());
       },
       itemBuilder: (_, suggestion) => ListTile(
-        title: Text(
-          suggestion,
-          style: const TextStyle(
-            color: Colors.black,
-          ),
-        ),
+        title: Text(suggestion),
       ),
       onSuggestionSelected: (suggestion) {
         controller.text = suggestion;

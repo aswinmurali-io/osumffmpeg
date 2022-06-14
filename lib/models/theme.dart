@@ -62,6 +62,9 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       labelStyle: TextStyle(
         color: isDark ? Colors.white : Colors.black,
       ),
+      hintStyle: TextStyle(
+        color: isDark ? Colors.white : null,
+      ),
       // Searchable dropdown's border theme.
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
@@ -88,7 +91,6 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
 
   static ThemeData get lightTheme {
     return ThemeData(
-      // backgroundColor: Colors.white54,
       primarySwatch: primarySwatch,
       inputDecorationTheme: getTextInputTheme(false),
       scaffoldBackgroundColor: Colors.transparent,
@@ -103,7 +105,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
 
   static ThemeData get darkTheme {
     return ThemeData(
-      primarySwatch: colorToMaterial(Colors.black),
+      primarySwatch: colorToMaterial(Colors.white),
       scaffoldBackgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.white),
       inputDecorationTheme: getTextInputTheme(true),
@@ -115,6 +117,12 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
         selectedIconTheme: IconThemeData(color: Colors.blueGrey.shade700),
         indicatorColor: Colors.white,
         useIndicator: true,
+      ),
+      listTileTheme: ListTileThemeData(
+        tileColor: Colors.grey.shade600,
+        iconColor: Colors.white,
+        textColor: Colors.white,
+        style: ListTileStyle.drawer,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -136,13 +144,15 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
           ),
         ),
       ),
-      textTheme: TextTheme(
-        headline2: headline2.copyWith(color: Colors.white),
-        subtitle1: const TextStyle(color: Colors.white), // TextField text!
-        bodyText2: const TextStyle(color: Colors.white),
-      ),
+      textTheme: darkTextTheme,
     );
   }
+
+  static final darkTextTheme = TextTheme(
+    headline2: headline2.copyWith(color: Colors.white),
+    subtitle1: const TextStyle(color: Colors.white), // TextField text!
+    bodyText2: const TextStyle(color: Colors.white),
+  );
 
   void toggleTheme() {
     switch (state) {

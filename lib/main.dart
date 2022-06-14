@@ -117,7 +117,7 @@ class OsumLayout extends HookWidget {
                   Visibility(
                     maintainState: true,
                     visible: route == routes[routeIndex.value],
-                    child: route.page(routeIndex),
+                    child: route.page(context, routeIndex),
                   )
               ],
             ),

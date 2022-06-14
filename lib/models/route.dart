@@ -23,7 +23,7 @@ class Route implements WithDisplayableValue, WithDisplayString {
 
   final String description;
 
-  Widget page(ValueNotifier<int> index) {
+  Widget page(BuildContext context, ValueNotifier<int> index) {
     return FadeInRight(
       duration: const Duration(milliseconds: 200),
       child: Padding(
@@ -41,10 +41,22 @@ class Route implements WithDisplayableValue, WithDisplayString {
                     child: TypeAheadFormField<Route>(
                       textFieldConfiguration: TextFieldConfiguration(
                         controller: OsumLayout.routeJumpController,
-                        decoration: const InputDecoration(
-                          hintText: 'Click to search for any feature.',
-                          enabledBorder: UnderlineInputBorder(),
-                          focusedBorder: UnderlineInputBorder(),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          hintText: 'Click here to search for any feature.',
+                          hintStyle: Theme.of(context)
+                              .inputDecorationTheme
+                              .hintStyle
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                          enabledBorder: Theme.of(context)
+                              .inputDecorationTheme
+                              .enabledBorder
+                              ?.copyWith(
+                                borderSide: const BorderSide(
+                                  style: BorderStyle.none,
+                                ),
+                              ),
+                          // focusedBorder: const UnderlineInputBorder(),
                         ),
                       ),
                       suggestionsCallback: (pattern) => OsumLayout.routes
@@ -52,18 +64,9 @@ class Route implements WithDisplayableValue, WithDisplayString {
                           .map((route) => route.value),
                       itemBuilder: (_, suggestion) => ListTile(
                         leading: suggestion.icon,
-                        title: Text(
-                          suggestion.title,
-                          style: const TextStyle(
-                            color: Colors.black,
-                          ),
-                        ),
-                        subtitle: Text(
-                          suggestion.description,
-                          style: const TextStyle(
-                            color: Colors.black54,
-                          ),
-                        ),
+                        title: Text(suggestion.title),
+                        subtitle: Text(suggestion.description),
+                        isThreeLine: true,
                       ),
                       onSuggestionSelected: (suggestion) {
                         index.value = OsumLayout.routes.indexWhere(
