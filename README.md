@@ -23,4 +23,4 @@
 
 ## License
 
-Osumffmpeg has a GNU Lesser General Public License v2.1, as found in the [LICENSE](https://raw.githubusercontent.com/aswinmurali-io/osumffmpeg/main/LICENSE) file.
+Osumffmpeg has a GNU Lesser General Public License v2.1, as found in the [LICENSE](https://github.com/aswinmurali-io/osumffmpeg/blob/main/LICENSE) file.
