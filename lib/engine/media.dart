@@ -27,12 +27,18 @@ class Media {
     File outputFile,
     Duration duration,
   ) async {
+    // ffmpeg requires posix-style path passed inside string quotes for
+    // input media file.
+    final posixPath = media.path.replaceAll(r'\', '/');
+
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
       commands: [
         '-re',
+        '-f',
+        'lavfi',
         '-i',
-        media.path,
+        "movie=filename=\\'$posixPath\\':loop=0, setpts=N/(FRAME_RATE*TB)",
         '-t',
         '${duration.inSeconds}',
         outputFile.path,
@@ -91,7 +97,7 @@ class Media {
     );
   }
 
-  Future<Stream<List<int>>> scale(
+  Future<Stream<List<int>>> scaleVideo(
     MediaResolution resolution,
     File outputFile,
   ) async {
