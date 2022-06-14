@@ -6,7 +6,9 @@ class MediaResolution implements WithDisplayString {
   const MediaResolution(this.width, this.height, this.name);
 
   factory MediaResolution.fromString(String resolution) {
-    if (resolution.contains('x')) {
+    // Must have the 'x' character and also atleast one digit after that.
+    if (resolution.contains('x') &&
+        (resolution.indexOf('x') + 1) < resolution.length) {
       final units = resolution.split('x').map(int.parse);
       return MediaResolution(units.first, units.last, 'Custom');
     } else {

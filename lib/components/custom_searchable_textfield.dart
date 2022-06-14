@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 import '../engine/utils.dart';
@@ -10,6 +11,7 @@ class CustomSearchableTextField<T extends WithDisplayableValue>
     required this.controller,
     required this.options,
     required this.onChanged,
+    this.inputFormatters,
     this.hintText,
   });
 
@@ -21,11 +23,14 @@ class CustomSearchableTextField<T extends WithDisplayableValue>
 
   final void Function(String) onChanged;
 
+  final List<TextInputFormatter>? inputFormatters;
+
   @override
   Widget build(BuildContext context) {
     return TypeAheadFormField<T>(
       textFieldConfiguration: TextFieldConfiguration(
         controller: controller,
+        inputFormatters: inputFormatters,
         decoration: InputDecoration(
           hintText: hintText,
         ),

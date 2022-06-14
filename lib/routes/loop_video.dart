@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:path/path.dart';
@@ -11,37 +10,49 @@ import '../components/duration_field.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/media.dart';
+import 'common.dart';
 
-class _PageState {
+class _PageState extends CommonPageState {
   /// The loop media page state.
   _PageState()
       : input = useTextEditingController(),
         output = useTextEditingController(),
         duration = DurationController(),
-        enableLoop = useState(false),
+        showAction = useState(false),
         ffmpegOutput = useState(null);
 
-  /// The [input] media file text field controller.
+  @override
   final TextEditingController input;
 
-  /// The [output] looped media file text field controller.
+  @override
   final TextEditingController output;
 
   /// The [duration] of the looped media file.
   final DurationController duration;
 
-  /// Should the loop button be enabled.
-  final ValueNotifier<bool> enableLoop;
+  @override
+  final ValueNotifier<bool> showAction;
 
-  /// The
+  @override
   final ValueNotifier<Stream<List<int>>?> ffmpegOutput;
 
-  /// Get the default output file location based on the [input] given.
-  ///
-  /// Example
-  ///   `C:\Users\User\Desktop\sample.mp3` becomes -->
-  ///   `C:\Users\User\Desktop\sample_looped.mp3`
-  String getDefaultOutputFileLocation() {
+  Future<void> onInputChangedWithExtraLogic() async =>
+      onInputChanged().then((_) => autoFillDuration());
+
+  Future<void> autoFillDuration() async {
+    final inputFile = File(input.text);
+
+    if (await inputFile.exists()) {
+      final totalDuration = await Media(File(input.text)).getDuration();
+
+      duration.hours.text = '${totalDuration.inHours.remainder(24)}';
+      duration.minutes.text = '${totalDuration.inMinutes.remainder(60)}';
+      duration.seconds.text = '${totalDuration.inSeconds.remainder(60)}';
+    }
+  }
+
+  @override
+  String getDefaultOutputLocation() {
     final path = dirname(input.text);
     final filename = basenameWithoutExtension(input.text);
     final ext = extension(input.text);
@@ -49,63 +60,28 @@ class _PageState {
     return '$path/$filename (Looped)$ext';
   }
 
-  /// On browsing the input file to loop.
-  Future<void> onBrowseInputFile() async {
-    final file = await FilePicker.platform.saveFile(
-      dialogTitle: 'Pick input media file.',
-    );
-
-    if (file != null) {
-      input.text = file;
-
-      final totalDuration = await Media(File(file)).getDuration();
-
-      duration.hours.text = '${totalDuration.inHours.remainder(24)}';
-      duration.minutes.text = '${totalDuration.inMinutes.remainder(60)}';
-      duration.seconds.text = '${totalDuration.inSeconds.remainder(60)}';
-
-      output.text = getDefaultOutputFileLocation();
-    }
-  }
-
-  /// On saving looped output media file.
-  Future<void> onBrowseOutputFile() async {
-    late String? file;
-
-    if (await File(output.text).exists()) {
-      file = await FilePicker.platform.saveFile(
-        dialogTitle: 'Pick output media file.',
-        initialDirectory: dirname(output.text),
-      );
-    } else {
-      file = await FilePicker.platform.saveFile(
-        dialogTitle: 'Pick output media file.',
-      );
-    }
-
-    if (file != null) {
-      output.text = file;
-    }
-  }
-
-  /// Checking if the form is valid to enable loop button.
-  Future<void> onChangeInForm() async {
+  @override
+  Future<void> onFormChanged() async {
     if (await File(input.text).exists() &&
         await Directory(dirname(output.text)).exists()) {
       final hours = int.tryParse(duration.hours.text);
       final minutes = int.tryParse(duration.minutes.text);
       final seconds = int.tryParse(duration.seconds.text);
 
-      if (hours != null && minutes != null && seconds != null) {
-        enableLoop.value = true;
+      if (hours != null &&
+          minutes != null &&
+          seconds != null &&
+          // Duration must be greater than 1 second atleast.
+          hours + minutes + seconds > 0) {
+        showAction.value = true;
+        return;
       }
-    } else {
-      enableLoop.value = false;
     }
+    showAction.value = false;
   }
 
-  /// Loop video
-  Future<void> renderLoopedVideo() async {
+  @override
+  Future<void> runAction() async {
     final value = Duration(
       hours: int.parse(duration.hours.text),
       minutes: int.parse(duration.minutes.text),
@@ -130,7 +106,7 @@ class LoopMediaPage extends HookWidget {
     return FadeInRight(
       duration: const Duration(milliseconds: 200),
       child: Form(
-        onChanged: state.onChangeInForm,
+        onChanged: state.onFormChanged,
         child: Scrollbar(
           child: SingleChildScrollView(
             child: SizedBox(
@@ -149,7 +125,7 @@ class LoopMediaPage extends HookWidget {
                       ),
                       const SizedBox(width: 10),
                       CustomButton(
-                        onPressed: state.onBrowseInputFile,
+                        onPressed: state.onInputChangedWithExtraLogic,
                         icon: const Icon(Icons.file_copy_outlined),
                         label: 'Browse',
                       )
@@ -173,7 +149,7 @@ class LoopMediaPage extends HookWidget {
                       CustomButton(
                         icon: const Icon(Icons.save),
                         label: 'Save Location',
-                        onPressed: state.onBrowseOutputFile,
+                        onPressed: state.onOutputChanged,
                       )
                     ],
                   ),
@@ -181,8 +157,7 @@ class LoopMediaPage extends HookWidget {
                   CustomButton(
                     label: 'Loop',
                     icon: const Icon(Icons.loop),
-                    onPressed:
-                        state.enableLoop.value ? state.renderLoopedVideo : null,
+                    onPressed: state.showAction.value ? state.runAction : null,
                   ),
                   const SizedBox(height: 10),
                   FfmpegOutput(outputStream: state.ffmpegOutput.value)

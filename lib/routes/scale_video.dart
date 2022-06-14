@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:osumffmpeg/engine/utils.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
@@ -13,94 +11,57 @@ import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/enums/resolution.dart';
 import '../engine/media.dart';
+import '../engine/utils.dart';
+import 'common.dart';
 
-class _PageState {
-  /// The loop media page state.
+class _PageState extends CommonPageState {
   _PageState()
       : input = useTextEditingController(),
         output = useTextEditingController(),
         resolution = useTextEditingController(),
-        enableScale = useState(false),
+        showAction = useState(false),
         ffmpegOutput = useState(null);
 
-  /// The [input] media file text field controller.
+  @override
   final TextEditingController input;
 
-  /// The [output] looped media file text field controller.
+  @override
   final TextEditingController output;
 
   /// The [resolution] of the looped media file.
   final TextEditingController resolution;
 
-  /// Should the loop button be enabled.
-  final ValueNotifier<bool> enableScale;
+  /// Should the scale button be enabled.
+  @override
+  final ValueNotifier<bool> showAction;
 
-  /// The
+  @override
   final ValueNotifier<Stream<List<int>>?> ffmpegOutput;
 
-  /// Get the default output file location based on the [input] given.
-  ///
-  /// Example
-  ///   `C:\Users\User\Desktop\sample.mp3` becomes -->
-  ///   `C:\Users\User\Desktop\sample_looped.mp3`
-  String getDefaultOutputFileLocation() {
+  @override
+  String getDefaultOutputLocation() {
     final path = dirname(input.text);
     final filename = basenameWithoutExtension(input.text);
     final ext = extension(input.text);
 
-    return '$path/$filename (Scaled)$ext';
+    return '$path/$filename (Looped)$ext';
   }
 
-  /// On browsing the input file to loop.
-  Future<void> onBrowseInputFile() async {
-    final file = await FilePicker.platform.saveFile(
-      dialogTitle: 'Pick input media file.',
-    );
-
-    if (file != null) {
-      input.text = file;
-
-      output.text = getDefaultOutputFileLocation();
-    }
-  }
-
-  /// On saving looped output media file.
-  Future<void> onBrowseOutputFile() async {
-    late String? file;
-
-    if (await File(output.text).exists()) {
-      file = await FilePicker.platform.saveFile(
-        dialogTitle: 'Pick output media file.',
-        initialDirectory: dirname(output.text),
-      );
-    } else {
-      file = await FilePicker.platform.saveFile(
-        dialogTitle: 'Pick output media file.',
-      );
-    }
-
-    if (file != null) {
-      output.text = file;
-    }
-  }
-
-  /// Checking if the form is valid to enable scale button.
-  Future<void> onChangeInForm() async {
+  @override
+  Future<void> onFormChanged() async {
     if (await File(input.text).exists() &&
         await Directory(dirname(output.text)).exists()) {
       try {
         MediaResolution.fromString(resolution.text);
-        enableScale.value = true;
+        showAction.value = true;
       } on InvalidMediaResolution {
-        enableScale.value = false;
+        showAction.value = false;
       }
     }
   }
 
-  void onChangeInScale(String? value) {}
-
-  /// Scale video
-  Future<void> renderScaleVideo() async {
+  @override
+  Future<void> runAction() async {
     final file = Media(File(input.text));
 
     final value = MediaResolution.fromString(resolution.text);
@@ -121,7 +82,7 @@ class ScaleVideoPage extends HookWidget {
     return FadeInRight(
       duration: const Duration(milliseconds: 200),
       child: Form(
-        onChanged: state.onChangeInForm,
+        onChanged: state.onFormChanged,
         child: Scrollbar(
           child: SingleChildScrollView(
             child: SizedBox(
@@ -140,7 +101,7 @@ class ScaleVideoPage extends HookWidget {
                       ),
                       const SizedBox(width: 10),
                       CustomButton(
-                        onPressed: state.onBrowseInputFile,
+                        onPressed: state.onInputChanged,
                         icon: const Icon(Icons.file_copy_outlined),
                         label: 'Browse',
                       )
@@ -155,7 +116,7 @@ class ScaleVideoPage extends HookWidget {
                       controller: state.resolution,
                       options: MediaResolutions.values,
                       hintText: 'Type or search for media resolutions.',
-                      onChanged: state.onChangeInScale,
+                      onChanged: (_) {},
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -172,16 +133,15 @@ class ScaleVideoPage extends HookWidget {
                       CustomButton(
                         icon: const Icon(Icons.save),
                         label: 'Save Location',
-                        onPressed: state.onBrowseOutputFile,
+                        onPressed: state.onOutputChanged,
                       )
                     ],
                   ),
                   const SizedBox(height: 20),
                   CustomButton(
-                    label: 'Loop',
+                    label: 'Scale',
                     icon: const Icon(Icons.loop),
-                    onPressed:
-                        state.enableScale.value ? state.renderScaleVideo : null,
+                    onPressed: state.showAction.value ? state.runAction : null,
                   ),
                   const SizedBox(height: 10),
                   FfmpegOutput(outputStream: state.ffmpegOutput.value)

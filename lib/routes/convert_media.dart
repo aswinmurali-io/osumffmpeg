@@ -1,77 +1,78 @@
 import 'dart:io';
 
 import 'package:animate_do/animate_do.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:osumffmpeg/components/custom_searchable_textfield.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
+import '../components/custom_searchable_textfield.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
 import '../engine/enums/exec.dart';
 import '../engine/enums/formats.dart';
 import '../engine/exec.dart';
+import 'common.dart';
 
-class _PageState {
+class _PageState extends CommonPageState {
   _PageState()
       : input = useTextEditingController(),
         output = useTextEditingController(),
-        enableConvert = useState(false),
         format = useTextEditingController(),
+        showAction = useState(false),
         ffmpegOutput = useState(null);
 
+  @override
   final TextEditingController input;
 
+  @override
   final TextEditingController output;
-
-  final ValueNotifier<bool> enableConvert;
 
   final TextEditingController format;
 
+  @override
+  final ValueNotifier<bool> showAction;
+
+  @override
   final ValueNotifier<Stream<List<int>>?> ffmpegOutput;
 
-  Future<void> onBrowseInputFile() async {
-    final path = await FilePicker.platform.saveFile();
-
-    if (path != null) {
-      input.text = path;
-
-      format.text = MediaFormats.mp4.value.displayString;
-
-      output.text = join(dirname(path), autoFillOutputLocation());
-    }
-  }
-
-  Future<void> onChangeInForm() async {
+  @override
+  Future<void> onFormChanged() async {
     if (await File(input.text).exists() &&
-        await Directory(dirname(output.text)).exists()) {
-      enableConvert.value = true;
+        await Directory(dirname(output.text)).exists() &&
+        format.text.isNotEmpty &&
+        format.text != ' ' &&
+        format.text[0] != '.') {
+      showAction.value = true;
     } else {
-      enableConvert.value = false;
+      showAction.value = false;
     }
   }
 
-  String autoFillOutputLocation() =>
-      '${basenameWithoutExtension(input.text)} (Converted).${format.value.text}';
+  @override
+  String getDefaultOutputLocation() {
+    final path = dirname(input.text);
+    final filename = basenameWithoutExtension(input.text);
 
-  Future<void> onBrowseOutputLocation() async {
-    final location = await FilePicker.platform.getDirectoryPath();
+    return '$path/$filename (Converted).${format.text}';
+  }
 
-    if (location != null) {
-      output.text = join(location, autoFillOutputLocation());
+  void onFormatChanged(String value) {
+    if (output.text.isNotEmpty) {
+      final base = basenameWithoutExtension(output.text);
+
+      output.text = join(dirname(output.text), '$base.${format.text}');
     }
   }
 
-  void onFormatChange(String value) =>
-      output.text = join(dirname(output.text), autoFillOutputLocation());
-
-  Future<void> onConvert() async =>
-      ffmpegOutput.value = await MediaEngine.executeFFmpegStream(
-        executable: FFmpegExec.ffmpeg,
-        commands: ['-i', input.text, output.text, '-y'],
-      );
+  @override
+  Future<void> runAction() async {
+    ffmpegOutput.value = await MediaEngine.executeFFmpegStream(
+      executable: FFmpegExec.ffmpeg,
+      commands: ['-i', input.text, output.text, '-y'],
+    );
+  }
 }
 
 class ConvertMediaPage extends HookWidget {
@@ -84,7 +85,7 @@ class ConvertMediaPage extends HookWidget {
     return FadeInRight(
       duration: const Duration(milliseconds: 200),
       child: Form(
-        onChanged: state.onChangeInForm,
+        onChanged: state.onFormChanged,
         child: FadeInRight(
           duration: const Duration(milliseconds: 200),
           child: Scrollbar(
@@ -107,7 +108,7 @@ class ConvertMediaPage extends HookWidget {
                         CustomButton(
                           label: 'Browse',
                           icon: const Icon(Icons.file_copy_outlined),
-                          onPressed: state.onBrowseInputFile,
+                          onPressed: state.onInputChanged,
                         )
                       ],
                     ),
@@ -120,7 +121,12 @@ class ConvertMediaPage extends HookWidget {
                         controller: state.format,
                         options: MediaFormats.values,
                         hintText: 'Media Formats',
-                        onChanged: state.onFormatChange,
+                        onChanged: state.onFormatChanged,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                            RegExp("[0-9a-zA-Z]"),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -137,7 +143,7 @@ class ConvertMediaPage extends HookWidget {
                         CustomButton(
                           label: 'Save Location',
                           icon: const Icon(Icons.save),
-                          onPressed: state.onBrowseOutputLocation,
+                          onPressed: state.onOutputChanged,
                         )
                       ],
                     ),
@@ -146,7 +152,7 @@ class ConvertMediaPage extends HookWidget {
                       label: 'Convert',
                       icon: const Icon(Icons.send),
                       onPressed:
-                          state.enableConvert.value ? state.onConvert : null,
+                          state.showAction.value ? state.runAction : null,
                     ),
                     const SizedBox(height: 10),
                     FfmpegOutput(outputStream: state.ffmpegOutput.value),
