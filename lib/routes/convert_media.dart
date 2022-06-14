@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:osumffmpeg/components/custom_searchable_textfield.dart';
 import 'package:path/path.dart';
 
 import '../components/custom_button.dart';
@@ -20,7 +21,7 @@ class _PageState {
       : input = useTextEditingController(),
         output = useTextEditingController(),
         enableConvert = useState(false),
-        format = useState(MediaFormats.mkv),
+        format = useTextEditingController(),
         ffmpegOutput = useState(null);
 
   final TextEditingController input;
@@ -29,7 +30,7 @@ class _PageState {
 
   final ValueNotifier<bool> enableConvert;
 
-  final ValueNotifier<MediaFormats> format;
+  final TextEditingController format;
 
   final ValueNotifier<Stream<List<int>>?> ffmpegOutput;
 
@@ -38,6 +39,8 @@ class _PageState {
 
     if (path != null) {
       input.text = path;
+
+      format.text = MediaFormats.mp4.value.displayString;
 
       output.text = join(dirname(path), autoFillOutputLocation());
     }
@@ -53,7 +56,7 @@ class _PageState {
   }
 
   String autoFillOutputLocation() =>
-      '${basenameWithoutExtension(input.text)} (Converted).${format.value.value}';
+      '${basenameWithoutExtension(input.text)} (Converted).${format.value.text}';
 
   Future<void> onBrowseOutputLocation() async {
     final location = await FilePicker.platform.getDirectoryPath();
@@ -63,24 +66,8 @@ class _PageState {
     }
   }
 
-  void onFormatChange(String? value) {
-    if (value != null) {
-      format.value = MediaFormats.values.firstWhere(
-        (format) => format.toString() == value,
-        orElse: () {
-          if (kDebugMode) {
-            print(
-              'Unable to find media format from enum. '
-              'Falling back to m4v.',
-            );
-          }
-          return MediaFormats.mk4;
-        },
-      );
-
+  void onFormatChange(String value) =>
       output.text = join(dirname(output.text), autoFillOutputLocation());
-    }
-  }
 
   Future<void> onConvert() async =>
       ffmpegOutput.value = await MediaEngine.executeFFmpegStream(
@@ -130,12 +117,12 @@ class ConvertMediaPage extends HookWidget {
                     const HeadingText('Convert format to'),
                     const SizedBox(height: 20),
                     SizedBox(
-                      width: 160,
-                      child: CustomDropdown(
-                        labelText: 'Media Format',
-                        items: MediaFormats.values.map((e) => e.value).toList(),
+                      width: 250,
+                      child: CustomSearchableTextField<MediaFormats>(
+                        controller: state.format,
+                        options: MediaFormats.values,
+                        hintText: 'Media Formats',
                         onChanged: state.onFormatChange,
-                        value: state.format.value.value,
                       ),
                     ),
                     const SizedBox(height: 20),

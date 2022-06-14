@@ -156,6 +156,9 @@ class ScaleVideoPage extends HookWidget {
                     child: CustomSearchableTextField<MediaResolutions>(
                       controller: state.resolution,
                       options: MediaResolutions.values,
+                      onChanged: (p0) {
+                        
+                      },
                     ),
                   ),
                   const SizedBox(height: 20),
