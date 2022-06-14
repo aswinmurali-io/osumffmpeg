@@ -105,7 +105,7 @@ class _PageState {
 
     final value = MediaResolution.fromString(resolution.text);
 
-    ffmpegOutput.value = await file.scale(value, File(output.text));
+    ffmpegOutput.value = await file.scaleVideo(value, File(output.text));
   }
 }
 
