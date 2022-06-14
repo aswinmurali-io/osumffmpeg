@@ -46,7 +46,7 @@ class _PageState {
     final filename = basenameWithoutExtension(input.text);
     final ext = extension(input.text);
 
-    return '$path/${filename}_looped$ext';
+    return '$path/$filename (Looped)$ext';
   }
 
   /// On browsing the input file to loop.
