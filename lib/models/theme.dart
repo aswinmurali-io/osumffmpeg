@@ -139,6 +139,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       textTheme: TextTheme(
         headline2: headline2.copyWith(color: Colors.white),
         subtitle1: const TextStyle(color: Colors.white), // TextField text!
+        bodyText2: const TextStyle(color: Colors.white),
       ),
     );
   }
