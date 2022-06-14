@@ -31,23 +31,15 @@ class OsumFfmpeg extends ConsumerWidget {
       darkTheme: ThemeProvider.darkTheme,
       themeMode: themeMode,
       // debugShowCheckedModeBanner: false,
-      home: OsumLayout(
-        themeMode: themeMode,
-        themeProvider: themeProvider,
-      ),
+      home: OsumLayout(themeMode: themeMode),
     );
   }
 }
 
 class OsumLayout extends HookWidget {
-  const OsumLayout({
-    super.key,
-    required this.themeMode,
-    required this.themeProvider,
-  });
+  const OsumLayout({super.key, required this.themeMode});
 
   final ThemeMode themeMode;
-  final ThemeProvider themeProvider;
 
   static final routeJumpController = TextEditingController();
 
