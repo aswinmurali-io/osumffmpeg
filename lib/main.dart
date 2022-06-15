@@ -11,6 +11,7 @@ import 'components/route_navigations.dart';
 import 'components/work_in_progress.dart';
 import 'models/route.dart';
 import 'models/theme.dart';
+import 'routes/change_framerate.dart';
 import 'routes/convert_media.dart';
 import 'routes/loop_video.dart';
 import 'routes/scale_video.dart';
@@ -72,7 +73,7 @@ class OsumLayout extends HookWidget {
     const Route(
       title: 'Change framerate of video',
       icon: Icon(Icons.speed),
-      content: WorkInProgress(),
+      content: ChangeFrameRatePage(),
       description:
           'Make video smoother or slower by changing framerate of video.',
     ),

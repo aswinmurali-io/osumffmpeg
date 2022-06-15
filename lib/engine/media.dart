@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'core.dart';
 import 'execs.dart';
+import 'framerates.dart';
 import 'resolutions.dart';
 
 class Media {
@@ -14,7 +15,7 @@ class Media {
   /// The media file.
   final File media;
 
-  /// Save the media in a specific [format] as [outputFile].
+  /// Save the media in a specific [framerate] as [outputFile].
   Future<Stream<List<int>>> saveToFormat(File outputFile) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
@@ -108,6 +109,23 @@ class Media {
         media.path,
         '-vf',
         'scale=${resolution.toDisplayString()}:flags=lanczos',
+        outputFile.path,
+        '-y',
+      ],
+    );
+  }
+
+  Future<Stream<List<int>>> changeFrameRate(
+    MediaFrameRateFormat frameRate,
+    File outputFile,
+  ) async {
+    return MediaEngine.executeFFmpegStream(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        '-i',
+        media.path,
+        '-filter:v',
+        'fps=fps=${frameRate.toDisplayString()}',
         outputFile.path,
         '-y',
       ],
