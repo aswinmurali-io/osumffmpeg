@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'enums/exec.dart';
-import 'enums/formats.dart';
 import 'enums/resolution.dart';
 import 'exec.dart';
 
@@ -12,10 +11,7 @@ class Media {
   final File media;
 
   /// Save the media in a specific [format] as [outputFile].
-  Future<Stream<List<int>>> saveToFormat(
-    MediaFormats format,
-    File outputFile,
-  ) async {
+  Future<Stream<List<int>>> saveToFormat(File outputFile) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
       commands: ['-i', media.absolute.path, outputFile.path, '-y'],

@@ -10,9 +10,8 @@ import '../components/custom_button.dart';
 import '../components/custom_searchable_textfield.dart';
 import '../components/ffmpeg_output.dart';
 import '../components/head_text.dart';
-import '../engine/enums/exec.dart';
 import '../engine/enums/formats.dart';
-import '../engine/exec.dart';
+import '../engine/media.dart';
 import 'common.dart';
 
 class _PageState extends CommonPageState {
@@ -67,12 +66,8 @@ class _PageState extends CommonPageState {
   }
 
   @override
-  Future<void> runAction() async {
-    ffmpegOutput.value = await MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
-      commands: ['-i', input.text, output.text, '-y'],
-    );
-  }
+  Future<void> runAction() async => ffmpegOutput.value =
+      await Media(File(input.text)).saveToFormat(File(output.text));
 }
 
 class ConvertMediaPage extends HookWidget {

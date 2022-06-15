@@ -1,7 +1,16 @@
+import '../errors.dart';
 import '../utils.dart';
 
 class MediaFormat implements WithDisplayString {
   const MediaFormat(this.formatString, this.displayString);
+
+  factory MediaFormat.fromString(String format) {
+    if (format.isNotEmpty) {
+      return MediaFormat('Custom', format);
+    } else {
+      throw InvalidMediaFormat(format);
+    }
+  }
 
   final String formatString;
 

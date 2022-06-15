@@ -1,3 +1,4 @@
+import '../errors.dart';
 import '../utils.dart';
 
 class MediaResolution implements WithDisplayString {
