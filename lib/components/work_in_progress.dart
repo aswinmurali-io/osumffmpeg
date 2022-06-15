@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:osumffmpeg/components/head_text.dart';
 
@@ -11,7 +10,7 @@ class WorkInProgress extends StatelessWidget {
       child: Column(
         children: const [
           SizedBox(height: 30),
-          Icon(Icons.construction, size: 90,),
+          Icon(Icons.construction, size: 90),
           HeadingText("Work in progress"),
         ],
       ),

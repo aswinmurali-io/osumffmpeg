@@ -50,9 +50,9 @@ class OsumLayout extends HookWidget {
       content: ConvertMediaPage(),
       description: 'Convert video/audio from one format to another.',
     ),
-    Route(
+    const Route(
       title: 'Save photo from video',
-      icon: const Icon(Icons.photo),
+      icon: Icon(Icons.photo),
       content: WorkInProgress(),
       description: '',
     ),
@@ -63,9 +63,9 @@ class OsumLayout extends HookWidget {
       description:
           'Upscale video resolution from 1080p to 4K or downscale to 480p.',
     ),
-    Route(
+    const Route(
       title: 'Change framerate of video',
-      icon: const Icon(Icons.speed),
+      icon: Icon(Icons.speed),
       content: WorkInProgress(),
       description:
           'Make video smoother or slower by changing framerate of video.',
@@ -77,21 +77,21 @@ class OsumLayout extends HookWidget {
       description:
           'Repeat the contents inside a video upto a certain duration.',
     ),
-    Route(
+    const Route(
       title: 'Change or mute audio in video',
-      icon: const Icon(Icons.audiotrack),
+      icon: Icon(Icons.audiotrack),
       content: WorkInProgress(),
       description: '',
     ),
-    Route(
+    const Route(
       title: 'Make gif from video',
-      icon: const Icon(Icons.gif),
+      icon: Icon(Icons.gif),
       content: WorkInProgress(),
       description: '',
     ),
-    Route(
+    const Route(
       title: 'Make video from images',
-      icon: const Icon(Icons.video_camera_front),
+      icon: Icon(Icons.video_camera_front),
       content: WorkInProgress(),
       description: '',
     ),
