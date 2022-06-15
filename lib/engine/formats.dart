@@ -1,5 +1,5 @@
-import '../errors.dart';
-import '../utils.dart';
+import 'errors.dart';
+import 'utils.dart';
 
 class MediaFormat implements WithDisplayString {
   const MediaFormat(this.formatString, this.displayString);

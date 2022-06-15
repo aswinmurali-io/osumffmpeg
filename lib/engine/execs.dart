@@ -1,4 +1,4 @@
-import '../utils.dart';
+import 'utils.dart';
 
 enum FFmpegExec implements WithValue<String> {
   ffplay('ffplay'),

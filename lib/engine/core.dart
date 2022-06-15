@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:async/async.dart';
 import 'package:osumlog/osumlog.dart';
 
-import 'enums/exec.dart';
 import 'errors.dart';
+import 'execs.dart';
 import 'utils.dart';
 
 class MediaEngine {

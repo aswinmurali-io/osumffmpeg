@@ -1,5 +1,5 @@
-import '../errors.dart';
-import '../utils.dart';
+import 'errors.dart';
+import 'utils.dart';
 
 class MediaResolution implements WithDisplayString {
   /// Define a media resolution by giving it's [width], [height]

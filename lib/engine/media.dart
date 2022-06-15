@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'enums/exec.dart';
-import 'enums/resolution.dart';
-import 'exec.dart';
+import 'execs.dart';
+import 'resolutions.dart';
+import 'core.dart';
 
 class Media {
   const Media(this.media);
