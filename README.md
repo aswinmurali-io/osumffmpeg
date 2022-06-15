@@ -1,5 +1,13 @@
 **(Work in progress)**
-![Banner](https://user-images.githubusercontent.com/47299190/173613380-7a2f4ec5-bc22-467b-9606-e839e846a44b.png)
+
+<a href="https://github.com/aswinmurali-io/osumffmpeg/">
+  <h1 align="center">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://user-images.githubusercontent.com/47299190/173841870-4a4ee13d-ef3a-4585-8b57-aa5f8f3762cc.png">
+      <img alt="Osumffmpeg" src="https://user-images.githubusercontent.com/47299190/173613380-7a2f4ec5-bc22-467b-9606-e839e846a44b.png">
+    </picture>
+  </h1>
+</a>
 
 <p align="center">
   <a href="#">
