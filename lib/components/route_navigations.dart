@@ -4,11 +4,12 @@
 
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart' hide Route;
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../models/route.dart';
 
-class RouteNavigationRail extends ConsumerWidget {
+class RouteNavigationRail extends HookWidget {
   const RouteNavigationRail({
     super.key,
     required this.index,
@@ -20,7 +21,8 @@ class RouteNavigationRail extends ConsumerWidget {
   final List<Route> routes;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final scrollController = useScrollController();
     return SizedBox(
       width: 150,
       child: FadeInLeftBig(
@@ -30,32 +32,39 @@ class RouteNavigationRail extends ConsumerWidget {
         // IntrinsicHeight <- is expensive.
         child: LayoutBuilder(
           builder: (context, constraint) {
-            return Scrollbar(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraint.maxHeight,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: NavigationRail(
-                          onDestinationSelected: (value) => index.value = value,
-                          labelType: NavigationRailLabelType.all,
-                          destinations: [
-                            for (final route in routes)
-                              NavigationRailDestination(
-                                icon: ZoomIn(child: route.icon),
-                                label: Text(
-                                  route.title,
-                                  textAlign: TextAlign.center,
+            return WebSmoothScroll(
+              animationDuration: 40,
+              controller: scrollController,
+              child: Scrollbar(
+                controller: scrollController,
+                child: SingleChildScrollView(
+                  controller: scrollController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraint.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 5, 10, 5),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: NavigationRail(
+                            onDestinationSelected: (value) =>
+                                index.value = value,
+                            labelType: NavigationRailLabelType.all,
+                            destinations: [
+                              for (final route in routes)
+                                NavigationRailDestination(
+                                  icon: ZoomIn(child: route.icon),
+                                  label: Text(
+                                    route.title,
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
-                              ),
-                          ],
-                          selectedIndex: index.value,
+                            ],
+                            selectedIndex: index.value,
+                          ),
                         ),
                       ),
                     ),
