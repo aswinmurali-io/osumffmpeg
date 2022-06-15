@@ -1,6 +1,8 @@
 name: osumffmpeg
 description: Power of FFMPEG for normal users.
 publish_to: 'none'
+homepage: https://aswinmurali-io.github.io/osumffmpeg/
+repository: https://github.com/aswinmurali-io/osumffmpeg
 
 version: 1.0.0+1
 
@@ -10,15 +12,13 @@ environment:
 dependencies:
   animate_do: ^2.1.0
   async: ^2.9.0
-  dropdown_search: ^5.0.2
   file_picker: ^4.6.1
   flutter:
     sdk: flutter
   flutter_acrylic: ^1.0.0+2
   flutter_hooks: ^0.18.4
-  flutter_riverpod: ^1.0.4
+  flutter_riverpod: ^1.0.4 #
   flutter_typeahead: ^4.0.0
-  hooks_riverpod: ^1.0.4
   osumlog: ^0.1.0
   path: ^1.8.0
   shared_preferences: ^2.0.15
