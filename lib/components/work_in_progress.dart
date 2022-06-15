@@ -1,5 +1,10 @@
+// Copyright 2022 Aswin Murali & the Osumffmpeg Authors. All rights reserved.
+// Use of this source code is governed by a GNU Lesser General Public License
+// v2.1 that can be found in the LICENSE file.
+
 import 'package:flutter/material.dart';
-import 'package:osumffmpeg/components/head_text.dart';
+
+import 'head_text.dart';
 
 class WorkInProgress extends StatelessWidget {
   const WorkInProgress({Key? key}) : super(key: key);
