@@ -48,13 +48,15 @@ class OsumLayout extends HookWidget {
       title: 'Convert Media',
       icon: Icon(Icons.update),
       content: ConvertMediaPage(),
-      description: 'Convert video/audio from one format to another.',
+      description:
+          'Convert video/audio from the current format to a different one.',
     ),
     const Route(
       title: 'Save photo from video',
       icon: Icon(Icons.photo),
       content: WorkInProgress(),
-      description: '',
+      description:
+          'Extract & save a particular frame or multiple frames from the video and save it.',
     ),
     const Route(
       title: 'Upscale or downscale video',
@@ -81,19 +83,20 @@ class OsumLayout extends HookWidget {
       title: 'Change or mute audio in video',
       icon: Icon(Icons.audiotrack),
       content: WorkInProgress(),
-      description: '',
+      description: 'Add / Change / Mute multiple audio tracks in a video.',
     ),
     const Route(
       title: 'Make gif from video',
       icon: Icon(Icons.gif),
       content: WorkInProgress(),
-      description: '',
+      description:
+          'Convert a video into an animated gif. Audio will be lost in the gif.',
     ),
     const Route(
       title: 'Make video from images',
       icon: Icon(Icons.video_camera_front),
       content: WorkInProgress(),
-      description: '',
+      description: 'Convert multiple images into a video.',
     ),
   ];
 
