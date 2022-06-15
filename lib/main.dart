@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'components/route_navigations.dart';
+import 'components/work_in_progress.dart';
 import 'models/route.dart';
 import 'models/theme.dart';
 import 'routes/convert_media.dart';
@@ -52,7 +53,7 @@ class OsumLayout extends HookWidget {
     Route(
       title: 'Save photo from video',
       icon: const Icon(Icons.photo),
-      content: Container(),
+      content: WorkInProgress(),
       description: '',
     ),
     const Route(
@@ -65,7 +66,7 @@ class OsumLayout extends HookWidget {
     Route(
       title: 'Change framerate of video',
       icon: const Icon(Icons.speed),
-      content: Container(),
+      content: WorkInProgress(),
       description:
           'Make video smoother or slower by changing framerate of video.',
     ),
@@ -79,19 +80,19 @@ class OsumLayout extends HookWidget {
     Route(
       title: 'Change or mute audio in video',
       icon: const Icon(Icons.audiotrack),
-      content: Container(),
+      content: WorkInProgress(),
       description: '',
     ),
     Route(
       title: 'Make gif from video',
       icon: const Icon(Icons.gif),
-      content: Container(),
+      content: WorkInProgress(),
       description: '',
     ),
     Route(
       title: 'Make video from images',
       icon: const Icon(Icons.video_camera_front),
-      content: Container(),
+      content: WorkInProgress(),
       description: '',
     ),
   ];
