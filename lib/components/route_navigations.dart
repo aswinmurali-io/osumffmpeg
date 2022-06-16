@@ -33,7 +33,8 @@ class RouteNavigationRail extends HookWidget {
         child: LayoutBuilder(
           builder: (context, constraint) {
             return WebSmoothScroll(
-              animationDuration: 40,
+              animationDuration: 300,
+              scrollOffset: 80,
               controller: scrollController,
               child: Scrollbar(
                 controller: scrollController,
