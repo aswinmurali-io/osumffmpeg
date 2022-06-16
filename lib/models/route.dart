@@ -32,7 +32,8 @@ class Route implements WithDisplayableValue, WithDisplayString {
 
   Widget page(BuildContext context, ValueNotifier<int> index) {
     return WebSmoothScroll(
-      animationDuration: 40,
+      scrollOffset: 80,
+      animationDuration: 300,
       controller: controller,
       child: Scrollbar(
         controller: controller,
