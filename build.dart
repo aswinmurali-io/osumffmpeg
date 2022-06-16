@@ -19,6 +19,10 @@ import 'dart:io';
 
 import 'package:path/path.dart';
 
+const syncRawForGitHubPages = false;
+const buildInstallerInWindows = true;
+const reduceExecutableSizeInWindows = true;
+
 void main(List<String> args) async {
   switch (args.first) {
     case 'sync_githubpage':
@@ -31,29 +35,32 @@ void main(List<String> args) async {
 }
 
 /// Helps the build script run commands in a cascading fashion.
-/// Do not await! Use [onDone] instead.
+/// Do not await! Use [then] instead.
 // ignore: avoid_void_async
 void run(
   String msg,
   String executable,
-  List<String> arguments,
-  void Function()? onDone,
-) async {
-  print('$msg...');
-  final result = await Process.start(
-    executable,
-    arguments,
-    runInShell: true,
-  );
+  List<String> arguments, {
+  bool flag = true,
+  void Function()? then,
+}) async {
+  if (flag) {
+    print('$msg...');
+    final result = await Process.start(
+      executable,
+      arguments,
+      runInShell: true,
+    );
 
-  result.stderr.listen(
-    (event) => stdout.write('    Stderr: ${String.fromCharCodes(event)}'),
-  );
+    result.stderr.listen(
+      (event) => stdout.write('    Stderr: ${String.fromCharCodes(event)}'),
+    );
 
-  result.stdout.listen(
-    (event) => stdout.write('    Stdout: ${String.fromCharCodes(event)}'),
-    onDone: onDone,
-  );
+    result.stdout.listen(
+      (event) => stdout.write('    Stdout: ${String.fromCharCodes(event)}'),
+      onDone: then,
+    );
+  }
 }
 
 // x------------------------------------------------x
@@ -72,12 +79,14 @@ void syncGitHubPages() {
 
   readme.copySync(githubPagePath);
 
-  final index = File(githubPagePath);
+  if (!syncRawForGitHubPages) {
+    final index = File(githubPagePath);
 
-  // Remove </br> tags as they appear raw in github page.
-  final modifiedContent = index.readAsStringSync().replaceAll('</br>', '');
+    // Remove </br> tags as they appear raw in github page.
+    final modifiedContent = index.readAsStringSync().replaceAll('</br>', '');
 
-  index.writeAsStringSync(modifiedContent);
+    index.writeAsStringSync(modifiedContent);
+  }
 }
 
 /// Build and package a desktop win32-based windows application for osumffmpeg.
@@ -86,15 +95,22 @@ void buildWin32() {
     'Running flutter pub get',
     'flutter',
     ['pub', 'get'],
-    () => run(
+    then: () => run(
       'Building windows desktop application',
       'flutter',
       ['build', 'windows'],
-      () => run(
-        'Building windows installer',
-        'iscc',
-        ['win32_installer.iss'],
-        () => print('Done'),
+      then: () => run(
+        'Compressing *.dll (flutter_windows.dll, etc)',
+        'upx',
+        ['build/windows/runner/Release/*.dll'],
+        flag: reduceExecutableSizeInWindows,
+        then: () => run(
+          'Building windows installer',
+          'iscc',
+          ['win32_installer.iss'],
+          flag: buildInstallerInWindows,
+          then: () => print('Done'),
+        ),
       ),
     ),
   );
