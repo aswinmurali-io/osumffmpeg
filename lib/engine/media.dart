@@ -4,7 +4,11 @@
 
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+
 import 'core.dart';
+import 'errors.dart';
 import 'execs.dart';
 import 'framerates.dart';
 import 'resolutions.dart';
@@ -16,7 +20,9 @@ class Media {
   final File media;
 
   /// Save the media in a specific [framerate] as [outputFile].
-  Future<Stream<List<int>>> saveToFormat(File outputFile) async {
+  Future<Stream<List<int>>> saveToFormat(
+    File outputFile,
+  ) async {
     return MediaEngine.executeFFmpegStream(
       executable: FFmpegExec.ffmpeg,
       commands: ['-i', media.absolute.path, outputFile.path, '-y'],
@@ -128,6 +134,83 @@ class Media {
         'fps=fps=${frameRate.toDisplayString()}',
         outputFile.path,
         '-y',
+      ],
+    );
+  }
+
+  Future<MemoryImage> getFrame(Duration position) async {
+    // Need to give image different id to update state.
+    // Bitmap is the fastest way to save frame.
+    const file = 'Osumffmpeg Frame.bmp';
+
+    await MediaEngine.executeFFmpeg(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        // To ignore audio processing, Can improve performance.
+        '-an',
+        /*
+         Seek argument MUST be first. (Massive performance boost)
+         Refer https://stackoverflow.com/questions/6984628/ffmpeg-ss-weird-behaviour 
+         */
+        '-ss',
+        '${position.inSeconds}',
+        '-i',
+        media.path,
+        '-frames:v',
+        '1',
+        file,
+        '-y',
+      ],
+    );
+
+    final thumbnail = File(file);
+
+    if (await thumbnail.exists()) {
+      final data = await thumbnail.readAsBytes();
+      await thumbnail.delete();
+
+      return MemoryImage(data);
+    }
+    throw const FailedToGetFrameFromMedia(null);
+  }
+
+  Future<void> saveFrame(Duration position, File output) async {
+    final frame = await getFrame(position);
+
+    await output.writeAsBytes(frame.bytes);
+  }
+
+  Future<Stream<List<int>>> saveAllFrames(
+    Directory output,
+    String format,
+  ) async {
+    final posixPath = output.path.replaceAll(r'\', '/');
+
+    return MediaEngine.executeFFmpegStream(
+      executable: FFmpegExec.ffmpeg,
+      commands: [
+        // To ignore audio processing, Can improve performance.
+        '-an',
+        '-i',
+        media.path,
+        join(
+          posixPath,
+          '${basenameWithoutExtension(media.path)}-%03d.$format',
+        ),
+        '-y',
+      ],
+    );
+  }
+
+  static const ffplayTitle = 'Osumffmpeg ffplay';
+
+  Future<String> play() async {
+    return MediaEngine.executeFFmpeg(
+      executable: FFmpegExec.ffplay,
+      commands: [
+        media.path,
+        '-window_title',
+        ffplayTitle,
       ],
     );
   }
