@@ -4,6 +4,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../models/theme.dart';
+
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
@@ -26,7 +28,7 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton.icon(
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
-          const EdgeInsets.all(16),
+          EdgeInsets.all(ThemeProvider.isMobile ? 8 : 16),
         ),
       ),
       onPressed: onPressed,
