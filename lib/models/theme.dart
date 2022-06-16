@@ -2,6 +2,8 @@
 // Use of this source code is governed by a GNU Lesser General Public License
 // v2.1 that can be found in the LICENSE file.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -10,6 +12,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends StateNotifier<ThemeMode> {
   ThemeProvider() : super(ThemeMode.system);
+
+  // TODO: Find a better solution by check screen width.
+  static bool get isMobile =>
+      Platform.isAndroid || Platform.isFuchsia || Platform.isIOS;
 
   /// Converts any [color] of type [Colors] to [MaterialColor].
   static MaterialColor colorToMaterial(Color color) =>
@@ -115,7 +121,8 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     return ThemeData(
       primarySwatch: primarySwatch,
       inputDecorationTheme: getTextInputTheme(false),
-      scaffoldBackgroundColor: Colors.transparent,
+      scaffoldBackgroundColor:
+          ThemeProvider.isMobile ? Colors.white : Colors.transparent,
       textTheme: TextTheme(
         headline2: headline2.copyWith(color: Colors.black),
       ),
