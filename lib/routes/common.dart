@@ -34,12 +34,13 @@ abstract class CommonPageState {
   String getDefaultOutputLocation();
 
   Future<void> onInputChanged() async {
-    final file = await FilePicker.platform.saveFile(
+    final file = await FilePicker.platform.pickFiles(
       dialogTitle: 'Input Media',
+      allowMultiple: false,
     );
 
     if (file != null) {
-      input.text = file;
+      input.text = file.files.first.path!;
 
       // Don't use auto default output location if user has already specified
       // output location path.
