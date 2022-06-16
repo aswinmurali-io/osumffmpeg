@@ -28,3 +28,12 @@ class InvalidMediaFormat implements Exception {
   @override
   String toString() => '(invalid format error) $format';
 }
+
+class FailedToGetFrameFromMedia implements Exception {
+  const FailedToGetFrameFromMedia(this.reason);
+
+  final dynamic reason;
+
+  @override
+  String toString() => '(failed to extract frame) $reason';
+}
