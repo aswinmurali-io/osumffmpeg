@@ -2,10 +2,14 @@
 // Use of this source code is governed by a GNU Lesser General Public License
 // v2.1 that can be found in the LICENSE file.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart' hide Route;
+import 'package:flutter/services.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:osumlog/osumlog.dart';
 
 import 'components/route_navigations.dart';
 import 'components/work_in_progress.dart';
@@ -19,7 +23,13 @@ import 'routes/scale_video.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Window.initialize();
+
+  try {
+    await Window.initialize();
+  } on MissingPluginException catch (error) {
+    Log.warn(error);
+  }
+
   runApp(const ProviderScope(child: OsumFfmpeg()));
 }
 
@@ -115,26 +125,29 @@ class OsumLayout extends HookWidget {
 
     final routeIndex = useState(0);
 
-    return Scaffold(
-      body: Row(
-        children: [
-          RouteNavigationRail(
-            routes: routes,
-            index: routeIndex,
-          ),
-          Expanded(
-            child: Stack(
-              children: [
-                for (final route in routes)
-                  Visibility(
-                    maintainState: true,
-                    visible: route == routes[routeIndex.value],
-                    child: route.page(context, routeIndex),
-                  )
-              ],
-            ),
-          )
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: Row(
+          children: [
+            if (!Platform.isAndroid && !Platform.isIOS)
+              RouteNavigationRail(
+                routes: routes,
+                index: routeIndex,
+              ),
+            Expanded(
+              child: Stack(
+                children: [
+                  for (final route in routes)
+                    Visibility(
+                      maintainState: true,
+                      visible: route == routes[routeIndex.value],
+                      child: route.page(context, routeIndex),
+                    )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

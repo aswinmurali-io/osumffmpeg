@@ -5,11 +5,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:osumffmpeg/engine/utils.dart';
-import 'package:osumffmpeg/main.dart';
 import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../components/theme_button.dart';
+import '../engine/utils.dart';
+import '../main.dart';
+import 'theme.dart';
 
 @immutable
 class Route implements WithDisplayableValue, WithDisplayString {
@@ -53,7 +54,9 @@ class Route implements WithDisplayableValue, WithDisplayString {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 400,
+                          width: ThemeProvider.isMobile
+                              ? MediaQuery.of(context).size.width / 1.3
+                              : 400,
                           child: TypeAheadFormField<Route>(
                             textFieldConfiguration: TextFieldConfiguration(
                               controller: OsumLayout.routeJumpController,
