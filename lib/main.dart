@@ -14,6 +14,7 @@ import 'models/theme.dart';
 import 'routes/change_framerate.dart';
 import 'routes/convert_media.dart';
 import 'routes/loop_video.dart';
+import 'routes/save_photo_from_video.dart';
 import 'routes/scale_video.dart';
 
 void main() async {
@@ -49,58 +50,58 @@ class OsumLayout extends HookWidget {
   static final routeJumpController = TextEditingController();
 
   static final routes = [
-    const Route(
+    Route(
       title: 'Convert Media',
-      icon: Icon(Icons.update),
-      content: ConvertMediaPage(),
+      icon: const Icon(Icons.update),
+      content: const ConvertMediaPage(),
       description:
           'Convert video/audio from the current format to a different one.',
     ),
-    const Route(
+    Route(
       title: 'Save photo from video',
-      icon: Icon(Icons.photo),
-      content: WorkInProgress(),
+      icon: const Icon(Icons.photo),
+      content: const SavePhotoFromVideoPage(),
       description:
           'Extract & save a particular frame or multiple frames from the video and save it.',
     ),
-    const Route(
+    Route(
       title: 'Upscale or downscale video',
-      icon: Icon(Icons.screenshot_monitor),
-      content: ScaleVideoPage(),
+      icon: const Icon(Icons.screenshot_monitor),
+      content: const ScaleVideoPage(),
       description:
           'Upscale video resolution from 1080p to 4K or downscale to 480p.',
     ),
-    const Route(
+    Route(
       title: 'Change framerate of video',
-      icon: Icon(Icons.speed),
-      content: ChangeFrameRatePage(),
+      icon: const Icon(Icons.speed),
+      content: const ChangeFrameRatePage(),
       description:
           'Make video smoother or slower by changing framerate of video.',
     ),
-    const Route(
+    Route(
       title: 'Loop video',
-      icon: Icon(Icons.repeat),
-      content: LoopMediaPage(),
+      icon: const Icon(Icons.repeat),
+      content: const LoopMediaPage(),
       description:
           'Repeat the contents inside a video upto a certain duration.',
     ),
-    const Route(
+    Route(
       title: 'Change or mute audio in video',
-      icon: Icon(Icons.audiotrack),
-      content: WorkInProgress(),
+      icon: const Icon(Icons.audiotrack),
+      content: const WorkInProgress(),
       description: 'Add / Change / Mute multiple audio tracks in a video.',
     ),
-    const Route(
+    Route(
       title: 'Make gif from video',
-      icon: Icon(Icons.gif),
-      content: WorkInProgress(),
+      icon: const Icon(Icons.gif),
+      content: const WorkInProgress(),
       description:
           'Convert a video into an animated gif. Audio will be lost in the gif.',
     ),
-    const Route(
+    Route(
       title: 'Make video from images',
-      icon: Icon(Icons.video_camera_front),
-      content: WorkInProgress(),
+      icon: const Icon(Icons.video_camera_front),
+      content: const WorkInProgress(),
       description: 'Convert multiple images into a video.',
     ),
   ];
