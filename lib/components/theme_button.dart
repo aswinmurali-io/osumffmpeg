@@ -40,11 +40,15 @@ class ThemeButton extends ConsumerWidget {
 
     final asset = getAsset(theme);
 
-    return TextButton.icon(
-      // tooltip: 'Change theme',
-      onPressed: themeNotifier.toggleTheme,
-      icon: Icon(asset.icon),
-      label: Text(asset.label),
-    );
+    return ThemeProvider.isMobile
+        ? IconButton(
+            onPressed: themeNotifier.toggleTheme,
+            icon: Icon(asset.icon),
+          )
+        : TextButton.icon(
+            onPressed: themeNotifier.toggleTheme,
+            icon: Icon(asset.icon),
+            label: Text(asset.label),
+          );
   }
 }
