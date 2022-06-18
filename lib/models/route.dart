@@ -9,7 +9,7 @@ import 'package:web_smooth_scroll/web_smooth_scroll.dart';
 
 import '../components/theme_button.dart';
 import '../engine/utils.dart';
-import '../main.dart';
+import '../layout.dart';
 import 'theme.dart';
 
 @immutable
