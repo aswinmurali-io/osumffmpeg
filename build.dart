@@ -21,14 +21,16 @@ import 'package:path/path.dart';
 
 const syncRawForGitHubPages = false;
 const buildInstallerInWindows = true;
-const reduceExecutableSizeInWindows = true;
+const reduceExecutableSize = true;
 
 void main(List<String> args) async {
   switch (args.first) {
     case 'sync_githubpage':
       return syncGitHubPages();
-    case 'build_win32':
-      return buildWin32();
+    case 'windows':
+      return buildWindows();
+    case 'linux':
+      return buildLinux();
     default:
       print('Unknown command');
   }
@@ -63,6 +65,34 @@ void run(
   }
 }
 
+void runUpx(String path, {void Function()? then}) {
+  run(
+    'Compressing native libraries (libflutter, etc)',
+    'upx',
+    [path],
+    flag: reduceExecutableSize,
+    then: then,
+  );
+}
+
+void runBuild(String platform, {void Function()? then}) {
+  run(
+    'Building $platform application',
+    'fluter',
+    ['build', platform],
+    then: then,
+  );
+}
+
+void runPub({void Function()? then}) {
+  run(
+    'Running flutter pub get',
+    'flutter',
+    ['pub', 'get'],
+    then: then,
+  );
+}
+
 // x------------------------------------------------x
 // |  Command logic                                 |
 // x------------------------------------------------x
@@ -90,20 +120,12 @@ void syncGitHubPages() {
 }
 
 /// Build and package a desktop win32-based windows application for osumffmpeg.
-void buildWin32() {
-  run(
-    'Running flutter pub get',
-    'flutter',
-    ['pub', 'get'],
-    then: () => run(
-      'Building windows desktop application',
-      'flutter',
-      ['build', 'windows'],
-      then: () => run(
-        'Compressing *.dll (flutter_windows.dll, etc)',
-        'upx',
-        ['build/windows/runner/Release/*.dll'],
-        flag: reduceExecutableSizeInWindows,
+void buildWindows() {
+  runPub(
+    then: () => runBuild(
+      'windows',
+      then: () => runUpx(
+        'build/windows/runner/Release/*.dll',
         then: () => run(
           'Building windows installer',
           'iscc',
@@ -111,6 +133,18 @@ void buildWin32() {
           flag: buildInstallerInWindows,
           then: () => print('Done'),
         ),
+      ),
+    ),
+  );
+}
+
+void buildLinux() {
+  runPub(
+    then: () => runBuild(
+      'linux',
+      then: () => runUpx(
+        'build/linux/x64/release/bundle/lib/*.so',
+        then: () => print('Done'),
       ),
     ),
   );
