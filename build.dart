@@ -78,7 +78,7 @@ void runUpx(String path, {void Function()? then}) {
 void runBuild(String platform, {void Function()? then}) {
   run(
     'Building $platform application',
-    'fluter',
+    'flutter',
     ['build', platform],
     then: then,
   );
