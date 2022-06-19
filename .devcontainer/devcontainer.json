@@ -1,0 +1,43 @@
+{
+	"name": "Osumffmpeg Dev",
+	"context": "..",
+	"dockerFile": "../Dockerfile.dev",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"usernamehw.errorlens",
+				"Dart-Code.flutter",
+				"eamodio.gitlens",
+				"DavidAnson.vscode-markdownlint",
+				"yzhang.markdown-all-in-one",
+				"albert.TabOut",
+				"WakaTime.vscode-wakatime",
+				"vmsynkov.colonize"
+			],
+			"settings": {
+				"files.exclude": {
+					"**/.git": true,
+					"**/.svn": true,
+					"**/.hg": true,
+					"**/CVS": true,
+					"**/.DS_Store": true,
+					"**/Thumbs.db": true,
+					// Flutter
+					"**/.dart_tool": true,
+					"**/.metadata": true,
+					"**/pubspec.lock": true,
+					"**/.flutter-plugins": true,
+					"**/.flutter-plugins-dependencies": true,
+					"**/build": true,
+					// Platform folder
+					"**/android": true,
+					"**/ios": true,
+					"**/linux": true,
+					"**/macos": true,
+					"**/windows": true,
+					"**/web": true
+				}
+			}
+		}
+	}
+}
