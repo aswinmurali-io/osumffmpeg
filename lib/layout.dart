@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart' hide Route;
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:osumffmpeg/engine/core.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'components/notify_noffmpeg.dart';
 import 'components/route_navigations.dart';
@@ -96,6 +97,7 @@ class OsumLayout extends HookWidget {
               RouteNavigationRail(
                 routes: routes,
                 index: routeIndex,
+                onChanged: () {},
               ),
             FutureBuilder(
               future: MediaEngine.checkForExecs(),
@@ -119,9 +121,21 @@ class OsumLayout extends HookWidget {
                     return const Expanded(child: NotifyNoFfmpeg());
                   }
                 }
-                return const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
+                return Expanded(
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey.shade200,
+                    highlightColor: Colors.transparent,
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        IgnorePointer(
+                          child: routes[routeIndex.value].page(
+                            context,
+                            routeIndex,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
