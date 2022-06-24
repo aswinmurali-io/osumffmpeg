@@ -15,9 +15,9 @@ import 'errors.dart';
 import 'execs.dart';
 import 'utils.dart';
 
-class MediaEngine {
+class _Engine {
   /// Check if no ffmpeg [exec] is present in this system.
-  static Future<bool> noFFmpeg(FFmpegExec exec) async {
+  Future<bool> noFFmpeg(OsumExecs exec) async {
     if (Platform.isAndroid || Platform.isIOS) {
       try {
         await FFmpegKit.cancel();
@@ -35,8 +35,8 @@ class MediaEngine {
     }
   }
 
-  static Future<String> checkForExecs() async {
-    for (final exec in FFmpegExec.values) {
+  Future<String> checkForExecs() async {
+    for (final exec in OsumExecs.values) {
       if (await noFFmpeg(exec)) {
         return 'Unable to find ${exec.value} executable which is part of the '
             'ffmpeg project. Please download it from https://ffmpeg.org/';
@@ -47,8 +47,8 @@ class MediaEngine {
 
   /// Execute [commands] inside ffmpeg's [executable] and get the output
   /// as a [Stream].
-  static Future<Stream<List<int>>> executeFFmpegStream({
-    required FFmpegExec executable,
+  Future<Stream<List<int>>> executeFFmpegStream({
+    required OsumExecs executable,
     required List<String> commands,
   }) async {
     Log.info(
@@ -57,7 +57,7 @@ class MediaEngine {
 
     if (Platform.isAndroid || Platform.isIOS) {
       switch (executable) {
-        case FFmpegExec.ffmpeg:
+        case OsumExecs.ffmpeg:
           final session = await FFmpegKit.execute(commands.join(' '));
           return session
               .getOutput()
@@ -65,14 +65,14 @@ class MediaEngine {
               .map((event) => utf8.encode(event!))
               .asBroadcastStream();
 
-        case FFmpegExec.ffprobe:
+        case OsumExecs.ffprobe:
           final session = await FFprobeKit.execute(commands.join(' '));
           return session
               .getOutput()
               .asStream()
               .map((event) => utf8.encode(event!))
               .asBroadcastStream();
-        case FFmpegExec.ffplay:
+        case OsumExecs.ffplay:
           throw MissingPluginException('FFplay not available.');
       }
     } else {
@@ -92,8 +92,8 @@ class MediaEngine {
 
   /// Execute [commands] inside ffmpeg's [executable] and get the output
   /// as a [String].
-  static Future<String> executeFFmpeg({
-    required FFmpegExec executable,
+  Future<String> executeFFmpeg({
+    required OsumExecs executable,
     required List<String> commands,
   }) async {
     Log.info(
@@ -102,13 +102,13 @@ class MediaEngine {
 
     if (Platform.isAndroid || Platform.isIOS) {
       switch (executable) {
-        case FFmpegExec.ffmpeg:
+        case OsumExecs.ffmpeg:
           final session = await FFmpegKit.execute(commands.join(' '));
           return (await session.getOutput())!;
-        case FFmpegExec.ffprobe:
+        case OsumExecs.ffprobe:
           final session = await FFprobeKit.execute(commands.join(' '));
           return (await session.getOutput())!;
-        case FFmpegExec.ffplay:
+        case OsumExecs.ffplay:
           throw MissingPluginException('FFplay not available.');
       }
     } else {
@@ -117,9 +117,13 @@ class MediaEngine {
       Log.info('Output ${process.stdout}');
 
       if (process.exitCode == 1) {
-        throw MediaEngineException(process.stderr);
+        throw OsumEngineException(process.stderr);
       }
       return '${process.stdout}';
     }
   }
 }
+
+/// The osumffmpeg engine that contains low-level
+/// ffmpeg command execution functions.
+final osumEngine = _Engine();

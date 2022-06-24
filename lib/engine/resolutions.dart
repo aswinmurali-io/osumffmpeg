@@ -5,17 +5,17 @@
 import 'errors.dart';
 import 'utils.dart';
 
-class MediaResolution implements WithDisplayString {
+class OsumResolution implements WithDisplayString {
   /// Define a media resolution by giving it's [width], [height]
   /// and a [name] to identify it.
-  const MediaResolution(this.width, this.height, this.name);
+  const OsumResolution(this.width, this.height, this.name);
 
-  factory MediaResolution.fromString(String resolution) {
+  factory OsumResolution.fromString(String resolution) {
     // Must have the 'x' character and also atleast one digit after that.
     if (resolution.contains('x') &&
         (resolution.indexOf('x') + 1) < resolution.length) {
       final units = resolution.split('x').map(int.parse);
-      return MediaResolution(units.first, units.last, 'Custom');
+      return OsumResolution(units.first, units.last, 'Custom');
     } else {
       throw InvalidMediaResolution(resolution);
     }
@@ -39,17 +39,17 @@ class MediaResolution implements WithDisplayString {
 /// source:
 ///   1. https://en.wikipedia.org/wiki/Display_resolution
 ///   2. Samsung display settings.
-enum MediaResolutions implements WithDisplayableValue {
-  hd720(MediaResolution(1280, 720, 'HD 720')),
-  hdplus(MediaResolution(1600, 720, 'HD+ 720')),
-  fhd1080(MediaResolution(1920, 1080, 'FHD 1080')),
-  fhdplus1080(MediaResolution(2400, 1080, 'FHD+ 1080')),
-  wqhd2kplus(MediaResolution(3200, 1440, 'WQHD+ 2K')),
-  uhd4k(MediaResolution(3840, 2160, 'UHD 4K')),
-  uhd8k(MediaResolution(7680, 4320, 'UHD 8K'));
+enum OsumResolutions implements WithDisplayableValue {
+  hd720(OsumResolution(1280, 720, 'HD 720')),
+  hdplus(OsumResolution(1600, 720, 'HD+ 720')),
+  fhd1080(OsumResolution(1920, 1080, 'FHD 1080')),
+  fhdplus1080(OsumResolution(2400, 1080, 'FHD+ 1080')),
+  wqhd2kplus(OsumResolution(3200, 1440, 'WQHD+ 2K')),
+  uhd4k(OsumResolution(3840, 2160, 'UHD 4K')),
+  uhd8k(OsumResolution(7680, 4320, 'UHD 8K'));
 
-  const MediaResolutions(this.value);
+  const OsumResolutions(this.value);
 
   @override
-  final MediaResolution value;
+  final OsumResolution value;
 }

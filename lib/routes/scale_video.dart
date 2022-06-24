@@ -56,7 +56,7 @@ class _PageState extends CommonPageState {
     if (await File(input.text).exists() &&
         await Directory(dirname(output.text)).exists()) {
       try {
-        MediaResolution.fromString(resolution.text);
+        OsumResolution.fromString(resolution.text);
         showAction.value = true;
       } on InvalidMediaResolution {
         showAction.value = false;
@@ -66,9 +66,9 @@ class _PageState extends CommonPageState {
 
   @override
   Future<void> runAction() async {
-    final file = Media(File(input.text));
+    final file = OsumMedia(File(input.text));
 
-    final value = MediaResolution.fromString(resolution.text);
+    final value = OsumResolution.fromString(resolution.text);
 
     ffmpegOutput.value = await file.scaleVideo(value, File(output.text));
   }
@@ -116,9 +116,9 @@ class ScaleVideoPage extends HookWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 230,
-                    child: CustomSearchableTextField<MediaResolutions>(
+                    child: CustomSearchableTextField<OsumResolutions>(
                       controller: state.resolution,
-                      options: MediaResolutions.values,
+                      options: OsumResolutions.values,
                       hintText: 'Type or search for media resolutions.',
                       onChanged: (_) {},
                     ),

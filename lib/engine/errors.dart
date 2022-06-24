@@ -2,8 +2,8 @@
 // Use of this source code is governed by a GNU Lesser General Public License
 // v2.1 that can be found in the LICENSE file.
 
-class MediaEngineException implements Exception {
-  const MediaEngineException(this.error);
+class OsumEngineException implements Exception {
+  const OsumEngineException(this.error);
 
   final dynamic error;
 

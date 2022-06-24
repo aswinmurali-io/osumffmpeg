@@ -5,14 +5,14 @@
 import 'errors.dart';
 import 'utils.dart';
 
-class MediaFrameRateFormat implements WithDisplayString {
-  const MediaFrameRateFormat(this.frameRateString, this.frameRate);
+class OsumFrameRate implements WithDisplayString {
+  const OsumFrameRate(this.frameRateString, this.frameRate);
 
-  factory MediaFrameRateFormat.fromString(String framerate) {
+  factory OsumFrameRate.fromString(String framerate) {
     final value = double.tryParse(framerate);
 
     if (framerate.isNotEmpty && value != null) {
-      return MediaFrameRateFormat('Custom', value);
+      return OsumFrameRate('Custom', value);
     } else {
       throw InvalidMediaFormat(framerate);
     }
@@ -29,16 +29,16 @@ class MediaFrameRateFormat implements WithDisplayString {
   String toString() => frameRateString;
 }
 
-enum MediaFrameRateFormats implements WithDisplayableValue {
-  f29(MediaFrameRateFormat('29 Frames / Second', 29)),
-  f24(MediaFrameRateFormat('24 Frames / Second', 24)),
-  f30(MediaFrameRateFormat('30 Frames / Second', 30)),
-  f59(MediaFrameRateFormat('59 Frames / Second', 59)),
-  f60(MediaFrameRateFormat('60 Frames / Second', 60)),
-  f90(MediaFrameRateFormat('90 Frames / Second', 90));
+enum OsumFrameRates implements WithDisplayableValue {
+  f29(OsumFrameRate('29 Frames / Second', 29)),
+  f24(OsumFrameRate('24 Frames / Second', 24)),
+  f30(OsumFrameRate('30 Frames / Second', 30)),
+  f59(OsumFrameRate('59 Frames / Second', 59)),
+  f60(OsumFrameRate('60 Frames / Second', 60)),
+  f90(OsumFrameRate('90 Frames / Second', 90));
 
-  const MediaFrameRateFormats(this.value);
+  const OsumFrameRates(this.value);
 
   @override
-  final MediaFrameRateFormat value;
+  final OsumFrameRate value;
 }

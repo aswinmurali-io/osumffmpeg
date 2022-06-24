@@ -4,12 +4,12 @@
 
 import 'utils.dart';
 
-enum FFmpegExec implements WithValue<String> {
+enum OsumExecs implements WithValue<String> {
   ffplay('ffplay'),
   ffmpeg('ffmpeg'),
   ffprobe('ffprobe');
 
-  const FFmpegExec(this.value);
+  const OsumExecs(this.value);
 
   @override
   final String value;

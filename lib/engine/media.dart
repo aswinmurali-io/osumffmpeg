@@ -13,8 +13,8 @@ import 'execs.dart';
 import 'framerates.dart';
 import 'resolutions.dart';
 
-class Media {
-  const Media(this.media);
+class OsumMedia {
+  const OsumMedia(this.media);
 
   /// The media file.
   final File media;
@@ -23,8 +23,8 @@ class Media {
   Future<Stream<List<int>>> saveToFormat(
     File outputFile,
   ) async {
-    return MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
+    return osumEngine.executeFFmpegStream(
+      executable: OsumExecs.ffmpeg,
       commands: ['-i', media.absolute.path, outputFile.path, '-y'],
     );
   }
@@ -38,8 +38,8 @@ class Media {
     // input media file.
     final posixPath = media.path.replaceAll(r'\', '/');
 
-    return MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
+    return osumEngine.executeFFmpegStream(
+      executable: OsumExecs.ffmpeg,
       commands: [
         '-re',
         '-f',
@@ -57,8 +57,8 @@ class Media {
   /// Get the total frames in the video.
   Future<int> getTotalFrames() async {
     return int.parse(
-      await MediaEngine.executeFFmpeg(
-        executable: FFmpegExec.ffprobe,
+      await osumEngine.executeFFmpeg(
+        executable: OsumExecs.ffprobe,
         commands: [
           '-v',
           'error',
@@ -77,8 +77,8 @@ class Media {
 
   // Get duration of media.
   Future<Duration> getDuration() async {
-    final response = await MediaEngine.executeFFmpeg(
-      executable: FFmpegExec.ffprobe,
+    final response = await osumEngine.executeFFmpeg(
+      executable: OsumExecs.ffprobe,
       commands: [
         '-v',
         'error',
@@ -105,11 +105,11 @@ class Media {
   }
 
   Future<Stream<List<int>>> scaleVideo(
-    MediaResolution resolution,
+    OsumResolution resolution,
     File outputFile,
   ) async {
-    return MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
+    return osumEngine.executeFFmpegStream(
+      executable: OsumExecs.ffmpeg,
       commands: [
         '-i',
         media.path,
@@ -122,11 +122,11 @@ class Media {
   }
 
   Future<Stream<List<int>>> changeFrameRate(
-    MediaFrameRateFormat frameRate,
+    OsumFrameRate frameRate,
     File outputFile,
   ) async {
-    return MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
+    return osumEngine.executeFFmpegStream(
+      executable: OsumExecs.ffmpeg,
       commands: [
         '-i',
         media.path,
@@ -141,10 +141,13 @@ class Media {
   Future<MemoryImage> getFrame(Duration position) async {
     // Need to give image different id to update state.
     // Bitmap is the fastest way to save frame.
-    const file = 'Osumffmpeg Frame.bmp';
 
-    await MediaEngine.executeFFmpeg(
-      executable: FFmpegExec.ffmpeg,
+    final file = (Platform.isAndroid || Platform.isIOS)
+        ? 'Osumffmpeg Frame.jpg'
+        : 'Osumffmpeg Frame.bmp';
+
+    await osumEngine.executeFFmpeg(
+      executable: OsumExecs.ffmpeg,
       commands: [
         // To ignore audio processing, Can improve performance.
         '-an',
@@ -186,8 +189,8 @@ class Media {
   ) async {
     final posixPath = output.path.replaceAll(r'\', '/');
 
-    return MediaEngine.executeFFmpegStream(
-      executable: FFmpegExec.ffmpeg,
+    return osumEngine.executeFFmpegStream(
+      executable: OsumExecs.ffmpeg,
       commands: [
         // To ignore audio processing, Can improve performance.
         '-an',
@@ -205,8 +208,8 @@ class Media {
   static const ffplayTitle = 'Osumffmpeg ffplay';
 
   Future<String> play() async {
-    return MediaEngine.executeFFmpeg(
-      executable: FFmpegExec.ffplay,
+    return osumEngine.executeFFmpeg(
+      executable: OsumExecs.ffplay,
       commands: [
         media.path,
         '-window_title',

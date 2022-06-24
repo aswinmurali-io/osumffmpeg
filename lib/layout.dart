@@ -100,7 +100,7 @@ class OsumLayout extends HookWidget {
                 onChanged: () {},
               ),
             FutureBuilder(
-              future: MediaEngine.checkForExecs(),
+              future: osumEngine.checkForExecs(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data == 'Success') {

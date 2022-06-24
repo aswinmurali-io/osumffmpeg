@@ -85,7 +85,7 @@ class _PageState extends CommonPageState {
   @override
   Future<void> runAction() async {
     await fixOutputLocation();
-    await Media(File(input.text)).saveFrame(
+    await OsumMedia(File(input.text)).saveFrame(
       Duration(seconds: video.position.value),
       File(
         '${output.text}/${basenameWithoutExtension(input.text)} (${video.position.value}th sec).jpg',
@@ -97,7 +97,7 @@ class _PageState extends CommonPageState {
 
   Future<void> runActionSaveAllFrames() async {
     await fixOutputLocation();
-    ffmpegOutput.value = await Media(File(input.text))
+    ffmpegOutput.value = await OsumMedia(File(input.text))
         .saveAllFrames(Directory(output.text), 'bmp');
   }
 }

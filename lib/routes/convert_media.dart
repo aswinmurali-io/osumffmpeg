@@ -71,7 +71,7 @@ class _PageState extends CommonPageState {
 
   @override
   Future<void> runAction() async => ffmpegOutput.value =
-      await Media(File(input.text)).saveToFormat(File(output.text));
+      await OsumMedia(File(input.text)).saveToFormat(File(output.text));
 }
 
 class ConvertMediaPage extends HookWidget {
@@ -114,9 +114,9 @@ class ConvertMediaPage extends HookWidget {
                   const SizedBox(height: 20),
                   SizedBox(
                     width: 250,
-                    child: CustomSearchableTextField<MediaFormats>(
+                    child: CustomSearchableTextField<OsumFormats>(
                       controller: state.format,
-                      options: MediaFormats.values,
+                      options: OsumFormats.values,
                       hintText: 'Media Formats',
                       onChanged: state.onFormatChanged,
                       inputFormatters: [

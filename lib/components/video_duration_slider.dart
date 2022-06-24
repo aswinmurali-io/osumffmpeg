@@ -25,7 +25,7 @@ class VideoDurationSliderController {
 
   Future<void> fetchTotalTime() async {
     if (file.value != null) {
-      duration.value = await Media(file.value!).getDuration();
+      duration.value = await OsumMedia(file.value!).getDuration();
     }
   }
 
@@ -33,7 +33,7 @@ class VideoDurationSliderController {
       duration.toString().split('.').first.padLeft(8, '0');
 
   Future<void> fetchFrame() async {
-    frame.value = await Media(file.value!).getFrame(
+    frame.value = await OsumMedia(file.value!).getFrame(
       Duration(seconds: position.value),
     );
   }

@@ -47,7 +47,7 @@ class _PageState extends CommonPageState {
     final inputFile = File(input.text);
 
     if (await inputFile.exists()) {
-      final totalDuration = await Media(File(input.text)).getDuration();
+      final totalDuration = await OsumMedia(File(input.text)).getDuration();
 
       duration.hours.text = '${totalDuration.inHours.remainder(24)}';
       duration.minutes.text = '${totalDuration.inMinutes.remainder(60)}';
@@ -92,7 +92,7 @@ class _PageState extends CommonPageState {
       seconds: int.parse(duration.seconds.text),
     );
 
-    final file = Media(File(input.text));
+    final file = OsumMedia(File(input.text));
 
     ffmpegOutput.value = await file.loopAndSave(File(output.text), value);
   }

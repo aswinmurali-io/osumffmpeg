@@ -46,7 +46,7 @@ class _PageState extends CommonPageState {
     if (await File(input.text).exists() &&
         await Directory(dirname(output.text)).exists()) {
       try {
-        MediaFrameRateFormat.fromString(framerate.text);
+        OsumFrameRate.fromString(framerate.text);
 
         final base = basenameWithoutExtension(input.text);
         final base2 = basenameWithoutExtension(output.text);
@@ -74,8 +74,8 @@ class _PageState extends CommonPageState {
 
   @override
   Future<void> runAction() async =>
-      ffmpegOutput.value = await Media(File(input.text)).changeFrameRate(
-        MediaFrameRateFormat.fromString(framerate.text),
+      ffmpegOutput.value = await OsumMedia(File(input.text)).changeFrameRate(
+        OsumFrameRate.fromString(framerate.text),
         File(output.text),
       );
 }
@@ -122,9 +122,9 @@ class ChangeFrameRatePage extends HookWidget {
                     const SizedBox(height: 20),
                     SizedBox(
                       width: 250,
-                      child: CustomSearchableTextField<MediaFrameRateFormats>(
+                      child: CustomSearchableTextField<OsumFrameRates>(
                         controller: state.framerate,
-                        options: MediaFrameRateFormats.values,
+                        options: OsumFrameRates.values,
                         hintText: 'Media Frame rates',
                         onChanged: (_) {},
                         inputFormatters: [

@@ -28,14 +28,14 @@ void main() {
   group('(Media Engine)', () {
     test(
       'Check for ffmpeg binaries in this system.',
-      () async => expect(await MediaEngine.checkForExecs(), equals('Success')),
+      () async => expect(await osumEngine.checkForExecs(), equals('Success')),
     );
 
     test(
       'Check total video frames logic ${VideoTestDetails.file.path} '
       'should be ${VideoTestDetails.totalFrames}',
       () async => expect(
-        await Media(VideoTestDetails.file).getTotalFrames(),
+        await OsumMedia(VideoTestDetails.file).getTotalFrames(),
         equals(9900),
       ),
     );
@@ -45,7 +45,7 @@ void main() {
       'should be ${VideoTestDetails.duration}',
       () async {
         expect(
-          await Media(VideoTestDetails.file).getDuration(),
+          await OsumMedia(VideoTestDetails.file).getDuration(),
           VideoTestDetails.duration,
         );
       },
@@ -56,14 +56,14 @@ void main() {
         'If it does exist then this ffmpeg version is different from the '
         'tested version for osumffmpeg.', () async {
       expect(
-        () async => MediaEngine.executeFFmpeg(
-          executable: FFmpegExec.ffmpeg,
+        () async => osumEngine.executeFFmpeg(
+          executable: OsumExecs.ffmpeg,
           commands: ['-v'],
         ),
-        throwsA(isA<MediaEngineException>()),
+        throwsA(isA<OsumEngineException>()),
       );
     });
 
-    Log.info('Possible media formats ${MediaFormats.values}');
+    Log.info('Possible media formats ${OsumFormats.values}');
   });
 }

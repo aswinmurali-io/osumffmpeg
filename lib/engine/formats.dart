@@ -5,12 +5,12 @@
 import 'errors.dart';
 import 'utils.dart';
 
-class MediaFormat implements WithDisplayString {
-  const MediaFormat(this.formatString, this.displayString);
+class OsumFormat implements WithDisplayString {
+  const OsumFormat(this.formatString, this.displayString);
 
-  factory MediaFormat.fromString(String format) {
+  factory OsumFormat.fromString(String format) {
     if (format.isNotEmpty) {
-      return MediaFormat('Custom', format);
+      return OsumFormat('Custom', format);
     } else {
       throw InvalidMediaFormat(format);
     }
@@ -27,16 +27,16 @@ class MediaFormat implements WithDisplayString {
   String toString() => formatString;
 }
 
-enum MediaFormats implements WithDisplayableValue {
-  mkv(MediaFormat('Matroska Multimedia Container', 'mkv')),
-  mp3(MediaFormat('MPEG-2 Audio Layer III', 'mp3')),
-  mp4(MediaFormat('MPEG-4 Part 14', 'mp4')),
-  mov(MediaFormat('QuickTime File Format', 'mov')),
-  avi(MediaFormat('Audio Video Interleave', 'avi')),
-  mk4(MediaFormat('MPEG-4 Video', 'm4v'));
+enum OsumFormats implements WithDisplayableValue {
+  mkv(OsumFormat('Matroska Multimedia Container', 'mkv')),
+  mp3(OsumFormat('MPEG-2 Audio Layer III', 'mp3')),
+  mp4(OsumFormat('MPEG-4 Part 14', 'mp4')),
+  mov(OsumFormat('QuickTime File Format', 'mov')),
+  avi(OsumFormat('Audio Video Interleave', 'avi')),
+  mk4(OsumFormat('MPEG-4 Video', 'm4v'));
 
-  const MediaFormats(this.value);
+  const OsumFormats(this.value);
 
   @override
-  final MediaFormat value;
+  final OsumFormat value;
 }
