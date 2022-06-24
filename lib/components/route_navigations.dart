@@ -14,11 +14,14 @@ class RouteNavigationRail extends HookWidget {
     super.key,
     required this.index,
     required this.routes,
+    required this.onChanged,
   });
 
   final ValueNotifier<int> index;
 
   final List<Route> routes;
+
+  final void Function() onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +54,10 @@ class RouteNavigationRail extends HookWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: NavigationRail(
-                            onDestinationSelected: (value) =>
-                                index.value = value,
+                            onDestinationSelected: (value) {
+                              index.value = value;
+                              onChanged();
+                            },
                             labelType: NavigationRailLabelType.all,
                             destinations: [
                               for (final route in routes)
