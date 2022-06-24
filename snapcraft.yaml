@@ -18,4 +18,4 @@ parts:
 apps:
   osumffmpeg:
     command: osumffmpeg
-    extensions: [flutter-dev]
+    extensions: [flutter-master]
