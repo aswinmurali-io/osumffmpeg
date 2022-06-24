@@ -10,7 +10,7 @@
 
 #define MyAppName "Osumffmpeg"
 #define MyAppVersion "0.1"
-#define MyAppPublisher "Open Source Developer(s)"
+#define MyAppPublisher "Osumffmpeg Developers"
 #define MyAppURL "https://aswinmurali-io.github.io/osumffmpeg/"
 #define MyAppExeName "osumffmpeg.exe"
 
