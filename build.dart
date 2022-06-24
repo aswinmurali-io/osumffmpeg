@@ -10,8 +10,11 @@
 /// Sync github pages
 ///   dart build.dart sync_githubpage
 ///
-/// Build & pack win32 app
-///   dart build.dart build_win32
+/// Build & pack windows app
+///   dart build.dart windows
+///
+/// Build & pack linux app
+///   dart build.dart linux
 ///
 // ignore_for_file: avoid_print
 
