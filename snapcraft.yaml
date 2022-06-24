@@ -10,8 +10,8 @@ parts:
   osumffmpeg:
     plugin: flutter
     override-build: |
-      snapcraftctl build
       flutter create .
+      snapcraftctl build
     source: https://github.com/aswinmurali-io/osumffmpeg.git
     flutter-target: lib/main.dart
 
