@@ -85,78 +85,74 @@ class ConvertMediaPage extends HookWidget {
       duration: const Duration(milliseconds: 200),
       child: Form(
         onChanged: state.onFormChanged,
-        child: FadeInRight(
-          duration: const Duration(milliseconds: 200),
-          child: Scrollbar(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const HeadingText('Input media file.'),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: state.input,
-                            enabled: false,
-                          ),
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const HeadingText('Input media file.'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: state.input,
+                          enabled: false,
                         ),
-                        const SizedBox(width: 10),
-                        CustomButton(
-                          label: 'Browse',
-                          icon: const Icon(Icons.file_copy_outlined),
-                          onPressed: state.onInputChanged,
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const HeadingText('Convert format to'),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: 250,
-                      child: CustomSearchableTextField<MediaFormats>(
-                        controller: state.format,
-                        options: MediaFormats.values,
-                        hintText: 'Media Formats',
-                        onChanged: state.onFormatChanged,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(
-                            RegExp("[0-9a-zA-Z]"),
-                          ),
-                        ],
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    const HeadingText('Output media file.'),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextFormField(
-                            controller: state.output,
-                            enabled: false,
-                          ),
+                      const SizedBox(width: 10),
+                      CustomButton(
+                        label: 'Browse',
+                        icon: const Icon(Icons.file_copy_outlined),
+                        onPressed: state.onInputChanged,
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const HeadingText('Convert format to'),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 250,
+                    child: CustomSearchableTextField<MediaFormats>(
+                      controller: state.format,
+                      options: MediaFormats.values,
+                      hintText: 'Media Formats',
+                      onChanged: state.onFormatChanged,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp("[0-9a-zA-Z]"),
                         ),
-                        const SizedBox(width: 10),
-                        CustomButton(
-                          label: 'Save Location',
-                          icon: const Icon(Icons.save),
-                          onPressed: state.onOutputChanged,
-                        )
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    CustomButton(
-                      label: 'Convert',
-                      icon: const Icon(Icons.send),
-                      onPressed:
-                          state.showAction.value ? state.runAction : null,
-                    ),
-                    const SizedBox(height: 10),
-                    FfmpegOutput(outputStream: state.ffmpegOutput.value),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  const HeadingText('Output media file.'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: state.output,
+                          enabled: false,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      CustomButton(
+                        label: 'Save Location',
+                        icon: const Icon(Icons.save),
+                        onPressed: state.onOutputChanged,
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  CustomButton(
+                    label: 'Convert',
+                    icon: const Icon(Icons.send),
+                    onPressed: state.showAction.value ? state.runAction : null,
+                  ),
+                  const SizedBox(height: 10),
+                  FfmpegOutput(outputStream: state.ffmpegOutput.value),
+                ],
               ),
             ),
           ),
