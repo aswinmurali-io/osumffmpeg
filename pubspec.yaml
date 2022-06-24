@@ -12,6 +12,7 @@ environment:
 dependencies:
   animate_do: ^2.1.0
   async: ^2.9.0
+  ffmpeg_kit_flutter_full: 4.5.1-LTS
   file_picker: ^4.6.1
   flutter:
     sdk: flutter
@@ -22,10 +23,11 @@ dependencies:
   osumlog: ^0.1.0
   path: ^1.8.0
   shared_preferences: ^2.0.15
+  shimmer: ^2.0.0
   web_smooth_scroll: ^1.0.0
 
 dev_dependencies:
-  flutter_lints: 2.0.1
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 
