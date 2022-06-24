@@ -7,7 +7,10 @@ description: 𝗢𝘀𝘂𝗺 𝗙𝗙𝗠𝗣𝗘𝗚 is a 📹 media utility t
 confinement: strict
 base: core18
 grade: devel
-# compression: lzo
+# compression: xz
+# architectures:
+#   - build-on: [ amd64 ]
+#   - build-on: [ arm64 ]
 
 parts:
   osumffmpeg:
@@ -15,10 +18,10 @@ parts:
     override-build: |
       flutter create .
       snapcraftctl build
-    source: https://github.com/aswinmurali-io/osumffmpeg.git
+    source: .
     flutter-target: lib/main.dart
 
 apps:
   osumffmpeg:
-    command: /build/osumffmpeg/parts/osumffmpeg/build/build/linux/x64/release/bundle/osumffmpeg
+    command: osumffmpeg
     extensions: [flutter-master]
