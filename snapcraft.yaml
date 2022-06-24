@@ -9,6 +9,8 @@ base: core18
 parts:
   osumffmpeg:
     plugin: flutter
+    prepare: |
+      flutter create .
     source: https://github.com/aswinmurali-io/osumffmpeg.git
     flutter-target: lib/main.dart
 
