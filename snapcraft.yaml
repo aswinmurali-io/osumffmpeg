@@ -23,5 +23,5 @@ parts:
 
 apps:
   osumffmpeg:
-    command: osumffmpeg
+    command: ./build/linux/release/bundle/osumffmpeg
     extensions: [flutter-master]
