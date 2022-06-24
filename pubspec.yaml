@@ -11,6 +11,7 @@ environment:
 
 dependencies:
   animate_do: ^2.1.0
+  archive: ^3.3.0
   async: ^2.9.0
   ffmpeg_kit_flutter_full: 4.5.1-LTS
   file_picker: ^4.6.1
