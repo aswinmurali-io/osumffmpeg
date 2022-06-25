@@ -18,11 +18,10 @@ parts:
     override-build: |
       flutter create .
       snapcraftctl build
-      chmod +x /build/osumffmpeg/parts/osumffmpeg/build/build/linux/x64/release/bundle/osumffmpeg
     source: .
     flutter-target: lib/main.dart
 
 apps:
   osumffmpeg:
-    command: ./build/osumffmpeg/parts/osumffmpeg/build/build/linux/x64/release/bundle/osumffmpeg
-    extensions: [flutter-master]
+    command: osumffmpeg
+    extensions: [flutter-stable]

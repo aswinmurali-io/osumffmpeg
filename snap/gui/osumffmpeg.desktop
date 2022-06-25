@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=osumffmpeg
+Comment=Power of FFMPEG for normal users.
+Exec=osumffmpeg
+Icon=${SNAP}/meta/gui/osumffmpeg.png
+Terminal=false
+Type=Application
+Categories=Utilities;
