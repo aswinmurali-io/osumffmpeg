@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.osumffmpeg.osumffmpeg</id>
+  <name>Osumffmpeg</name>
+  <summary>Power of FFMPEG for normal users.</summary>
+  <developer_name>Osumffmpeg Developers</developer_name>
+  <url type="homepage">https://github.com/aswinmurali-io/osumffmpeg</url>
+  <metadata_license>LGPL-2.1</metadata_license>
+  <project_license>LGPL-2.1</project_license>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+  <description>
+    <p>Power of FFMPEG for normal users.</p>
+  </description>
+  <launchable type="desktop-id">snap/gui/osumffmpeg.desktop</launchable>
+  <!-- <screenshots>
+    <screenshot type="default">
+      <image></image>
+    </screenshot>
+  </screenshots> -->
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="1.0.0" date="2022-02-25" />
+  </releases>
+</component>
