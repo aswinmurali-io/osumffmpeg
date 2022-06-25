@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-flutter-app:
     runs-on: ubuntu-latest
 
     steps:
