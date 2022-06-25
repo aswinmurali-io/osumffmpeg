@@ -39,8 +39,45 @@ jobs:
       - name: Create platform
         run: flutter create .
 
-      - name: Test Build
+      - name: Linux Build
         run: flutter build linux
+      
+      - name: Compress Flutter build
+        run: tar -C build/linux/x64/release/bundle -cvf osumffmpeg-linux-x64-noffmpeg.tar.gz .
+      
+      - name: Upload Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: osumffmpeg-linux-x64-noffmpeg
+          path: osumffmpeg-linux-x64-noffmpeg.tar.gz
 
 #       - name: Run tests
 #         run: flutter test
+
+  build-flatpak:
+    name: Build flatpak
+    needs: build-flutter-app
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-21.08
+      options: --privileged
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download app archive
+        uses: actions/download-artifact@v3
+        with:
+          name: osumffmpeg-linux-x64-noffmpeg
+
+      - name: Build .flatpak
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          bundle: Osumffmpeg.flatpak
+          manifest-path: flatpak.json
+
+      - name: Upload .flatpak artifact to workflow
+        uses: actions/upload-artifact@v2
+        with:
+          name: Flatpak artifact
+          path: Osumffmpeg.flatpak
