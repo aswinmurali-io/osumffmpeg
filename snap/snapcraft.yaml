@@ -2,6 +2,7 @@ name: osumffmpeg
 version: git
 summary: Power of FFMPEG for normal users.
 description: 𝗢𝘀𝘂𝗺 𝗙𝗙𝗠𝗣𝗘𝗚 is a 📹 media utility tool 🛠️ that gives the normal users the power of FFMPEG 💪 to convert formats ⚙️ • loop video 🔁 • mute audio 🔇 and much more in a beautiful UI.
+
 confinement: strict
 base: core18
 grade: devel
@@ -12,15 +13,17 @@ compression: lzo
 
 parts:
   osumffmpeg:
-
+    source: .
     plugin: flutter
     override-build: |
       flutter create .
       snapcraftctl build
-    source: .
     flutter-target: lib/main.dart
 
 apps:
   osumffmpeg:
-    command: bin/osumffmpeg
+    command: osumffmpeg
     extensions: [flutter-master]
+    plugs:
+      - network
+      - desktop
