@@ -32,7 +32,7 @@
                 "mkdir -p /app/share/icons/hicolor/scalable/apps",
                 "cp -r osumffmpeg.svg /app/share/icons/hicolor/scalable/apps/com.osumffmpeg.osumffmpeg.svg",
                 "mkdir -p /app/share/applications",
-                "cp -r snap/gui/osumffmpeg.desktop /app/share/applications/",
+                "cp -r osumffmpeg.desktop /app/share/applications/",
                 "mkdir -p /app/share/appdata",
                 "cp -r osumffmpeg.metainfo.xml /app/share/appdata/"
             ],
@@ -43,7 +43,7 @@
                 },
                 {
                     "type": "file",
-                    "path": "snap/gui/osumffmpeg.desktop"
+                    "path": "osumffmpeg.desktop"
                 },
                 {
                     "type": "file",
