@@ -132,7 +132,7 @@ void buildWindows() {
         then: () => run(
           'Building windows installer',
           'iscc',
-          ['win32_installer.iss'],
+          ['innosetup.iss'],
           flag: buildInstallerInWindows,
           then: () => print('Done'),
         ),
