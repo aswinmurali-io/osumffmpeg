@@ -22,7 +22,7 @@ parts:
 
 apps:
   osumffmpeg:
-    command: osumffmpeg
+    command: osumffmpeg-app
     extensions: [flutter-master]
     plugs:
       - network
