@@ -12,6 +12,7 @@ compression: lzo
 
 parts:
   osumffmpeg:
+
     plugin: flutter
     override-build: |
       flutter create .
@@ -21,5 +22,5 @@ parts:
 
 apps:
   osumffmpeg:
-    command: ./bin/osumffmpeg
+    command: bin/osumffmpeg
     extensions: [flutter-master]
