@@ -1,18 +1,21 @@
-name: flutter
+# Includes Vanilla Linux, Flatpak & Android builds.
+
+name: flutter-linux-android-flatpak
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-  build-flutter-app:
+  build-flutter-linux:
+    name: Build Flutter
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Install flutter
         uses: britannio/action-install-flutter@v1.1
         with:
@@ -35,32 +38,47 @@ jobs:
 
       - name: Analyze project source
         run: flutter analyze
-      
+
       - name: Create platform
         run: flutter create .
 
       - name: Linux Build
         run: flutter build linux
-      
-      - name: Compress Flutter build
+
+      # - name: Android Build
+      #   run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
+
+      - name: Compress Flutter linux build
         run: tar -C build/linux/x64/release/bundle -cvf osumffmpeg-linux-x64-noffmpeg.tar.gz .
-      
-      - name: Upload Archive
+
+      - name: Upload Linux Archive
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-linux-x64-noffmpeg
           path: osumffmpeg-linux-x64-noffmpeg.tar.gz
 
-#       - name: Run tests
-#         run: flutter test
+      # - name: Compress Flutter android build
+      #   run: tar -C build/app/outputs/flutter-apk -cvf osumffmpeg-android-universal-ffmpeg.tar.gz .
+
+      # - name: Upload Android Archive
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: osumffmpeg-android-universal-ffmpeg.tar.gz
+      #     path: osumffmpeg-android-universal-ffmpeg.tar.gz
+
+      # - name: Run tests
+      #   run: flutter test
 
   build-flatpak:
-    name: Build flatpak
-    needs: build-flutter-app
+    name: Build Flatpak
+    needs: build-flutter-linux
+
     runs-on: ubuntu-latest
+
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-21.08
       options: --privileged
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
