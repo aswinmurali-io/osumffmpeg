@@ -24,4 +24,4 @@ parts:
 apps:
   osumffmpeg:
     command: osumffmpeg
-    extensions: [flutter-stable]
+    extensions: [flutter-master]
