@@ -36,6 +36,14 @@ jobs:
 
       - name: Windows Build
         run: flutter build windows
+      
+      - name: Get UPX
+        uses: crazy-max/ghaction-chocolatey@v2
+        with:
+          args: install upx -y
+      
+      - name: Compress dlls
+        run: upx build/windows/runner/Release/*.dll
 
       - name: Compress Flutter build
         run: tar -C build/windows/runner/Release -cvf osumffmpeg-windows-x64-noffmpeg.tar.gz .
