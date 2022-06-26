@@ -10,6 +10,10 @@ macos/
 web/
 windows/
 
+!windows/runner/resources/app_icon.ico
+!windows/runner/main.cpp
+!windows/runner/Runner.rc
+
 # See https://www.dartlang.org/guides/libraries/private-files
 
 # Files and directories created by pub
