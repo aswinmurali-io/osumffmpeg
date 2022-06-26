@@ -32,7 +32,7 @@ jobs:
         run: flutter analyze
 
       - name: Create platform
-        run: flutter create . --target-platform=windows
+        run: flutter create . --platforms=windows
 
       - name: Windows Build
         run: flutter build windows
