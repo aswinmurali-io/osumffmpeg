@@ -1,0 +1,61 @@
+name: windows
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-flutter-windows:
+    name: Build Flutter
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install flutter
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "master"
+
+      - name: Flutter doctor
+        run: flutter doctor
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: flutter format --output=none --set-exit-if-changed .
+
+      - name: Analyze project source
+        run: flutter analyze
+
+      - name: Create platform
+        run: flutter create . --target-platform=windows
+
+      - name: Windows Build
+        run: flutter build windows
+
+      - name: Compress Flutter build
+        run: tar -C build/windows/runner/Release -cvf osumffmpeg-windows-x64-noffmpeg.tar.gz .
+
+      - name: Upload Executable Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: osumffmpeg-windows-x64-noffmpeg
+          path: osumffmpeg-windows-x64-noffmpeg.tar.gz
+
+      - name: Get Inno Setup
+        uses: crazy-max/ghaction-chocolatey@v2
+        with:
+          args: install innosetup -y
+
+      - name: Build Installer
+        run: iscc innosetup.iss
+
+      - name: Upload Installer Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: osumffmpeg-windows-x64-noffmpeg-installer.exe
+          path: build/windows/installer/Osumffmpeg Installer.exe
