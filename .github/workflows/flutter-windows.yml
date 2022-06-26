@@ -1,3 +1,5 @@
+# Build for Windows 64-Bit
+
 name: windows
 
 on:
@@ -45,10 +47,10 @@ jobs:
       - name: Compress dlls
         run: upx build/windows/runner/Release/*.dll
 
-      - name: Compress Flutter build
+      - name: Compress flutter build
         run: tar -C build/windows/runner/Release -cvf osumffmpeg-windows-x64-noffmpeg.tar.gz .
 
-      - name: Upload Executable Archive
+      - name: Upload executable
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-windows-x64-noffmpeg
@@ -59,10 +61,10 @@ jobs:
         with:
           args: install innosetup -y
 
-      - name: Build Installer
+      - name: Build installer
         run: iscc innosetup.iss
 
-      - name: Upload Installer Archive
+      - name: Upload installer
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-windows-x64-noffmpeg-installer.exe

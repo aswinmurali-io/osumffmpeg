@@ -1,6 +1,6 @@
 # Includes Vanilla Linux, Flatpak & Android builds.
 
-name: flutter-linux-android-flatpak
+name: linux-flatpak
 
 on:
   push:

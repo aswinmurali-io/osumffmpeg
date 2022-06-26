@@ -22,10 +22,17 @@
   </br>
   </br>
   <a href="#">
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment/badge.svg" />  
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter.yml/badge.svg" />  
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter-linux-flatpak.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter-windows.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/docker-publish.yml/badge.svg" />
     <img align="center" src="https://www.repostatus.org/badges/latest/active.svg" />  
    </a>
+
+   <!-- <a href="https://launchpad.net/osumffmpeg/">
+    <img src="http://media.launchpad.net/lp-badge-kit/launchpad-badge-w160px.png"
+         alt="Launchpad logo"/>
+    </a> -->
 </p>
 
 ![Preview](https://user-images.githubusercontent.com/47299190/173613514-03d778b7-a272-4a54-8aba-c8b079d34ffb.png)
@@ -33,3 +40,27 @@
 ## License
 
 Osumffmpeg has a GNU Lesser General Public License v2.1, as found in the [LICENSE](https://github.com/aswinmurali-io/osumffmpeg/blob/main/LICENSE) file.
+
+## Installing
+
+`osumffmpeg` depends on `ffmpeg` as an external dependency.
+
+<!-- <a href="https://snapcraft.io/osumffmpeg">
+  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a> -->
+
+### Building from source via `Dockerfile`
+
+```bash
+docker build . -f Dockerfile -t osumffmpeg --squash
+docker run -d --name osumffmpeg osumffmpeg
+```
+
+### Building from source
+
+```bash
+git clone https://github.com/aswinmurali-io/osumffmpeg.git
+cd osumffmpeg
+flutter pub get
+flutter build <PLATFORM>
+```
