@@ -173,13 +173,23 @@ class SavePhotoFromVideoPage extends HookWidget {
                               state.showAction.value ? state.runAction : null,
                         ),
                         const SizedBox(width: 20),
-                        CustomButton(
-                          label: 'Extract everything',
-                          icon: const Icon(Icons.save_alt),
-                          onPressed: state.showAction.value
-                              ? state.runActionSaveAllFrames
-                              : null,
-                        ),
+                        /*
+                          TODO: Disabled the extract everything button to 
+                          prevent excessive performance penalty. This option
+                          extracts every frame in a video which is too much for
+                          a system to handle. 
+
+                          NOTE: Possible solution is to extract `n` frames in
+                          every `x` seconds. Defaults to 1 frame every 1 second.
+
+                          CustomButton(
+                            label: 'Extract everything',
+                            icon: const Icon(Icons.save_alt),
+                            onPressed: state.showAction.value
+                                ? state.runActionSaveAllFrames
+                                : null,
+                          ),
+                        */
                       ],
                     ),
                     const SizedBox(height: 10),
