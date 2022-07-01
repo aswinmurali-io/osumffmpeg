@@ -6,24 +6,13 @@ description: 𝗢𝘀𝘂𝗺 𝗙𝗙𝗠𝗣𝗘𝗚 is a 📹 media utility t
 confinement: strict
 base: core18
 grade: devel
-compression: lzo
-# architectures:
-#   - build-on: [ amd64 ]
-#   - build-on: [ arm64 ]
+compression: xz
 
 parts:
   osumffmpeg:
-    source: .
-    plugin: flutter
-    override-build: |
-      flutter create .
-      snapcraftctl build
-    flutter-target: lib/main.dart
+    plugin: dump
+    source: build/linux/x64/release/bundle/
 
 apps:
   osumffmpeg:
-    command: osumffmpeg-app
-    extensions: [flutter-master]
-    plugs:
-      - network
-      - desktop
+    command: osumffmpeg
