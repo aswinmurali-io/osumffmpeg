@@ -10,9 +10,15 @@ compression: xz
 
 parts:
   osumffmpeg:
-    plugin: dump
-    source: build/linux/x64/release/bundle/
+    plugin: flutter
+    source: .
+    flutter-target: lib/main.dart
 
 apps:
   osumffmpeg:
     command: osumffmpeg
+    extensions:
+      - flutter-beta
+    plugs:
+      - network
+      - desktop
