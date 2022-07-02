@@ -17,9 +17,6 @@ parts:
   osumffmpeg:
     plugin: flutter
     source: .
-    override-build: |
-      flutter create . --platforms=linux
-      snapcraftctl build
     flutter-target: lib/main.dart
 
 apps:

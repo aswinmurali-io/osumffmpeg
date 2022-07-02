@@ -45,10 +45,10 @@ jobs:
           path: osumffmpeg-windows-x64-noffmpeg.tar.gz
 
       - name: Pack source
-        run: tar --exclude *.gz -C . -czf osumffmpeg-windows-x64-noffmpeg-source .
+        run: tar --exclude *.gz -C . -czf osumffmpeg-windows-x64-source.tar.gz .
 
       - name: Upload source
         uses: actions/upload-artifact@v2
         with:
-          name: osumffmpeg-windows-x64-noffmpeg-source
-          path: osumffmpeg-windows-x64-noffmpeg-source.tar.gz
+          name: osumffmpeg-windows-x64-source
+          path: osumffmpeg-windows-x64-source.tar.gz
