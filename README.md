@@ -47,6 +47,22 @@ Osumffmpeg has a GNU Lesser General Public License v2.1, as found in the [LICENS
 
 `osumffmpeg` depends on `ffmpeg` as an external dependency.
 
+### Snap
+
+<a href="https://snapcraft.io/osumffmpeg">
+  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a>
+
+<a href="https://snapcraft.io/osumffmpeg">
+  <img alt="osumffmpeg" src="https://snapcraft.io/osumffmpeg/badge.svg" />
+</a>
+
+Or use the `snap` command line.
+
+```sh
+sudo snap install osumffmpeg
+```
+
 <!-- <a href="https://snapcraft.io/osumffmpeg">
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a> -->

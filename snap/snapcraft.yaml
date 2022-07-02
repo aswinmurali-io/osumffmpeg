@@ -7,11 +7,14 @@ grade: devel
 compression: xz
 confinement: strict
 
+icon: snap/gui/osumffmpeg.png
+license: GNU Lesser General Public License v2.1 only
 summary: Power of FFMPEG for normal users.
 description: 𝗢𝘀𝘂𝗺 𝗙𝗙𝗠𝗣𝗘𝗚 is a 📹 media utility tool 🛠️ that gives the normal users the power of FFMPEG 💪 to convert formats ⚙️ • loop video 🔁 • mute audio 🔇 and much more in a beautiful UI.
 
 website: https://github.com/aswinmurali-io/osumffmpeg
 source-code: https://github.com/aswinmurali-io/osumffmpeg
+issues: https://github.com/aswinmurali-io/osumffmpeg/issues
 
 parts:
   osumffmpeg:
