@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  windows:
+  innosetup:
     runs-on: windows-latest
 
     steps:

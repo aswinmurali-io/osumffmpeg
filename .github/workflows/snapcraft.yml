@@ -7,7 +7,7 @@ on:
       - completed
 
 jobs:
-  windows:
+  snapcraft:
     runs-on: ubuntu-latest
 
     steps:
