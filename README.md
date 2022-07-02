@@ -22,10 +22,12 @@
   </br>
   </br>
   <a href="#">
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment/badge.svg" />
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter-linux-flatpak.yml/badge.svg" />
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/flutter-windows.yml/badge.svg" />
-    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/docker-publish.yml/badge.svg" />
+    <!-- <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/pages/pages-build-deployment/badge.svg" /> -->
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/innosetup.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/linux.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/windows.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/snapcraft.yml/badge.svg" />
+    <img align="center" src="https://github.com/aswinmurali-io/osumffmpeg/actions/workflows/docker.yml/badge.svg" />
     <img align="center" src="https://www.repostatus.org/badges/latest/active.svg" />  
    </a>
 
