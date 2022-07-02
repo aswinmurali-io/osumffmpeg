@@ -1,0 +1,27 @@
+name: Inno Setup
+
+on:
+  workflow_run:
+    workflows: ["Linux Build"]
+    types:
+      - completed
+
+jobs:
+  windows:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get app
+        uses: actions/download-artifact@v3
+        with:
+          name: osumffmpeg-linux-x64-noffmpeg
+
+      - uses: snapcore/action-build@v1
+        id: build
+
+      # - uses: snapcore/action-publish@v1
+      #   env:
+      #     SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.STORE_LOGIN }}
+      #   with:
+      #     snap: ${{ steps.build.outputs.snap }}
+      #     release: edge
