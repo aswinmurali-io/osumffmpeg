@@ -11,13 +11,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Get app
+      - name: Get app by source
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: windows.yml
           workflow_conclusion: success
-          name: osumffmpeg-windows-x64-noffmpeg
+          name: osumffmpeg-windows-x64-noffmpeg-source
 
       - name: Get innosetup
         uses: crazy-max/ghaction-chocolatey@v2

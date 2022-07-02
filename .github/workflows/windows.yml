@@ -38,8 +38,17 @@ jobs:
       - name: Pack build
         run: tar -C build/windows/runner/Release -cvf osumffmpeg-windows-x64-noffmpeg.tar.gz .
 
+      - name: Pack source
+        run: tar -C . -cvf osumffmpeg-windows-x64-noffmpeg-source.tar.gz .
+
       - name: Upload app
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-windows-x64-noffmpeg
           path: osumffmpeg-windows-x64-noffmpeg.tar.gz
+      
+      - name: Pack source
+        uses: actions/upload-artifact@v2
+        with:
+          name: osumffmpeg-windows-x64-noffmpeg-source
+          path: osumffmpeg-windows-x64-noffmpeg-source.tar.gz
