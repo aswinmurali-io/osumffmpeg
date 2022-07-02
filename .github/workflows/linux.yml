@@ -42,11 +42,8 @@ jobs:
           name: osumffmpeg-linux-x64-noffmpeg
           path: osumffmpeg-linux-x64-noffmpeg.tar.gz
 
-      - name: Pack source
-        run: touch osumffmpeg-linux-x64-source.tar.gz && tar --exclude *.gz -C . -czf osumffmpeg-linux-x64-source.tar.gz .
-
       - name: Upload source
         uses: actions/upload-artifact@v2
         with:
-          name: osumffmpeg-linux-x64-source
-          path: osumffmpeg-linux-x64-source.tar.gz
+          name: osumffmpeg-linux-source
+          path: .

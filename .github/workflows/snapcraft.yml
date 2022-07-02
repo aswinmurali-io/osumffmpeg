@@ -17,7 +17,7 @@ jobs:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: linux.yml
           workflow_conclusion: success
-          name: osumffmpeg-linux-x64-noffmpeg-source
+          name: osumffmpeg-linux-source
 
       - uses: snapcore/action-build@v1
         id: build
