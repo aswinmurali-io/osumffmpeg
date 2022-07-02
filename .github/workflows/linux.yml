@@ -42,6 +42,9 @@ jobs:
           name: osumffmpeg-linux-x64-noffmpeg
           path: osumffmpeg-linux-x64-noffmpeg.tar.gz
 
+      - name: Clean flutter cache for snapcraft
+        run: flutter clean
+
       - name: Upload source
         uses: actions/upload-artifact@v2
         with:
