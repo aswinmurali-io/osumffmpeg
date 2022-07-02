@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get app
+      - name: Get app by source
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: linux.yml
           workflow_conclusion: success
-          name: osumffmpeg-linux-x64-noffmpeg
+          name: osumffmpeg-linux-x64-noffmpeg-source
 
       - uses: snapcore/action-build@v1
         id: build

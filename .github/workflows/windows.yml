@@ -26,28 +26,28 @@ jobs:
 
       - name: Windows build
         run: flutter build windows
-      
+
       - name: Get upx
         uses: crazy-max/ghaction-chocolatey@v2
         with:
           args: install upx -y
-      
+
       - name: Compress dlls
         run: upx build/windows/runner/Release/*.dll
 
       - name: Pack build
         run: tar -C build/windows/runner/Release -cvf osumffmpeg-windows-x64-noffmpeg.tar.gz .
 
-      - name: Pack source
-        run: tar -C . -cvf osumffmpeg-windows-x64-noffmpeg-source.tar.gz .
-
       - name: Upload app
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-windows-x64-noffmpeg
           path: osumffmpeg-windows-x64-noffmpeg.tar.gz
-      
+
       - name: Pack source
+        run: tar --exclude *.gz -C . -czf osumffmpeg-windows-x64-noffmpeg-source .
+
+      - name: Upload source
         uses: actions/upload-artifact@v2
         with:
           name: osumffmpeg-windows-x64-noffmpeg-source
