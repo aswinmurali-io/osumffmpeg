@@ -1,4 +1,4 @@
-name: Inno Setup
+name: Snapcraft
 
 on:
   workflow_run:
