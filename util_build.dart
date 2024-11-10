@@ -5,16 +5,16 @@
 /// Osumffmpeg's project helper script.
 ///
 /// Usage:
-///   dart build.dart [command]
+///   dart util_build.dart [command]
 ///
 /// Sync github pages
-///   dart build.dart sync_githubpage
+///   dart util_build.dart sync_githubpage
 ///
 /// Build & pack windows app
-///   dart build.dart windows
+///   dart util_build.dart windows
 ///
 /// Build & pack linux app
-///   dart build.dart linux
+///   dart util_build.dart linux
 ///
 // ignore_for_file: avoid_print
 
