@@ -19,7 +19,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
 
   /// Converts any [color] of type [Colors] to [MaterialColor].
   static MaterialColor colorToMaterial(Color color) =>
-      MaterialColor(color.value, getSwatch(color));
+      MaterialColor(color.toARGB32(), getSwatch(color));
 
   /// Get swatch from a [color].
   /// source: https://stackoverflow.com/questions/46595466/is-there-a-map-of-material-design-colors-for-flutter
