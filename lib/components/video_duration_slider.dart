@@ -62,15 +62,15 @@ class VideoDurationSlider extends HookWidget {
             height: 200,
           )
         else
-          SizedBox(
+          const SizedBox(
             width: 300,
             height: 200,
             child: Column(
-              children: const [
+              children: [
                 SizedBox(height: 30),
                 Icon(Icons.sync, size: 50),
                 SizedBox(height: 10),
-                Text('Seek the video to preview frame')
+                Text('Seek the video to preview frame'),
               ],
             ),
           ),
@@ -87,7 +87,7 @@ class VideoDurationSlider extends HookWidget {
             ),
             Text(controller.displayDuration(controller.duration.value)),
           ],
-        )
+        ),
       ],
     );
   }

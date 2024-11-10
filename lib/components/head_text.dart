@@ -13,7 +13,7 @@ class HeadingText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       data,
-      style: Theme.of(context).textTheme.headline2,
+      style: Theme.of(context).textTheme.headlineLarge,
     );
   }
 }

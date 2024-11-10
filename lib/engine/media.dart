@@ -69,7 +69,7 @@ class OsumMedia {
           'stream=nb_read_packets',
           '-of',
           'csv=p=0',
-          media.absolute.path
+          media.absolute.path,
         ],
       ),
     );

@@ -37,6 +37,7 @@ class _Engine {
 
   Future<String> checkForExecs() async {
     for (final exec in OsumExecs.values) {
+      // await Future.delayed(Duration(seconds: 1));
       if (await noFFmpeg(exec)) {
         return 'Unable to find ${exec.value} executable which is part of the '
             'ffmpeg project. Please download it from https://ffmpeg.org/';

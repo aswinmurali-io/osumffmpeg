@@ -104,7 +104,7 @@ class Route implements WithDisplayableValue, WithDisplayString {
                     ],
                   ),
                 ),
-                content
+                content,
               ],
             ),
           ),

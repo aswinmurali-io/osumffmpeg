@@ -106,7 +106,7 @@ class ConvertMediaPage extends HookWidget {
                         label: 'Browse',
                         icon: const Icon(Icons.file_copy_outlined),
                         onPressed: state.onInputChanged,
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -141,7 +141,7 @@ class ConvertMediaPage extends HookWidget {
                         label: 'Save Location',
                         icon: const Icon(Icons.save),
                         onPressed: state.onOutputChanged,
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),

@@ -78,7 +78,7 @@ class DurationField extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
-        )
+        ),
       ],
     );
   }

@@ -11,9 +11,9 @@ class WorkInProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
-        children: const [
+        children: [
           SizedBox(height: 30),
           Icon(Icons.construction, size: 90),
           HeadingText("Work in progress"),

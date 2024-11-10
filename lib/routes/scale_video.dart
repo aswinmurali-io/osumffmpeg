@@ -108,7 +108,7 @@ class ScaleVideoPage extends HookWidget {
                         onPressed: state.onInputChanged,
                         icon: const Icon(Icons.file_copy_outlined),
                         label: 'Browse',
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -138,7 +138,7 @@ class ScaleVideoPage extends HookWidget {
                         icon: const Icon(Icons.save),
                         label: 'Save Location',
                         onPressed: state.onOutputChanged,
-                      )
+                      ),
                     ],
                   ),
                   const SizedBox(height: 20),
@@ -148,7 +148,7 @@ class ScaleVideoPage extends HookWidget {
                     onPressed: state.showAction.value ? state.runAction : null,
                   ),
                   const SizedBox(height: 10),
-                  FfmpegOutput(outputStream: state.ffmpegOutput.value)
+                  FfmpegOutput(outputStream: state.ffmpegOutput.value),
                 ],
               ),
             ),

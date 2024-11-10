@@ -113,7 +113,7 @@ class OsumLayout extends HookWidget {
                               maintainState: true,
                               visible: route == routes[routeIndex.value],
                               child: route.page(context, routeIndex),
-                            )
+                            ),
                         ],
                       ),
                     );
@@ -139,7 +139,7 @@ class OsumLayout extends HookWidget {
                   ),
                 );
               },
-            )
+            ),
           ],
         ),
       ),

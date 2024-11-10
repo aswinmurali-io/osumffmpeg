@@ -4,8 +4,8 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,16 +43,16 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     final highStep = lightness / highDivisor;
 
     return {
-      50: (hslColor.withLightness(lightness + (lowStep * 5))).toColor(),
-      100: (hslColor.withLightness(lightness + (lowStep * 4))).toColor(),
-      200: (hslColor.withLightness(lightness + (lowStep * 3))).toColor(),
-      300: (hslColor.withLightness(lightness + (lowStep * 2))).toColor(),
-      400: (hslColor.withLightness(lightness + lowStep)).toColor(),
-      500: (hslColor.withLightness(lightness)).toColor(),
-      600: (hslColor.withLightness(lightness - highStep)).toColor(),
-      700: (hslColor.withLightness(lightness - (highStep * 2))).toColor(),
-      800: (hslColor.withLightness(lightness - (highStep * 3))).toColor(),
-      900: (hslColor.withLightness(lightness - (highStep * 4))).toColor(),
+      50: hslColor.withLightness(lightness + (lowStep * 5)).toColor(),
+      100: hslColor.withLightness(lightness + (lowStep * 4)).toColor(),
+      200: hslColor.withLightness(lightness + (lowStep * 3)).toColor(),
+      300: hslColor.withLightness(lightness + (lowStep * 2)).toColor(),
+      400: hslColor.withLightness(lightness + lowStep).toColor(),
+      500: hslColor.withLightness(lightness).toColor(),
+      600: hslColor.withLightness(lightness - highStep).toColor(),
+      700: hslColor.withLightness(lightness - (highStep * 2)).toColor(),
+      800: hslColor.withLightness(lightness - (highStep * 3)).toColor(),
+      900: hslColor.withLightness(lightness - (highStep * 4)).toColor(),
     };
   }
 
@@ -106,8 +106,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
     if (themeMode == ThemeMode.dark) {
       Window.setEffect(effect: WindowEffect.acrylic, dark: true);
     } else if (themeMode == ThemeMode.system) {
-      if (SchedulerBinding.instance.window.platformBrightness ==
-          Brightness.light) {
+      if (PlatformDispatcher.instance.platformBrightness == Brightness.light) {
         Window.setEffect(effect: WindowEffect.mica, dark: false);
       } else {
         Window.setEffect(effect: WindowEffect.acrylic, dark: true);
@@ -124,7 +123,7 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       scaffoldBackgroundColor:
           ThemeProvider.isMobile ? Colors.white : Colors.transparent,
       textTheme: TextTheme(
-        headline2: headline2.copyWith(color: Colors.black),
+        displayMedium: headline2.copyWith(color: Colors.black),
       ),
       navigationRailTheme: const NavigationRailThemeData(
         backgroundColor: Colors.white70,
@@ -155,17 +154,17 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          foregroundColor: MaterialStateProperty.resolveWith<Color>(
+          foregroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) {
-              if (states.contains(MaterialState.disabled)) {
+              if (states.contains(WidgetState.disabled)) {
                 return Colors.white70;
               }
               return Colors.white;
             },
           ),
-          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
             (states) {
-              if (states.contains(MaterialState.disabled)) {
+              if (states.contains(WidgetState.disabled)) {
                 return const Color.fromARGB(90, 78, 78, 78);
               }
               return Colors.blueGrey.shade700;
@@ -178,9 +177,9 @@ class ThemeProvider extends StateNotifier<ThemeMode> {
   }
 
   static final darkTextTheme = TextTheme(
-    headline2: headline2.copyWith(color: Colors.white),
-    subtitle1: const TextStyle(color: Colors.white), // TextField text!
-    bodyText2: const TextStyle(color: Colors.white),
+    headlineLarge: headline2.copyWith(color: Colors.white),
+    titleMedium: const TextStyle(color: Colors.white), // TextField text!
+    bodyMedium: const TextStyle(color: Colors.white),
   );
 
   Future<void> toggleTheme() async {
