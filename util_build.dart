@@ -2,6 +2,8 @@
 // Use of this source code is governed by a GNU Lesser General Public License
 // v2.1 that can be found in the LICENSE file.
 
+library osum_ffmpeg_util;
+
 /// Osumffmpeg's project helper script.
 ///
 /// Usage:
