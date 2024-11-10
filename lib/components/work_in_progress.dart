@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'head_text.dart';
 
 class WorkInProgress extends StatelessWidget {
-  const WorkInProgress({Key? key}) : super(key: key);
+  const WorkInProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
